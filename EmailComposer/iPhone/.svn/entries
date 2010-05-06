@@ -1,0 +1,37 @@
+8
+
+dir
+0
+https://svn.github.com/purplecabbage/PhoneGap-Plugins/EmailComposer/iPhone
+https://svn.github.com/purplecabbage/PhoneGap-Plugins
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+EmailComposer.h
+file
+
+
+
+add
+
+EmailComposer.js
+file
+
+
+
+add
+
+EmailComposer.m
+file
+
+
+
+add
+
