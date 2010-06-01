@@ -8,6 +8,7 @@
 
 #import "ChildBrowserCommand.h"
 #import "ChildBrowserViewController.h"
+#import "PhoneGapViewController.h"
 
 
 @implementation ChildBrowserCommand
@@ -15,10 +16,17 @@
 - (void) showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options // args: url
 {	
 	ChildBrowserViewController* childBrowser = [ [ ChildBrowserViewController alloc ] initWithScale:FALSE ];
-	[ [ super appViewController ] presentModalViewController:childBrowser animated:YES ];
+	
+/* // TODO: Work in progress
+	NSString* strOrientations = [ options objectForKey:@"supportedOrientations"];
+	NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
+*/
+	PhoneGapViewController* cont = (PhoneGapViewController*)[ super appViewController ];
+	childBrowser.supportedOrientations = cont.supportedOrientations;
+	[ cont presentModalViewController:childBrowser animated:YES ];
 	
 	NSString *url = (NSString*) [arguments objectAtIndex:0];
-	//stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
 	[childBrowser loadURL:url  ];
 	[childBrowser release];
 }

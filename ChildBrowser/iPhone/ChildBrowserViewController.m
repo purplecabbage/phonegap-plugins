@@ -12,6 +12,7 @@
 @implementation ChildBrowserViewController
 
 @synthesize imageURL;
+@synthesize supportedOrientations;
 @synthesize isImage;
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -45,11 +46,6 @@
 
 
 
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 
 - (void)didReceiveMemoryWarning {
@@ -77,7 +73,7 @@
 	[fwdBtn release];
 	[safariBtn release];
 	[spinner release];
-	
+	[ supportedOrientations release];
 	[super dealloc];
 }
 
@@ -101,6 +97,22 @@
 	}
 	 
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation 
+{
+	BOOL autoRotate = [self.supportedOrientations count] > 1; // autorotate if only more than 1 orientation supported
+	if (autoRotate)
+	{
+		if ([self.supportedOrientations containsObject:
+			 [NSNumber numberWithInt:interfaceOrientation]]) {
+			return YES;
+		}
+    }
+	
+	return NO;
+}
+
+
 
 
 - (void)loadURL:(NSString*)url

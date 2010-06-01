@@ -21,17 +21,17 @@
 	BOOL scaleEnabled;
 	BOOL isImage;
 	NSString* imageURL;
+	NSArray* supportedOrientations;
 }
 
+@property (nonatomic, retain) 	NSArray* supportedOrientations;
 @property(retain) NSString* imageURL;
 @property(assign) BOOL isImage;
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation; 
 - (ChildBrowserViewController*)initWithScale:(BOOL)enabled;
-
 - (IBAction)onDoneButtonPress:(id)sender;
-
 - (IBAction)onSafariButtonPress:(id)sender;
-
 - (void)loadURL:(NSString*)url;
 
 @end
