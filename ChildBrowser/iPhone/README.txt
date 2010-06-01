@@ -18,4 +18,9 @@ Here is a sample command to open google in a childbrowser :
 
 PhoneGap.exec("ChildBrowserCommand.showWebPage", "http://www.google.com");
 
+=================================
+
+June 1, 2010
+Added support for orientations, supportedOrientations are passed through to the child view controller. -jm
+
 
