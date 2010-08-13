@@ -21,6 +21,7 @@
 	NSString* bccRecipientsString = [options valueForKey:@"bccRecipients"];
 	NSString* subject = [options valueForKey:@"subject"];
 	NSString* body = [options valueForKey:@"body"];
+	NSString* isHTML = [options valueForKey:@"bIsHTML"];
 	
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     picker.mailComposeDelegate = self;
@@ -30,7 +31,16 @@
 		[picker setSubject:subject];
 	// set body
 	if(body != nil)
-		[picker setMessageBody:body isHTML:NO];
+	{
+		if(isHTML != nil && [isHTML boolValue])
+		{
+			[picker setMessageBody:body isHTML:YES];
+		}
+		else
+		{
+			[picker setMessageBody:body isHTML:NO];
+		}
+	}
 	
 	// Set recipients
 	if(toRecipientsString != nil)
