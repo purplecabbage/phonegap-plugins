@@ -4,3 +4,4 @@
 *.mode1v3
 javascripts/phonegap.js
 javascripts/SAiOSAdPlugin.js
+build
