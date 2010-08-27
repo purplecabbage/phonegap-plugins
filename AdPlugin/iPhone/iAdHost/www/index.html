@@ -39,13 +39,21 @@
 	{
 		// listen for the "iAdBannerViewDidLoadAdEvent" that is sent by the iAdPlugin
 		document.addEventListener("iAdBannerViewDidLoadAdEvent", iAdBannerViewDidLoadAdEventHandler, false);
-
-		var adAtBottom = true; 
+		// listen for the "iAdBannerViewDidFailToReceiveAdWithErrorEvent" that is sent by the iAdPlugin
+		document.addEventListener("iAdBannerViewDidFailToReceiveAdWithErrorEvent", iAdBannerViewDidFailToReceiveAdWithErrorEventHandler, false);
+		
+		var adAtBottom = false; 
 		setTimeout(function() {
 			window.plugins.iAdPlugin.prepare(adAtBottom); // by default, ad is at Top
 		}, 1000);
 	}
 		
+	function iAdBannerViewDidFailToReceiveAdWithErrorEventHandler(evt)
+	{
+		alert(evt.error);
+		window.plugins.iAdPlugin.showAd(false);
+	}
+	
 	function iAdBannerViewDidLoadAdEventHandler(evt)
 	{
 		// if we got this event, a new ad is loaded
@@ -55,6 +63,8 @@
 
 		elem = document.getElementById("showAd");
 		elem.disabled = false;
+		elem.checked = true;
+		window.plugins.iAdPlugin.showAd(true);
 		
 		gTotalAdsLoaded++;
 		
@@ -65,6 +75,7 @@
 			clearInterval(gTimerId);
 		}
 		gTimerId = setInterval(lastAdLoadedInterval, 1000);
+		
 	}
 	
 	function lastAdLoadedInterval()

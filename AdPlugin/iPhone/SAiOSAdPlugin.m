@@ -157,4 +157,19 @@
     }
 }
 
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError*)error
+{
+	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
+    if (adBannerViewClass)
+    {
+		NSString* jsString = 
+		@"var e = document.createEvent('Events');"
+		"e.initEvent('iAdBannerViewDidFailToReceiveAdWithErrorEvent');"
+		"e.error = '%@';"
+		"document.dispatchEvent(e);";
+		
+		[super writeJavascript:[NSString stringWithFormat:jsString, [error description]]];
+    }
+}
+
 @end
