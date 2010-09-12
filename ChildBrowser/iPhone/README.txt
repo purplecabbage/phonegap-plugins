@@ -1,7 +1,6 @@
 
 
 
-
 The child browser allows you to display external webpages within your PhoneGap application.
 
 A simple use case would be:
@@ -16,7 +15,7 @@ Note, because this is open source, I could not include the graphics I usually us
 
 Here is a sample command to open google in a childbrowser :
 
-PhoneGap.exec("ChildBrowserCommand.showWebPage", "http://www.google.com");
+PhoneGap.exec("ChildBrowserCommand.showWebPage", "http://www.google.com" );
 
 =================================
 
