@@ -1,6 +1,5 @@
 //
 //  ChildBrowserViewController.m
-//  DeqqApp
 //
 //  Created by Jesse MacFadyen on 21/07/09.
 //  Copyright 2009 Nitobi. All rights reserved.
@@ -14,6 +13,8 @@
 @synthesize imageURL;
 @synthesize supportedOrientations;
 @synthesize isImage;
+@synthesize delegate;
+
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -42,6 +43,7 @@
 	webView.delegate = self;
 	webView.scalesPageToFit = TRUE;
 	webView.backgroundColor = [UIColor whiteColor];
+	NSLog(@"View did load",@"");
 }
 
 
@@ -58,6 +60,7 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+	NSLog(@"View did UN-load",@"");
 }
 
 
@@ -77,14 +80,31 @@
 	[super dealloc];
 }
 
+-(void)closeBrowser
+{
+	
+	if(delegate != NULL)
+	{
+		[delegate onClose];		
+	}
+	
+	[ [super parentViewController] dismissModalViewControllerAnimated:YES];
+}
+
 -(IBAction) onDoneButtonPress:(id)sender
 {
-	[ [super parentViewController] dismissModalViewControllerAnimated:YES];
+	[ self closeBrowser];
 }
 
 
 -(IBAction) onSafariButtonPress:(id)sender
 {
+	
+	if(delegate != NULL)
+	{
+		[delegate onOpenInSafari];		
+	}
+	
 	if(isImage)
 	{
 		NSURL* pURL = [ [NSURL alloc] initWithString:imageURL ];
@@ -95,6 +115,7 @@
 		NSURLRequest *request = webView.request;
 		[[UIApplication sharedApplication] openURL:request.URL];
 	}
+
 	 
 }
 
@@ -151,16 +172,23 @@
 	fwdBtn.enabled = webView.canGoForward;
 	
 	[ spinner startAnimating ];
+	
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)sender {
+- (void)webViewDidFinishLoad:(UIWebView *)sender 
+{
 	NSURLRequest *request = webView.request;
+	NSLog(@"New Address is : %@",request.URL.absoluteString);
 	addressLabel.text = request.URL.absoluteString;
 	backBtn.enabled = webView.canGoBack;
 	fwdBtn.enabled = webView.canGoForward;
 	[ spinner stopAnimating ];
 	
-	
+	if(delegate != NULL)
+	{
+		[delegate onChildLocationChange:request.URL.absoluteString];		
+	}
+
 }
 
 

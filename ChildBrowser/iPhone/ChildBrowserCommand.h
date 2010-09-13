@@ -8,14 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "PhoneGapCommand.h"
+#import "ChildBrowserViewController.h"
+
 
  
-@interface ChildBrowserCommand : PhoneGapCommand  {
+@interface ChildBrowserCommand : PhoneGapCommand<ChildBrowserDelegate>  {
 
-
+	ChildBrowserViewController* childBrowser;
 }
 
-- (void) showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+@property (nonatomic, retain) ChildBrowserViewController *childBrowser;
 
+
+- (void) showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+-(void) onChildLocationChange:(NSString*)newLoc;
 
 @end
