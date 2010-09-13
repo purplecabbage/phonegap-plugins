@@ -23,3 +23,14 @@ June 1, 2010
 Added support for orientations, supportedOrientations are passed through to the child view controller. -jm
 
 
+================================
+
+Sept 13, 2010
++ added callbacks for location change, close, opening in safari, 
++ added method to close the browser from js.  
+( This should allow easy additions for facebook connect as you can monitor the browser's address and respond accordingly.  )
++ added images to the XIB, these need to be attached as resources in your xcode project.
+
+
+
+
