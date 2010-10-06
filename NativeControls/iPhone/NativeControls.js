@@ -140,7 +140,7 @@ NativeControls.prototype.setToolBarTitle = function(title)
 
 PhoneGap.addConstructor(function() 
 {
-	if(window.plugins)
+	if(!window.plugins)
 	{
 		window.plugins = {};
 	}
