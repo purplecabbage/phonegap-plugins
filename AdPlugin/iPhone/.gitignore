@@ -1,7 +1,0 @@
-.DS_Store
-*.pbxuser
-*.perspectivev3
-*.mode1v3
-javascripts/phonegap.js
-javascripts/SAiOSAdPlugin.js
-build
