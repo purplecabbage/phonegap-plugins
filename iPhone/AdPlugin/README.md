@@ -35,10 +35,10 @@ Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap
 
 Patches welcome! Send a pull request. Since this is not a part of PhoneGap Core (which requires a CLA), this should be easier.
 
-Post issues in the [PhoneGap Google Groups](http://groups.google.com/group/phonegap), include in the subject heading - "AdPlugin" or on [Github](http://github.com/shazron/PhoneGap-Plugins/issues)
+Post issues in the [PhoneGap Google Groups](http://groups.google.com/group/phonegap), include in the subject heading - "AdPlugin" or on [Github](http://github.com/phonegap/phoneGap-plugins/issues)
 (preferred)
 
-The latest code will always be [here](http://github.com/shazron/PhoneGap-Plugins/tree/master/AdPlugin/)
+The latest code (my fork) will always be [here](http://github.com/shazron/phoneGap-plugins/tree/master/iPhone/AdPlugin/)
 
 ## LICENSE ##
 
