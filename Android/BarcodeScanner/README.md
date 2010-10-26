@@ -2,7 +2,7 @@
 By Matt Kane
 
 ## Adding the Plugin to your project ##
-This plugin requires the end user to install (the ZXing Barcode Scanner app)[http://code.google.com/p/zxing/]
+This plugin requires the end user to install [the ZXing Barcode Scanner app](http://code.google.com/p/zxing/)
 If the user doesn't have the app install they will be promped to install it the first time the plugin is used.
 
 1. To install the plugin, move barcodescanner.js to your project's www folder and include a reference to it 
@@ -52,7 +52,7 @@ A full example could be:
 	);
 	
 ## BUGS AND CONTRIBUTIONS ##
-The latest bleeding-edge version is available (on GitHub)[http://github.com/ascorbic/phonegap-plugins/tree/master/Android/]
+The latest bleeding-edge version is available [on GitHub](http://github.com/ascorbic/phonegap-plugins/tree/master/Android/)
 If you have a patch, fork my repo baby and send me a pull request. Submit bug reports on GitHub, please.
 	
 ## Licence ##
