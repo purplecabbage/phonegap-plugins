@@ -58,8 +58,10 @@ BarcodeScanner.prototype.scan = function(types, success, fail, options) {
         success(args);
     }, function(args) {
         fail(args);
-    }, 'BarcodeScanner', 'scan', [types, installTitle, installMessage, yesString, noString], true);
+    }, 'BarcodeScanner', 'scan', [types, installTitle, installMessage, yesString, noString]);
 };
 
-PhoneGap.addPlugin('barcodeScanner', new BarcodeScanner());
-PluginManager.addService("BarcodeScanner","com.beetight.barcodescanner.BarcodeScanner");
+PhoneGap.addConstructor(function() {
+	PhoneGap.addPlugin('barcodeScanner', new BarcodeScanner());
+	PluginManager.addService("BarcodeScanner","com.beetight.barcodescanner.BarcodeScanner");
+});

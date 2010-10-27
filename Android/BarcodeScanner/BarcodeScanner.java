@@ -86,7 +86,9 @@ public class BarcodeScanner extends Plugin {
 			} else {
 	            return new PluginResult(PluginResult.Status.INVALID_ACTION);
 			}
-			return new PluginResult(PluginResult.Status.OK, "");
+			PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
+			r.setKeepCallback(true);
+			return r;
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return new PluginResult(PluginResult.Status.JSON_EXCEPTION);
