@@ -14,8 +14,8 @@ Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonega
 
 1. To install the plugin, move childbrowser.js to your project's www folder and include a reference to it in your html file after phonegap.js.
 
-      <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-      <script type="text/javascript" charset="utf-8" src="childbrowser.js"></script>
+    &lt;script type="text/javascript" charset="utf-8" src="phonegap.js"&gt;&lt;/script&gt;<br/>
+    &lt;script type="text/javascript" charset="utf-8" src="childbrowser.js"&gt;&lt;/script&gt;
 
 2. Create a directory within your project called "src/com/phonegap/plugins/childBrowser" and move the Java file into it.
 
