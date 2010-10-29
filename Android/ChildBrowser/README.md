@@ -1,11 +1,3 @@
-/*
- * PhoneGap is available under *either* the terms of the modified BSD license *or* the
- * MIT License (2008). See http://opensource.org/licenses/alphabetical for full text.
- *
- * Copyright (c) 2005-2010, Nitobi Software Inc.
- * Copyright (c) 2010, IBM Corporation
- */
-
 # ChildBrowser plugin for Phonegap #
 
 The child browser allows you to display external web pages within your PhoneGap application.
@@ -22,10 +14,8 @@ Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonega
 
 1. To install the plugin, move childbrowser.js to your project's www folder and include a reference to it in your html file after phonegap.js.
 
-<code>
       <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
       <script type="text/javascript" charset="utf-8" src="childbrowser.js"></script>
-</code>
 
 2. Create a directory within your project called "src/com/phonegap/plugins/childBrowser" and move the Java file into it.
 
@@ -37,9 +27,7 @@ The plugin creates the object `window.plugins.childBrowser`.  To use, call one o
 
 Sample use:
 
-<code>
     window.plugins.childBrowser.showWebPage("http://www.google.com");
-</code>
 
 ## RELEASE NOTES ##
 
