@@ -17,7 +17,7 @@ Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonega
     &lt;script type="text/javascript" charset="utf-8" src="phonegap.js"&gt;&lt;/script&gt;<br/>
     &lt;script type="text/javascript" charset="utf-8" src="childbrowser.js"&gt;&lt;/script&gt;
 
-2. Create a directory within your project called "src/com/phonegap/plugins/childBrowser" and move the Java file into it.
+2. Create a directory within your project called "src/com/phonegap/plugins/childBrowser" and move ChildBrowser.java into it.
 
 ## Using the plugin ##
 
@@ -31,7 +31,8 @@ Sample use:
 
 ## RELEASE NOTES ##
 
-### 20101029 ###
+### Oct 29, 2010 ###
+
 * Initial release
 
 
