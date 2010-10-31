@@ -15,8 +15,9 @@
 #import <UIKit/UITabBar.h>
 #import <UIKit/UIToolbar.h>
 #import "PhoneGapCommand.h"
+#import "ChatKeyboardControl.h"
 
-@interface NativeControls : PhoneGapCommand <UITabBarDelegate> {
+@interface NativeControls : PhoneGapCommand <UITabBarDelegate, UIActionSheetDelegate> {
 	UITabBar* tabBar;
 	NSMutableDictionary* tabBarItems;
 
@@ -24,6 +25,7 @@
 	UIBarButtonItem* toolBarTitle;
 	NSMutableDictionary* toolBarItems;
 	CGRect	originalWebViewBounds;
+	
 }
 
 /* Tab Bar methods 
@@ -41,5 +43,10 @@
 - (void)createToolBar:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)setToolBarTitle:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)toolBarTitleClicked;
+
+/* ActionSheet 
+ */
+- (void)createActionSheet:(NSArray*)arguments withDict:(NSDictionary*)options;
+
 
 @end

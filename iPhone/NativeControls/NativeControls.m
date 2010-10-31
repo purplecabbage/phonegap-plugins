@@ -11,7 +11,8 @@
 //  Copyright 2009 Decaf Ninja Software. All rights reserved.
 
 #import "NativeControls.h"
-
+#import "ChatKeyboardControl.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation NativeControls
 #ifndef __IPHONE_3_0
@@ -24,10 +25,20 @@
     if (self) 
 	{
         tabBarItems = [[NSMutableDictionary alloc] initWithCapacity:5];
+		originalWebViewBounds = theWebView.bounds;
     }
     return self;
 }
 
+- (void)dealloc
+{
+    if (tabBar)
+        [tabBar release];
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark TabBar
 
 /**
  * Create a native tab bar at either the top or the bottom of the display.
@@ -44,8 +55,11 @@
     tabBar.autoresizesSubviews    = YES;
     tabBar.hidden                 = YES;
     tabBar.userInteractionEnabled = YES;
-
-	[self.webView.superview addSubview:tabBar];    
+	tabBar.opaque = YES;
+	
+	webView.superview.autoresizesSubviews = YES;
+	
+	[ webView.superview addSubview:tabBar];    
 }
 
 /**
@@ -60,24 +74,39 @@
 {
     if (!tabBar)
         [self createTabBar:nil withDict:nil];
-
-    CGFloat height = 49.0f;
-    BOOL atBottom = YES;
-    
-    NSDictionary* tabSettings = [settings objectForKey:@"TabBarSettings"];
-    if (tabSettings) {
-        height   = [[tabSettings objectForKey:@"height"] floatValue];
-        atBottom = [[tabSettings objectForKey:@"position"] isEqualToString:@"bottom"];
-    }
-    tabBar.hidden = NO;
-
-     CGRect webViewBounds = originalWebViewBounds = webView.bounds;
 	
+	// if we are calling this again when its shown, reset
+	if (!tabBar.hidden) {
+		return;
+	}
+
+    CGFloat height = 0.0f;
+    BOOL atBottom = YES;
+	
+	CGRect offsetRect = [ [UIApplication sharedApplication] statusBarFrame];
+    
+    if (options) 
+	{
+        height   = [[options objectForKey:@"height"] floatValue];
+        atBottom = [[options objectForKey:@"position"] isEqualToString:@"bottom"];
+    }
+	if(height == 0)
+	{
+		height = 49.0f;
+	}
+	
+    tabBar.hidden = NO;
+     CGRect webViewBounds = originalWebViewBounds;
      CGRect tabBarBounds;
-     if (atBottom) {
+	
+	NSNotification* notif = [NSNotification notificationWithName:@"PGLayoutSubviewAdded" object:tabBar];
+	[[NSNotificationQueue defaultQueue] enqueueNotification:notif postingStyle: NSPostASAP];
+	
+     if (atBottom) 
+	 {
          tabBarBounds = CGRectMake(
              webViewBounds.origin.x,
-             webViewBounds.origin.y + webViewBounds.size.height - height,
+             webViewBounds.origin.y + webViewBounds.size.height - height - offsetRect.size.height,
              webViewBounds.size.width,
              height
          );
@@ -85,9 +114,11 @@
             webViewBounds.origin.x,
             webViewBounds.origin.y,
             webViewBounds.size.width,
-            webViewBounds.size.height - height
+            webViewBounds.size.height - height - offsetRect.size.height
          );
-     } else {
+     } 
+	 else 
+	 {
          tabBarBounds = CGRectMake(
              webViewBounds.origin.x,
              webViewBounds.origin.y,
@@ -103,6 +134,8 @@
      }
      
     [tabBar setFrame:tabBarBounds];
+	
+	
     [webView setFrame:webViewBounds];
 }
 
@@ -117,6 +150,11 @@
     if (!tabBar)
         [self createTabBar:nil withDict:nil];
     tabBar.hidden = YES;
+	
+	NSNotification* notif = [NSNotification notificationWithName:@"PGLayoutSubviewRemoved" object:tabBar];
+	[[NSNotificationQueue defaultQueue] enqueueNotification:notif postingStyle: NSPostASAP];
+	
+	
 	[webView setFrame:originalWebViewBounds];
 }
 
@@ -262,23 +300,27 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    NSString * jsCallBack = [NSString stringWithFormat:@"uicontrols.tabBarItemSelected(%d);", item.tag];    
+    NSString * jsCallBack = [NSString stringWithFormat:@"window.plugins.nativeControls.tabBarItemSelected(%d);", item.tag];    
     [webView stringByEvaluatingJavaScriptFromString:jsCallBack];
 }
 
+#pragma mark -
+#pragma mark ToolBar
 
 
 /*********************************************************************************/
 - (void)createToolBar:(NSArray*)arguments withDict:(NSDictionary*)options
 {
-    CGFloat height   = 39.0f;
+    CGFloat height   = 45.0f;
     BOOL atTop       = YES;
-    UIBarStyle style = UIBarStyleDefault;
+    UIBarStyle style = UIBarStyleBlackOpaque;
 
-    NSDictionary* toolBarSettings = [settings objectForKey:@"ToolBarSettings"];
-    if (toolBarSettings) {
+    NSDictionary* toolBarSettings = options;//[settings objectForKey:@"ToolBarSettings"];
+    if (toolBarSettings) 
+	{
         if ([toolBarSettings objectForKey:@"height"])
             height = [[toolBarSettings objectForKey:@"height"] floatValue];
+		
         if ([toolBarSettings objectForKey:@"position"])
             atTop  = [[toolBarSettings objectForKey:@"position"] isEqualToString:@"top"];
         
@@ -313,12 +355,15 @@
     toolBar.autoresizesSubviews    = YES;
     toolBar.userInteractionEnabled = YES;
     toolBar.barStyle               = style;
+	
 
     [toolBar setFrame:toolBarBounds];
     [webView setFrame:webViewBounds];
 
     [self.webView.superview addSubview:toolBar];
 }
+
+
 
 
 - (void)setToolBarTitle:(NSArray*)arguments withDict:(NSDictionary*)options
@@ -330,16 +375,76 @@
     if (!toolBarTitle) {
         toolBarTitle = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:self action:@selector(toolBarTitleClicked)];
     } else {
-        toolBarTitle.title = title;
+        //toolBarTitle.title = title;
     }
+	
+	
+	//UINavigationBar
+	
+	//initWithImage
+	UIImage* logoImage = [UIImage imageNamed:@"www/ui/tabHeader.png"];
+	
+	
+	
+	/*UIImageView* logo = [[ UIImageView alloc ] initWithImage: logoImage ];
+	logo.userInteractionEnabled = YES;*/
+	
+	
+	UIButton* logoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+	
+	[ logoBtn setBackgroundImage:logoImage forState:UIControlStateNormal];
+	[ logoBtn addTarget:self action:@selector(toolBarTitleClicked) forControlEvents:UIControlEventTouchUpInside];
+	 
+	UIBarButtonItem *modalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:logoBtn];
+	
+	UIImageView* backImage = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"www/ui/but-back.png"]];
+	UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(toolBarTitleClicked)];
+	[ backButtonItem setCustomView:backImage];
+	// backButtonItem.target = self;
+	// backButtonItem.action = @selector(toolBarTitleClicked);
+	
+	/*[ backButtonItem addTarget:self action:@selector(toolBarTitleClicked) forControlEvents:UIControlEventTouchUpInside];*/
+	 
+	
+	
+	
+	//UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:  style:UIBarButtonItemStylePlain target:self action:@selector(toolBarTitleClicked)];
 
     UIBarButtonItem *space1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *space2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    NSArray *items = [[NSArray alloc] initWithObjects:space1, toolBarTitle, space2, nil];
+	
+	UIBarButtonItem *refresh = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:nil];
+	//refresh.target = self;
+	//refresh.action = @selector(toolBarTitleClicked);
+	
+	//refresh.customView = backImage;
+	
+
+    NSArray *items = [[NSArray alloc] initWithObjects:backButtonItem,space1,modalBarButtonItem,space2, refresh, nil];
+
+	
+	//UINavigationItem* navItem = [[UINavigationItem alloc] init];
+	//navItem.titleView = logo;
+	
+    [toolBar setItems:items animated:YES];
+	
+
+	
+	modalBarButtonItem.target = self;
+	modalBarButtonItem.action = @selector(toolBarTitleClicked);
+	[modalBarButtonItem release];
+	
+	
+
+	 [backButtonItem release];
 	[space1 release];
 	[space2 release];
+	[ refresh release ];
+	[ backImage release ];
 	
-    [toolBar setItems:items];
+	
+	//[ toolBar pushNavigationItem:navItem animated:YES];
+	
 	[items release];
 }
 
@@ -348,11 +453,51 @@
     NSLog(@"Toolbar clicked");
 }
 
-- (void)dealloc
+#pragma mark -
+#pragma mark ActionSheet
+
+- (void)createActionSheet:(NSArray*)arguments withDict:(NSDictionary*)options
 {
-    if (tabBar)
-        [tabBar release];
-    [super dealloc];
+    
+	NSString* title = [options objectForKey:@"title"];
+
+	
+	UIActionSheet* actionSheet = [ [UIActionSheet alloc ] 
+						 initWithTitle:title 
+						 delegate:self 
+						 cancelButtonTitle:nil 
+						 destructiveButtonTitle:nil
+						 otherButtonTitles:nil
+						 ];
+	
+	int count = [arguments count];
+	for(int n = 0; n < count; n++)
+	{
+		[ actionSheet addButtonWithTitle:[arguments objectAtIndex:n]];
+	}
+	
+	if([options objectForKey:@"cancelButtonIndex"])
+	{
+		actionSheet.cancelButtonIndex = [[options objectForKey:@"cancelButtonIndex"] intValue];
+	}
+	if([options objectForKey:@"destructiveButtonIndex"])
+	{
+		actionSheet.destructiveButtonIndex = [[options objectForKey:@"destructiveButtonIndex"] intValue];
+	}
+	
+	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;//UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:webView.superview];
+    [actionSheet release];
+	
 }
+
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	NSString * jsCallBack = [NSString stringWithFormat:@"window.plugins.nativeControls._onActionSheetDismissed(%d);", buttonIndex];    
+    [webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+}
+
 
 @end

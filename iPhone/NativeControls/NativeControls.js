@@ -68,11 +68,13 @@ NativeControls.prototype.hideTabBar = function(animate) {
  *  - \c badge value to display in the optional circular badge on the item; if null or unspecified, the badge will be hidden
  */
 NativeControls.prototype.createTabBarItem = function(name, label, image, options) {
-    var tag = this.tabBarTag++;
+    
+	var tag = this.tabBarTag++;
     if (options && 'onSelect' in options && typeof(options['onSelect']) == 'function') {
-        this.tabBarCallbacks[tag] = options.onSelect;
-        delete options.onSelect;
+        this.tabBarCallbacks[tag] = {'onSelect':options.onSelect,'name':name};
+        //delete options.onSelect;
     }
+	
     PhoneGap.exec("NativeControls.createTabBarItem", name, label, image, tag, options);
 };
 
@@ -117,15 +119,17 @@ NativeControls.prototype.selectTabBarItem = function(tab) {
  * Function called when a tab bar item has been selected.
  * @param {Number} tag the tag number for the item that has been selected
  */
-NativeControls.prototype.tabBarItemSelected = function(tag) {
-    if (typeof(this.tabBarCallbacks[tag]) == 'function')
-        this.tabBarCallbacks[tag]();
+NativeControls.prototype.tabBarItemSelected = function(tag) 
+{
+    if (typeof(this.tabBarCallbacks[tag].onSelect) == 'function')
+        this.tabBarCallbacks[tag].onSelect(this.tabBarCallbacks[tag].name);
 };
 
 /**
  * Create a toolbar.
  */
-NativeControls.prototype.createToolBar = function() {
+NativeControls.prototype.createToolBar = function() 
+{
     PhoneGap.exec("NativeControls.createToolBar");
 };
 
@@ -138,6 +142,41 @@ NativeControls.prototype.setToolBarTitle = function(title)
     PhoneGap.exec("NativeControls.setToolBarTitle", title);
 };
 
+
+
+NativeControls.prototype.createActionSheet = function(buttonTitles,actionSheetTitle,cancelButtonIndex,destructiveButtonIndex)
+{
+	var options = {};
+	
+	if(actionSheetTitle != null)
+	{
+		options.title = actionSheetTitle;
+	}
+	if(cancelButtonIndex != null)
+	{
+		options.cancelButtonIndex = cancelButtonIndex;
+	}
+	if(destructiveButtonIndex != null)
+	{
+		options.destructiveButtonIndex = destructiveButtonIndex;
+	}
+
+	var params = [ "NativeControls.createActionSheet",options ];
+    for (var i = 0; i < buttonTitles.length; i++) 
+	{
+        params.push(buttonTitles[i]);
+    }
+    PhoneGap.exec.apply(this, params);
+	
+	this.actionSheetDelegate = {};
+	return this.actionSheetDelegate;
+}
+
+NativeControls.prototype._onActionSheetDismissed = function(index)
+{
+	this.actionSheetDelegate.onActionSheetDismissed(index);
+}
+
 PhoneGap.addConstructor(function() 
 {
 	if(!window.plugins)
@@ -146,3 +185,26 @@ PhoneGap.addConstructor(function()
 	}
     window.plugins.nativeControls = new NativeControls();
 });
+
+function StatusBar()
+{
+	
+}
+
+StatusBar.prototype.setHidden = function(bHide)
+{
+	PhoneGap.exec("StatusBar.setHidden",bHide);
+}
+
+PhoneGap.addConstructor(
+						
+						function() 
+						{
+						if (typeof window.plugins == "undefined") 
+						window.plugins = {};
+						
+						if (typeof window.plugins.statusBar == "undefined")
+						window.plugins.statusBar = new StatusBar();
+						
+						}
+						);
