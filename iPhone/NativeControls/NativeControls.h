@@ -15,7 +15,6 @@
 #import <UIKit/UITabBar.h>
 #import <UIKit/UIToolbar.h>
 #import "PhoneGapCommand.h"
-#import "ChatKeyboardControl.h"
 
 @interface NativeControls : PhoneGapCommand <UITabBarDelegate, UIActionSheetDelegate> {
 	UITabBar* tabBar;
