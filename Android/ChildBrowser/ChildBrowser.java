@@ -32,7 +32,7 @@ public class ChildBrowser extends Plugin {
 		
 		try {
 			if (action.equals("showWebPage")) {
-				result = this.showWebPage(args.getString(0));
+				result = this.showWebPage(args.getString(0), args.optBoolean(1));
 				if (result.length() > 0) {
 					status = PluginResult.Status.ERROR;
 				}
@@ -68,11 +68,18 @@ public class ChildBrowser extends Plugin {
      * Display a new browser with the specified URL.
      * 
      * @param url			The url to load.
+     * @param usePhoneGap	Load url in PhoneGap webview
      * @return				"" if ok, or error message.
      */
-    public String showWebPage(String url) {
+    public String showWebPage(String url, boolean usePhoneGap) {
 		try {
-			Intent intent = new Intent(Intent.ACTION_VIEW);
+			Intent intent = null;
+			if (usePhoneGap) {
+				intent = new Intent().setClass(this.ctx, com.phonegap.DroidGap.class);
+			}
+			else {
+				intent = new Intent(Intent.ACTION_VIEW);
+			}
 			intent.setData(Uri.parse(url));
 			this.ctx.startActivity(intent);
 			return "";

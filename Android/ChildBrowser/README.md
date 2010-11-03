@@ -23,7 +23,15 @@ Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonega
 
 The plugin creates the object `window.plugins.childBrowser`.  To use, call one of the following, available methods:
 
-* showWebPage(url)
+<pre>
+  /**
+   * Display a new browser with the specified URL.
+   *
+   * @param url           The url to load
+   * @param usePhoneGap   Load url in PhoneGap webview [optional]
+   */
+  showWebPage(url, [usePhoneGap])
+</pre>
 
 Sample use:
 
