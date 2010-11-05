@@ -18,8 +18,8 @@ function ChildBrowser() {
  * @param url           The url to load
  * @param usePhoneGap   Load url in PhoneGap webview [optional]
  */
-ChildBrowser.prototype.showWebPage = function(url, usePhoneGapBrowser) {
-    PhoneGap.exec(null, null, "ChildBrowser", "showWebPage", [url]);
+ChildBrowser.prototype.showWebPage = function(url, usePhoneGap) {
+    PhoneGap.exec(null, null, "ChildBrowser", "showWebPage", [url, usePhoneGap]);
 };
 
 /**
