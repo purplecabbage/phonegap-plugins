@@ -14,7 +14,7 @@ Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap
 
 ## RELEASE NOTES ##
 
-### 20101008 ###
+### 20101105 ###
 * Initial release
 * See the .js file for API docs, and the KeychainPlugin-Host/www/index.html for sample code
 
@@ -25,7 +25,7 @@ Patches welcome! Send a pull request. Since this is not a part of PhoneGap Core 
 Post issues in the [PhoneGap Google Groups](http://groups.google.com/group/phonegap), include in the subject heading - "KeychainPlugin" or on [Github](http://github.com/phonegap/phonegap-plugins/issues)
 (preferred)
 
-The latest code (my fork) will always be [here](http://github.com/shazron/phonegap-plugins/tree/master/iPhone/KeychainPlugin/)
+The latest code (my fork) will always be [here](http://github.com/shazron/phonegap-plugins/tree/master/iPhone/Keychain/)
 
 ## LICENSE ##
 
