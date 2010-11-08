@@ -150,9 +150,12 @@
     if (adBannerViewClass)
     {
 		NSString* jsString = 
-				@"var e = document.createEvent('Events');"
-				"e.initEvent('iAdBannerViewDidLoadAdEvent');"
-				"document.dispatchEvent(e);";
+		@"(function(){"
+		"var e = document.createEvent('Events');"
+		"e.initEvent('iAdBannerViewDidLoadAdEvent');"
+		"document.dispatchEvent(e);"
+		"})();";
+
 		[super writeJavascript:jsString];
     }
 }
@@ -163,10 +166,12 @@
     if (adBannerViewClass)
     {
 		NSString* jsString = 
-		@"var e = document.createEvent('Events');"
+		@"(function(){"
+		"var e = document.createEvent('Events');"
 		"e.initEvent('iAdBannerViewDidFailToReceiveAdWithErrorEvent');"
 		"e.error = '%@';"
-		"document.dispatchEvent(e);";
+		"document.dispatchEvent(e);"
+		"})();";
 		
 		[super writeJavascript:[NSString stringWithFormat:jsString, [error description]]];
     }

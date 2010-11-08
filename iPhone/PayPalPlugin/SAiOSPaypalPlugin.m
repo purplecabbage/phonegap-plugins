@@ -35,7 +35,7 @@
 #define NO_APP_ID	@"dummy"
 
 /* Get one from Paypal at developer.paypal.com */
-#define PAYPAL_APP_ID	@"dummy"
+#define PAYPAL_APP_ID	NO_APP_ID
 
 /* valid values are ENV_SANDBOX, ENV_NONE (offline) and ENV_LIVE */
 #define PAYPAL_APP_ENV	ENV_NONE
@@ -136,10 +136,12 @@
 - (void) paymentSuccess:(NSString*)transactionID 
 {
 	NSString* jsString = 
-	@"var e = document.createEvent('Events');"
+	@"(function() {"
+	"var e = document.createEvent('Events');"
 	"e.initEvent('PaypalPaymentEvent.Success');"
 	"e.transactionID = '%@';"
-	"document.dispatchEvent(e);";
+	"document.dispatchEvent(e);"
+	"})();";
 	
 	[super writeJavascript:[NSString stringWithFormat:jsString, transactionID]];
 	
@@ -149,9 +151,11 @@
 - (void) paymentCanceled 
 {
 	NSString* jsString = 
-	@"var e = document.createEvent('Events');"
+	@"(function() {"
+	"var e = document.createEvent('Events');"
 	"e.initEvent('PaypalPaymentEvent.Canceled');"
-	"document.dispatchEvent(e);";
+	"document.dispatchEvent(e);"
+	"})();";
 	
 	[super writeJavascript:jsString];	
 }
@@ -159,10 +163,12 @@
 - (void) paymentFailed:(PAYPAL_FAILURE)errorType
 {
 	NSString* jsString = 
-	@"var e = document.createEvent('Events');"
+	@"(function() {"
+	"var e = document.createEvent('Events');"
 	"e.initEvent('PaypalPaymentEvent.Failed');"
 	"e.errorType = %d;"
-	"document.dispatchEvent(e);";
+	"document.dispatchEvent(e);"
+	"})();";
 	
 	[super writeJavascript:[NSString stringWithFormat:jsString, errorType]];	
 
