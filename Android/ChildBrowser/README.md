@@ -19,6 +19,14 @@ Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonega
 
 2. Create a directory within your project called "src/com/phonegap/plugins/childBrowser" and move ChildBrowser.java into it.
 
+3. Add the following activity to your AndroidManifest.xml file.  It should be added inside the &lt;application&gt; tag.
+
+    &lt;activity android:name="com.phonegap.DroidGap" android:label="@string/app_name"&gt;<br/>
+      &lt;intent-filter&gt;<br/>
+      &lt;/intent-filter&gt;<br/>
+    &lt;/activity&gt;
+
+
 ## Using the plugin ##
 
 The plugin creates the object `window.plugins.childBrowser`.  To use, call one of the following, available methods:
@@ -43,6 +51,10 @@ Sample use:
 
 * Initial release
 
+### Nov 12, 2010 ###
+
+* Changed how URL is passed when usePhoneGap=true.  Instead of using Data, it is now passed as Extra.  This will work with latest edge version with the same date.
+* Added "Loading" dialog that is shown when usePhoneGap=true.
 
 ## BUGS AND CONTRIBUTIONS ##
 
