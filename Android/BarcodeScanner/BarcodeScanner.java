@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.phonegap.DroidGap;
+import com.phonegap.api.PhonegapActivity;
 import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 
@@ -142,7 +143,7 @@ public class BarcodeScanner extends Plugin {
 	}
 	
 	 private void showDownloadDialog(final String title, final String message, final String yesString, final String noString) {
-		final DroidGap context = this.ctx;
+		final PhonegapActivity context = this.ctx;
 		Runnable runnable = new Runnable() {
 				public void run() {
 
