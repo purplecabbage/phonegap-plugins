@@ -9,8 +9,10 @@ If the user doesn't have the app install they will be promped to install it the 
 in your html files. 
 2. Create a folder called 'src/com/beetight/barcodescanner' within your project's src/com/ folder and move the java file into it.
 
-    mkdir <your_project>/src/com/beetight/barcodescanner
-    mv ./BarcodeScanner.java <your_project>/src/com/beetight/barcodescanner
+    #
+        mkdir <your_project>/src/com/beetight/barcodescanner
+        mv ./BarcodeScanner.java <your_project>/src/com/beetight/barcodescanner
+    #
 
 ## Using the plugin ##
 The plugin creates the object `window.plugins.barcodeScanner` with one method `scan(types, success, fail, options)`
