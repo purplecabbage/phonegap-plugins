@@ -11,7 +11,6 @@
 //  Copyright 2009 Decaf Ninja Software. All rights reserved.
 
 #import "NativeControls.h"
-#import "ChatKeyboardControl.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation NativeControls
