@@ -8,10 +8,9 @@ If the user doesn't have the app install they will be promped to install it the 
 1. To install the plugin, move barcodescanner.js to your project's www folder and include a reference to it 
 in your html files. 
 2. Create a folder called 'src/com/beetight/barcodescanner' within your project's src/com/ folder.
+3. And copy the java file into that new folder.
 
 `mkdir <your_project>/src/com/beetight/barcodescanner`
-
-3. And copy the java file into that new folder.
 
 `cp ./BarcodeScanner.java <your_project>/src/com/beetight/barcodescanner`
 
