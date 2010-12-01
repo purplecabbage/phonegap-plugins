@@ -10,7 +10,8 @@ in your html files.
 2. Create a folder called 'src/com/beetight/barcodescanner' within your project's src/com/ folder.
 
 `mkdir <your_project>/src/com/beetight/barcodescanner`
-3.  and copy the java file into that new folder
+
+3. And copy the java file into that new folder.
 
 `cp ./BarcodeScanner.java <your_project>/src/com/beetight/barcodescanner`
 
