@@ -34,10 +34,14 @@ The plugin creates the object `window.plugins.childBrowser`.  To use, call one o
 <pre>
   /**
    * Display a new browser with the specified URL.
+   * 
+   * NOTE: If usePhoneGap is set, only trusted PhoneGap URLs should be loaded,
+   *       since any PhoneGap API can be called by the loaded HTML page.
    *
    * @param url           The url to load
-   * @param usePhoneGap   Load url in PhoneGap webview [optional]
+   * @param usePhoneGap   Load url in PhoneGap webview [optional] - Default: false
    */
+   
   showWebPage(url, [usePhoneGap])
 </pre>
 
@@ -55,6 +59,10 @@ Sample use:
 
 * Changed how URL is passed when usePhoneGap=true.  Instead of using Data, it is now passed as Extra.  This will work with latest edge version with the same date.
 * Added "Loading" dialog that is shown when usePhoneGap=true.
+
+### Dec 2, 2010 ###
+
+* Added warning comments about loading URLs when usePhoneGap=true.
 
 ## BUGS AND CONTRIBUTIONS ##
 
