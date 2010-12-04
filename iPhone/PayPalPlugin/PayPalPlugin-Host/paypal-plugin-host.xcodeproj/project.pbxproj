@@ -415,7 +415,7 @@
 					"-Obj-C",
 				);
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "$(PHONEGAPLIB)/Classes/JSON $(PHONEGAPLIB)/Classes";
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
@@ -436,7 +436,7 @@
 					"-Obj-C",
 				);
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "$(PHONEGAPLIB)/Classes/JSON $(PHONEGAPLIB)/Classes";
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
