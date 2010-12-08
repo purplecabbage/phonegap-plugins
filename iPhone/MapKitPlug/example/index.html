@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+	<!-- Change this if you want to allow scaling -->
+    <meta name="viewport" content="width=default-width; user-scalable=no" />
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <title>MapTest</title>
+	
+	<!-- iPad/iPhone specific css below, add after your main css >
+	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
+	-->
+	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+	<script type="text/javascript" charset="utf-8" src="MapKitPlug.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+
+	// If you want to prevent dragging, uncomment this section
+	/*
+	function preventBehavior(e) 
+	{ 
+      e.preventDefault(); 
+    };
+	document.addEventListener("touchmove", preventBehavior, false);
+	*/
+	
+	function onBodyLoad()
+	{
+		document.addEventListener("deviceready",onDeviceReady,false);
+	}
+	
+	function cbMapCallback()
+	{
+		alert(arguments[0]);
+	}
+	
+	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+	function onDeviceReady()
+	{
+
+				
+	}
+	
+	function showMap()
+	{
+		var pin = { lat:49.281468,
+					lon:-123.104446,
+					title:"Nitobi HQ",
+					pinColor:"purple", 
+					index:0,
+					selected:true};
+					
+		var pin2 = { lat:49.281468,
+					lon:-123.104446,
+					title:"Nitobi HQ",
+					pinColor:"purple", 
+					index:0,
+					selected:true};
+
+
+		
+		// do your thing!
+		var _options = {
+			   buttonCallback: "cbMapCallback",
+			   height:360,
+			   diameter:1000,
+			   atBottom:true,
+			   lat:pin.lat,
+			   lon:pin.lon
+				};
+	
+		window.plugins.mapKit.showMap();
+		window.plugins.mapKit.setMapData([pin],_options);
+		
+	}
+	
+	function hideMap()
+	{
+		window.plugins.mapKit.hideMap();
+	}
+	
+	function resizeMap()
+	{
+				var pin = { lat:49.281468,
+					lon:-123.104446,
+					title:"Nitobi HQ",
+					pinColor:"purple", 
+					index:0,
+					selected:true};
+					
+		var pin2 = { lat:49.281468,
+					lon:-123.104446,
+					title:"Nitobi HQ",
+					pinColor:"purple", 
+					index:0,
+					selected:true};
+
+
+		
+		// do your thing!
+		var _options = {
+			   buttonCallback: "cbMapCallback",
+			   height:260,
+			   diameter:1000,
+			   atBottom:true,
+			   lat:pin.lat,
+			   lon:pin.lon
+				};
+	
+		window.plugins.mapKit.showMap();
+		window.plugins.mapKit.setMapData([pin],_options);
+	}
+	
+
+    
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+  	<button style="top:400px;position:absolute;" onclick="showMap()">Show Map</button>
+	<button style="left:100px;top:400px;position:absolute;" onclick="hideMap()">Hide Map</button>
+	<button style="left:200px;top:400px;position:absolute;" onclick="resizeMap()">Resize Map</button>
+
+  </body>
+</html>
