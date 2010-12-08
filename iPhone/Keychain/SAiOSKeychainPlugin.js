@@ -98,7 +98,7 @@ SAiOSKeychainPlugin.install = function()
 	if ( !window.plugins ) {
 		window.plugins = {};
 	} 
-	if ( !window.plugins.paypal ) {
+	if ( !window.plugins.keychain ) {
 		window.plugins.keychain = new SAiOSKeychainPlugin();
 	}
 }

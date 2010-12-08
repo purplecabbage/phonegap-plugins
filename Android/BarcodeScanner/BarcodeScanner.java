@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.phonegap.DroidGap;
+import com.phonegap.api.PhonegapActivity;
 import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 
@@ -142,7 +143,7 @@ public class BarcodeScanner extends Plugin {
 	}
 	
 	 private void showDownloadDialog(final String title, final String message, final String yesString, final String noString) {
-		final DroidGap context = this.ctx;
+		final PhonegapActivity context = this.ctx;
 		Runnable runnable = new Runnable() {
 				public void run() {
 
@@ -153,9 +154,18 @@ public class BarcodeScanner extends Plugin {
 						public void onClick(DialogInterface dlg, int i) {
 							dlg.dismiss();
 							Intent intent = new Intent(Intent.ACTION_VIEW, 
-									Uri.parse("market://search?q=pname:com.google.zxing.client.android")
+								Uri.parse("market://search?q=pname:com.google.zxing.client.android")
 							);
-							context.startActivity(intent);
+							try {
+								context.startActivity(intent);
+							} catch (ActivityNotFoundException e) { 
+//							We don't have the market app installed, so download it directly.
+				       			Intent in = new Intent(Intent.ACTION_VIEW);
+			        			in.setData(Uri.parse("http://zxing.googlecode.com/files/BarcodeScanner3.5.apk"));
+			        			context.startActivity(in);
+
+							}
+
 						}
 					});
 					dialog.setNegativeButton(noString, new DialogInterface.OnClickListener() {
