@@ -127,7 +127,7 @@ public class FileUploader extends Plugin {
 				for (Iterator iter = params.keys(); iter.hasNext();) {
 					Object key = iter.next();
 					dos.writeBytes(td + boundary + lineEnd); 
-					dos.writeBytes("Content-Disposition: form-data; name=\"" +  key + "\"); ");
+					dos.writeBytes("Content-Disposition: form-data; name=\"" +  key + "\"; ");
 					dos.writeBytes(lineEnd + lineEnd); 
 					dos.writeBytes(params.getString(key.toString()));
 					dos.writeBytes(lineEnd); 
