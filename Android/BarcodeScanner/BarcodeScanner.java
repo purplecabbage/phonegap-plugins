@@ -57,7 +57,44 @@ public class BarcodeScanner extends Plugin {
 		this.callback = callbackId;
 		
 		try {
-			if (action.equals("scan")) {
+			if (action.equals("encode")) {
+				String type = null;
+				if(args.length() > 0) {
+					type = args.getString(0);
+				}
+
+				String data = null;
+				if(args.length() > 1) {
+					data = args.getString(1);
+				}
+
+				String installTitle = defaultInstallTitle;
+				if(args.length() > 2) {
+					installTitle = args.getString(2);
+				}
+
+				String installMessage = defaultInstallMessage;
+				if(args.length() > 3) {
+					installMessage = args.getString(3);
+				}
+
+				String yesString = defaultYesString;
+				if(args.length() > 4) {
+					yesString = args.getString(4);
+				}
+
+				String noString = defaultNoString;
+				if(args.length() > 5) {
+					noString = args.getString(5);
+				}
+
+				// if data.TypeOf() == Bundle, then call 
+				// encode(type, Bundle)
+				// else 
+				// encode(type, String)
+				this.encode(type, data, installTitle, installMessage, yesString, noString);
+			}
+			else if (action.equals("scan")) {
 				String barcodeTypes = null;
 				if(args.length() > 0) {
 					barcodeTypes = args.getString(0);
@@ -178,5 +215,27 @@ public class BarcodeScanner extends Plugin {
 				}
 			};
 			context.runOnUiThread(runnable);
+		}
+
+		/**
+		 * Initiates a barcode encode. If the ZXing scanner isn't installed, the user
+		 * will be prompted to install it.
+		 * @param type  The barcode type to encode
+		 * @param data  The data to encode in the bar code
+		 * @param installTitle The title for the dialog box that prompts the user to install the scanner
+		 * @param installMessage The message prompting the user to install the barcode scanner
+		 * @param yesString The string "Yes" or localised equivalent
+		 * @param noString The string "No" or localised version
+		 */
+		public void encode(String type, String data, String installTitle, String installMessage, String yesString, String noString) {
+			Intent intentEncode = new Intent("com.google.zxing.client.android.ENCODE");
+		    intentEncode.putExtra("ENCODE_TYPE", type);
+		    intentEncode.putExtra("ENCODE_DATA", data);
+
+		    try {
+		      this.ctx.startActivity(intentEncode);
+		    } catch (ActivityNotFoundException e) {
+		    	showDownloadDialog(installTitle, installMessage, yesString, noString);
+		    }
 		}
 }
