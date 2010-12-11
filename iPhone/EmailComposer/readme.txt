@@ -1,5 +1,4 @@
-
-You will need to add MessageUI.framework to your project if it is not already included.\
+You will need to add MessageUI.framework to your project if it is not already included.
 
 Just add the .m.h files to your project ( you can add them directly to your own project, you don't need to put them in phonegap lib ).
 
