@@ -55,6 +55,25 @@ A full example could be:
 		    alert("Scanning failed: " + error);
 	    }, {yesString: "Install"}
 	);
+
+## Encoding a Barcode ##
+Supported encoding types:
+
+* TEXT_TYPE
+* EMAIL_TYPE
+* PHONE_TYPE
+* SMS_TYPE
+
+
+A full example could be:
+
+            window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, "http://www.nytimes.com", function(success) {
+  	        alert("encode success: " + success);
+  	      }, function(fail) {
+  	        alert("encoding failed: " + fail);
+  	      }, {yesString: "Install"}
+  	    );
+
 	
 ## BUGS AND CONTRIBUTIONS ##
 The latest bleeding-edge version is available [on GitHub](http://github.com/ascorbic/phonegap-plugins/tree/master/Android/)
