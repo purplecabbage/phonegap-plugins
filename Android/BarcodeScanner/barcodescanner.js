@@ -28,6 +28,15 @@ BarcodeScanner.Type = {
 	ALL_CODE_TYPES: null
 }
 
+BarcodeScanner.Encode = {
+		TEXT_TYPE: "TEXT_TYPE",
+		EMAIL_TYPE: "EMAIL_TYPE",
+		PHONE_TYPE: "PHONE_TYPE",
+		SMS_TYPE: "SMS_TYPE",
+		//  CONTACT_TYPE: "CONTACT_TYPE",  // TODO:  not implemented, requires passing a Bundle class from Javascriopt to Java
+		//  LOCATION_TYPE: "LOCATION_TYPE" // TODO:  not implemented, requires passing a Bundle class from Javascriopt to Java
+	}
+
 BarcodeScanner.prototype.scan = function(types, success, fail, options) {
 	
 	/* These are the strings used in the dialog that appears if ZXing isn't installed */
@@ -59,6 +68,38 @@ BarcodeScanner.prototype.scan = function(types, success, fail, options) {
     }, function(args) {
         fail(args);
     }, 'BarcodeScanner', 'scan', [types, installTitle, installMessage, yesString, noString]);
+};
+
+BarcodeScanner.prototype.encode = function(type, data, success, fail, options) {
+
+	/* These are the strings used in the dialog that appears if ZXing isn't installed */
+	var installTitle = "Install Barcode Scanner?";
+	var installMessage = "This requires the free Barcode Scanner app. Would you like to install it now?";
+	var yesString = "Yes";
+	var noString = "No";
+	if (typeof options != 'undefined') {
+		if(typeof options.installTitle != 'undefined') {
+			installTitle = options.installTitle;
+		}
+
+		if(typeof options.installMessage != 'undefined') {
+			installMessage = options.installMessage;
+		}
+
+		if(typeof options.yesString != 'undefined') {
+			yesString = options.yesString;
+		}
+
+		if(typeof options.noString != 'undefined') {
+			noString = options.noString;
+		}
+	}
+
+    return PhoneGap.exec(function(args) {
+        success(args);
+    }, function(args) {
+        fail(args);
+    }, 'BarcodeScanner', 'encode', [type, data, installTitle, installMessage, yesString, noString]);
 };
 
 PhoneGap.addConstructor(function() {
