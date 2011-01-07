@@ -40,18 +40,14 @@ public class ContactView extends Plugin {
 		case (PICK_CONTACT):
 			if (resultCode == Activity.RESULT_OK) {
 				Uri contactData = data.getData();
-				Cursor c = this.ctx.managedQuery(contactData, null, null, null,
-						null);
+				Cursor c = this.ctx.managedQuery(contactData, null, null, null, null);
 				if (c.moveToFirst()) {
 					String ContactID = c.getString(c
 							.getColumnIndex(ContactsContract.Contacts._ID));
-					String hasPhone = c
-							.getString(c
-									.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+					String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 
 					if (Integer.parseInt(hasPhone) == 1) {
-						Cursor phoneCursor = this.ctx
-								.managedQuery(
+						Cursor phoneCursor = this.ctx.managedQuery(
 										ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
 										null,
 										ContactsContract.CommonDataKinds.Phone.CONTACT_ID
@@ -64,8 +60,7 @@ public class ContactView extends Plugin {
 						}
 					}
 
-					name = c.getString(c
-							.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+					name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
 					JSONObject contactObject = new JSONObject();
 					try {
 						contactObject.put("name", name);
