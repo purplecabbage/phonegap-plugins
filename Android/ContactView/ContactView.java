@@ -1,17 +1,12 @@
 package com.rearden;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.util.Log;
-
 import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 
