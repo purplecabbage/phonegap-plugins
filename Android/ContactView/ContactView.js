@@ -1,10 +1,11 @@
 var ContactView = function() {};
 
-ContactView.prototype.show = function(element) {
+ContactView.prototype.show = function(nameElement, phoneElement) {
 
     function success(args) {
-        var el = document.getElementById(element);
-        el.value = args;    
+    alert(args.name +", "+ args.phone);
+        nameElement.value = typeof args.name != "undefined" ? args.name : "";
+        phoneElement.value = typeof args.phone != "undefined" ? args.phone : "";
     }
     
     function fail(args) {
