@@ -12,10 +12,10 @@ ContactView.prototype.show = function(element) {
     }
 
 	return PhoneGap.exec(function(args) {
-	        success(args);
-	    }, function(args) {
-	        fail(args);
-	    }, 'ContactView', '', []);
+		success(args);
+	}, function(args) {
+		fail(args);
+	}, 'ContactView', '', []);
 };
 
 PhoneGap.addConstructor(function() {
