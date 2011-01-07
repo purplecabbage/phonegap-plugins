@@ -3,7 +3,6 @@ var ContactView = function() {};
 ContactView.prototype.show = function(nameElement, phoneElement) {
 
     function success(args) {
-    alert(args.name +", "+ args.phone);
         nameElement.value = typeof args.name != "undefined" ? args.name : "";
         phoneElement.value = typeof args.phone != "undefined" ? args.phone : "";
     }
