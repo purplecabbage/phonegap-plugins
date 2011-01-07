@@ -29,20 +29,20 @@ public class ContactView extends Plugin {
 		this.ctx.startActivityForResult((Plugin) this, intent, PICK_CONTACT);
 	}
 
-@Override
-public void onActivityResult(int reqCode, int resultCode, Intent data) {
-	String name = null;
-	switch (reqCode) {
-		case (PICK_CONTACT):
-			if (resultCode == Activity.RESULT_OK) {
-				Uri contactData = data.getData();
-				Cursor c = this.ctx.managedQuery(contactData, null, null, null, null);
-				if (c.moveToFirst()) {
-					name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-					this.success(new PluginResult(PluginResult.Status.OK, name),this.callback);
+	@Override
+	public void onActivityResult(int reqCode, int resultCode, Intent data) {
+		String name = null;
+		switch (reqCode) {
+			case (PICK_CONTACT):
+				if (resultCode == Activity.RESULT_OK) {
+					Uri contactData = data.getData();
+					Cursor c = this.ctx.managedQuery(contactData, null, null, null, null);
+					if (c.moveToFirst()) {
+						name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+						this.success(new PluginResult(PluginResult.Status.OK, name),this.callback);
+					}
 				}
+				break;
 			}
-			break;
 		}
 	}
-}
