@@ -5,11 +5,11 @@ How to use:
 
 Put the following javascript code in your initializer, after the DOM has loaded:
 
-document.querySelector("#name-contact-to-native").addEventListener("touchstart", function() {
+document.querySelector("#contact-name-to-native").addEventListener("touchstart", function() {
     	window.plugins.contactView.show("contact-name-from-native");
 }, false);
 
-"#name-contact-to-native" is the element id that triggers the contact view.
+"#contact-name-to-native" is the element id that triggers the contact view.
 
 "contact-name-from-native" is the element id in html that receives the contact's name. By convention, it is an input field's value that receives it. But you can edit this in ContactView.js
 
