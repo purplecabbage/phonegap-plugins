@@ -37,38 +37,48 @@ public class ContactView extends Plugin {
 		String name = null;
 		String number = null;
 		switch (reqCode) {
-			case (PICK_CONTACT):
-				if (resultCode == Activity.RESULT_OK) {
-					Uri contactData = data.getData();
-					Cursor c = this.ctx.managedQuery(contactData, null, null, null, null);
-					if (c.moveToFirst()) {
-			            String ContactID = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
-						String hasPhone =c.getString(
-			                    c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-						
-			            if(Integer.parseInt(hasPhone) == 1){
-			                Cursor phoneCursor = this.ctx.managedQuery(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-			                        null,
-			                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID+"='"+ContactID+"'",
-			                        null, null);
-			                while(phoneCursor.moveToNext()){
-			                    number = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-			                }
-			            }
-				
-						name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-						 JSONObject contactObject = new JSONObject();
-						 try {
-							 contactObject.put("name", name);
-							 contactObject.put("phone", number);
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
+		case (PICK_CONTACT):
+			if (resultCode == Activity.RESULT_OK) {
+				Uri contactData = data.getData();
+				Cursor c = this.ctx.managedQuery(contactData, null, null, null,
+						null);
+				if (c.moveToFirst()) {
+					String ContactID = c.getString(c
+							.getColumnIndex(ContactsContract.Contacts._ID));
+					String hasPhone = c
+							.getString(c
+									.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 
-						this.success(new PluginResult(PluginResult.Status.OK, contactObject),this.callback);
+					if (Integer.parseInt(hasPhone) == 1) {
+						Cursor phoneCursor = this.ctx
+								.managedQuery(
+										ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+										null,
+										ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+												+ "='" + ContactID + "'", null,
+										null);
+						while (phoneCursor.moveToNext()) {
+							number = phoneCursor
+									.getString(phoneCursor
+									.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+						}
 					}
+
+					name = c.getString(c
+							.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+					JSONObject contactObject = new JSONObject();
+					try {
+						contactObject.put("name", name);
+						contactObject.put("phone", number);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+					this.success(new PluginResult(PluginResult.Status.OK,
+							contactObject), this.callback);
 				}
-				break;
 			}
+			break;
 		}
 	}
+}
