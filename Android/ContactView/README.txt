@@ -3,15 +3,27 @@ This plugin is a different philosophy to how contacts can work with PhoneGap And
 
 How to use:
 
-Put the following javascript code in your initializer, after the DOM has loaded:
+Usage:
 
-document.querySelector("#contact-name-to-native").addEventListener("touchstart", function() {
-    	window.plugins.contactView.show(document.getElementById("contact-name-from-native"), document.getElementById("phonenumber-contact"));
-}, false);
+window.plugins.contactView.show(success, failure);
 
-"#contact-name-to-native" is the element id that triggers the contact view.
+Success returns an object with the name and the phone of the contact selected.
 
-"contact-name-from-native" is the element id in html that receives the contact's name. By convention, it is an input field's value that receives it. And "phonenumber-contact" is the phone number input field in the HTML. But you can edit this in ContactView.js to ignore phone or name.
+Example:
+
+	document.querySelector("#contact-name-to-native").addEventListener("touchstart", function() {
+	    window.plugins.contactView.show(
+	    	function(contact) {
+	    		document.getElementById("contact-name-from-native").value = contact.name;
+	    		document.getElementById("contact-phone").value = contact.phone;
+	    	},
+	    	function(fail) {
+	    		alert("We were unable to get the contact you selected.");
+	    	}
+	    );
+    }, false);
+    
+   
 
 For the current files to work, you'll need to create a package (folders) called com.rearden. You can change this to whatever you like, just update the ContactView.js and ContactView.java.
 
