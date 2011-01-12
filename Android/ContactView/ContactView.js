@@ -1,14 +1,13 @@
 var ContactView = function() {};
 
-ContactView.prototype.show = function(nameElement, phoneElement) {
+ContactView.prototype.show = function(successCallback, failCallback) {
 
     function success(args) {
-        nameElement.value = typeof args.name != "undefined" ? args.name : "";
-        phoneElement.value = typeof args.phone != "undefined" ? args.phone : "";
+        successCallback(args);
     }
     
     function fail(args) {
-    	alert("fail "+args)
+    	failCallback(args);
     }
 
 	return PhoneGap.exec(function(args) {
