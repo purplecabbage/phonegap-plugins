@@ -37,6 +37,8 @@
     mapView.autoresizesSubviews    = YES;
     mapView.userInteractionEnabled = YES;
 	mapView.showsUserLocation = YES;
+	mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	childView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	
 	imageButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	
