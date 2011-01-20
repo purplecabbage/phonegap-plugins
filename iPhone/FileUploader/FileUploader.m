@@ -153,13 +153,13 @@
 	[postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 	[req setHTTPBody:postBody];
 	
-	FileUploadDelegate* delegate = [[[FileUploadDelegate alloc] init] retain];
+	FileUploadDelegate* delegate = [[FileUploadDelegate alloc] init];
 	delegate.command = self;
 	delegate.successCallback = successCallback;
 	delegate.failCallback = failCallback;
 	delegate.progressCallback = progressCallback;
 	
-	NSURLConnection* connection = [[NSURLConnection connectionWithRequest:req delegate:delegate] retain];
+	[[NSURLConnection connectionWithRequest:req delegate:delegate] retain];
 }
 
 @end
