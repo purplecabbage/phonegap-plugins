@@ -102,16 +102,22 @@
 	if(!fileKey) {
 		fileKey = @"file";	
 	}
-	
-	NSString *boundary = @"*****com.beetight.formBoundary";
-	
 	NSURL *url = [NSURL URLWithString:server];
-		
+
 	NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
 	[req setHTTPMethod:@"POST"];
 	
+	if([params objectForKey:@"__cookie"]) {
+		[req setValue:[params objectForKey:@"__cookie"] forHTTPHeaderField:@"Cookie"];
+		[params removeObjectForKey:@"__cookie"];
+		[req setHTTPShouldHandleCookies:NO];
+	}
+	
+	NSString *boundary = @"*****com.beetight.formBoundary";
+
 	NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
 	[req setValue:contentType forHTTPHeaderField:@"Content-type"];
+	[req setValue:@"XMLHttpRequest" forHTTPHeaderField:@"X-Requested-With"];
 	NSString* userAgent = [[webView request] valueForHTTPHeaderField:@"User-agent"];
 	if(userAgent) {
 		[req setValue: userAgent forHTTPHeaderField:@"User-agent"];
