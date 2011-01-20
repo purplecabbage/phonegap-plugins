@@ -19,4 +19,6 @@
 @property (nonatomic, copy) NSString* successCallback;
 @property (nonatomic, copy) NSString* failCallback;
 
+- (void) scan:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+
 @end
