@@ -29,9 +29,8 @@ Badge.prototype.clear = function() {
 
 PhoneGap.addConstructor(function() 
 {
-	if(window.plugins)
-	{
-		window.plugins = {};
-	}
+    if (!window.plugins) {
+      window.plugins = {};
+    }
     window.plugins.badge = new Badge();
 });
