@@ -4,18 +4,12 @@ By Omer Saatcioglu
 ## Adding the Plugin to your project ##
 1. To install the plugin, move clipboardmanager.js to your project's www folder and include a reference to it in your html files. 
 2. Create a folder called 'src/com/saatcioglu/phonegap/clipboardmanager' within your project's src folder.
-3. And copy ContextHolder.java and ClipboardManagerPlugin.java into that new folder.
+3. And copy ClipboardManagerPlugin.java into that new folder.
 
 `mkdir <your_project>/src/com/saatcioglu/phonegap/clipboardmanager`
 `cp ./ClipboardManagerPlugin.java <your_project>/src/com/beetight/barcodescanner`
-`cp ./ContextHolder.java <your_project>/src/com/beetight/barcodescanner`
 
 ## Using the plugin ##
-Before using the plugin, we need to at the following line of code before calling the `loadUrl` method in the main activity to let the
-ClipboardManagerPlugin use the context of the main activity. Otherwise, it wouldn't be able to reach to the Clipboard Service
-
-	ContextHolder.set(this);
-
 The plugin creates the object `window.plugins.clipboardManager` with the methods 
 
 `copy(str, success, fail)` that copies the given string
