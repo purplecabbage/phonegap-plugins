@@ -17,12 +17,19 @@
 	BOOL bannerIsVisible;
 	BOOL bannerIsInitialized;
 	BOOL bannerIsAtBottom;
+	
+	NSString* portraitContentIndentifier;
+	NSString* landscapeContentIndentifier;
+	
 }
 
 @property (nonatomic, retain)	ADBannerView* bannerView;
 @property (assign)				BOOL bannerIsVisible;
 @property (assign)				BOOL bannerIsInitialized;
 @property (assign)				BOOL bannerIsAtBottom;
+
+@property (copy) NSString* portraitContentIndentifier;
+@property (copy) NSString* landscapeContentIndentifier;
 
 
 - (void) prepare:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;

@@ -19,13 +19,23 @@
 @implementation SAiOSAdPlugin
 
 @synthesize bannerView;
-@synthesize bannerIsVisible, bannerIsInitialized, bannerIsAtBottom;
+@synthesize bannerIsVisible;
+@synthesize bannerIsInitialized;
+@synthesize bannerIsAtBottom;
+@synthesize portraitContentIndentifier;
+@synthesize landscapeContentIndentifier;
+
 
 #pragma mark -
 #pragma mark Public Methods
 
 - (void) prepare:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
+	
+//	[[NSNotificationCenter defaultCenter] addObserver:self
+//										  selector:@selector(onOrientationChange)
+//										  name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+	
 	NSUInteger argc = [arguments count];
 	if (argc > 1) {
 		return;
@@ -49,16 +59,39 @@
 #pragma mark -
 #pragma mark Private Methods
 
+-(NSString*) getADBannerContentSizeIdentifierPortrait 
+{
+	if ( [ [ [ UIDevice currentDevice ] systemVersion ] floatValue ] >= 4.2 ) 
+	{
+		return ADBannerContentSizeIdentifierPortrait;
+	}
+	
+	return ADBannerContentSizeIdentifier320x50;
+}
+
+-(NSString*) getADBannerContentSizeIdentifierLandscape 
+{
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 4.2) 
+	{
+		return ADBannerContentSizeIdentifierLandscape;
+	}
+	
+	return ADBannerContentSizeIdentifier480x32;
+}
+
 - (void) __prepare:(BOOL)atBottom
 {
 	NSLog(@"SAiOSAdPlugin Prepare Ad At Bottom: %d", atBottom);
+	
+	self.portraitContentIndentifier = [self getADBannerContentSizeIdentifierPortrait];
+	self.landscapeContentIndentifier = [self getADBannerContentSizeIdentifierLandscape];	
 	
 	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
 	if (adBannerViewClass && !self.bannerView)
 	{
 		bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
 
-		bannerView.requiredContentSizeIdentifiers = [NSSet setWithObjects: ADBannerContentSizeIdentifier320x50, ADBannerContentSizeIdentifier480x32, nil];		
+		bannerView.requiredContentSizeIdentifiers = [NSSet setWithObjects: self.portraitContentIndentifier, self.landscapeContentIndentifier, nil];		
 		
 		bannerView.delegate = self;
 
@@ -72,11 +105,13 @@
 {
 	NSLog(@"SAiOSAdPlugin Show Ad: %d", show);
 	
-	if (!self.bannerIsInitialized){
+	if (!self.bannerIsInitialized)
+	{
 		[self __prepare:NO];
 	}
 	
-	if (!(NSClassFromString(@"ADBannerView") && self.bannerView)) { // ad classes not available
+	if (!(NSClassFromString(@"ADBannerView") && self.bannerView)) 
+	{ // ad classes not available
 		return;
 	}
 	
@@ -100,12 +135,12 @@
 		// First, setup the banner's content size and adjustment based on the current orientation
 		if(UIInterfaceOrientationIsLandscape(self.appViewController.interfaceOrientation))
 		{
-			bannerView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape;
+			bannerView.currentContentSizeIdentifier = self.landscapeContentIndentifier;
 			bannerHeight = 32.0;
 		}
 		else
 		{
-			bannerView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
+			bannerView.currentContentSizeIdentifier = self.portraitContentIndentifier;
 		}
 		
 		bannerViewFrame.size.height = bannerHeight;
@@ -153,18 +188,14 @@
 	}
 	
 	[UIView commitAnimations];
-	
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-        self.bannerView.currentContentSizeIdentifier =
-		ADBannerContentSizeIdentifierLandscape;
-    else
-        self.bannerView.currentContentSizeIdentifier =
-		ADBannerContentSizeIdentifierPortrait;
-}
+//-(void)onOrientationChange
+//{
+//	self.bannerIsVisible = !self.bannerIsVisible;
+//	[ self __showAd:(!self.bannerIsVisible)];
+//	
+//}
 
 #pragma mark -
 #pragma ADBannerViewDelegate
