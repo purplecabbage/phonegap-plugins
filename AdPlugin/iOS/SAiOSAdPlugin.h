@@ -12,14 +12,14 @@
 
 @interface SAiOSAdPlugin : PhoneGapCommand <ADBannerViewDelegate> {
 	
-	ADBannerView* adView;
+	ADBannerView* bannerView;
 	
 	BOOL bannerIsVisible;
 	BOOL bannerIsInitialized;
 	BOOL bannerIsAtBottom;
 }
 
-@property (nonatomic, retain)	ADBannerView* adView;
+@property (nonatomic, retain)	ADBannerView* bannerView;
 @property (assign)				BOOL bannerIsVisible;
 @property (assign)				BOOL bannerIsInitialized;
 @property (assign)				BOOL bannerIsAtBottom;
