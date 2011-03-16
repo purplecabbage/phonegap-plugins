@@ -125,7 +125,7 @@
 	[UIView beginAnimations:@"blah" context:NULL];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	
-	if (show)
+	if (show && self.bannerView.bannerLoaded)
 	{
 		CGFloat bannerHeight = 50.0;
 		
