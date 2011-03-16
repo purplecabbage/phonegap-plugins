@@ -11,7 +11,7 @@
 @interface SAiOSAdPlugin(PrivateMethods)
 
 - (void) __prepare:(BOOL)atBottom;
-- (void) __showAd:(BOOL)show;
+- (void) __showAd:(BOOL)show atBottom:(BOOL)atBottom;
 
 @end
 
@@ -31,29 +31,34 @@
 
 - (void) prepare:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
-	
-//	[[NSNotificationCenter defaultCenter] addObserver:self
-//										  selector:@selector(onOrientationChange)
-//										  name:@"UIDeviceOrientationDidChangeNotification" object:nil];
-	
-	NSUInteger argc = [arguments count];
+  BOOL atBottom = NO;
+
+  NSUInteger argc = [arguments count];
 	if (argc > 1) {
-		return;
-	}
-	
-	NSString* atBottomValue = [arguments objectAtIndex:0];
-	[self __prepare:[atBottomValue boolValue]];
+    return;
+  } else if (argc == 1) {
+    atBottom = [[arguments objectAtIndex:0] boolValue];
+  }
+
+  [self __prepare:atBottom];
 }
 
 - (void) showAd:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
-	NSUInteger argc = [arguments count];
-	if (argc > 1) {
-		return;
-	}
-	
-	NSString* showValue = [arguments objectAtIndex:0];
-	[self __showAd:[showValue boolValue]];
+  BOOL showValue = YES;
+  BOOL atBottom  = NO;
+  
+  NSUInteger argc = [arguments count];
+  if (argc > 2) {
+  	return;
+  } else if (argc > 0) {
+    showValue = [[arguments objectAtIndex:0] boolValue];
+    if (argc > 1) {
+      atBottom = [[arguments objectAtIndex:1] boolValue];
+    }
+  }
+  
+  [self __showAd:showValue atBottom:atBottom];
 }
 
 #pragma mark -
@@ -61,7 +66,7 @@
 
 -(NSString*) getADBannerContentSizeIdentifierPortrait 
 {
-	if ( [ [ [ UIDevice currentDevice ] systemVersion ] floatValue ] >= 4.2 ) 
+	if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 4.2)
 	{
 		return ADBannerContentSizeIdentifierPortrait;
 	}
@@ -90,40 +95,32 @@
 	if (adBannerViewClass && !self.bannerView)
 	{
 		bannerView = [[ADBannerView alloc] initWithFrame:CGRectZero];
-
+    
 		bannerView.requiredContentSizeIdentifiers = [NSSet setWithObjects: self.portraitContentIndentifier, self.landscapeContentIndentifier, nil];		
 		
 		bannerView.delegate = self;
-
+    
 		self.bannerIsAtBottom = atBottom;
 		self.bannerIsVisible = NO;
 		self.bannerIsInitialized = YES;
 	}
 }
 
-- (void) __showAd:(BOOL)show
+- (void) __showAd:(BOOL)show atBottom:(BOOL)atBottom
 {
-	NSLog(@"SAiOSAdPlugin Show Ad: %d", show);
+	NSLog(@"SAiOSAdPlugin Show Ad: %d atBottom: %d", show, atBottom);
+
+  // same state, nothing to do
+	if (show == self.bannerIsVisible) return;
+
+	if (show && !self.bannerIsInitialized) [self __prepare:atBottom];
 	
-	if (!self.bannerIsInitialized)
-	{
-		[self __prepare:NO];
-	}
-	
-	if (!(NSClassFromString(@"ADBannerView") && self.bannerView)) 
-	{ // ad classes not available
-		return;
-	}
-	
-	if (show == self.bannerIsVisible) { // same state, nothing to do
-		return;
-	}
+  // ad classes not available
+	if (!(NSClassFromString(@"ADBannerView") && self.bannerView)) return;
 	
 	CGRect bannerViewFrame = bannerView.frame;
-	CGRect webViewFrame = webView.frame;
-	CGRect screenFrame = [ [ UIScreen mainScreen ] applicationFrame ];
-	
-	//CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+	CGRect webViewFrame    = webView.frame;
+	CGRect screenFrame     = [[UIScreen mainScreen] applicationFrame];
 	
 	[UIView beginAnimations:@"blah" context:NULL];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -154,7 +151,7 @@
 		{
 			webViewFrame.origin.y += bannerViewFrame.size.height;
 		}
-
+    
 		webViewFrame.size.height -= bannerViewFrame.size.height;
 		webView.frame = webViewFrame;
 		
@@ -170,13 +167,13 @@
 	{
 		if (self.bannerIsAtBottom) 
 		{
-
+      
 		}
 		else // aka: at the top
 		{
 			webViewFrame.origin.y = screenFrame.origin.y;
 		}
-
+    
 		
 		webViewFrame.size.height += bannerViewFrame.size.height;
 		
@@ -190,37 +187,30 @@
 	[UIView commitAnimations];
 }
 
-//-(void)onOrientationChange
-//{
-//	self.bannerIsVisible = !self.bannerIsVisible;
-//	[ self __showAd:(!self.bannerIsVisible)];
-//	
-//}
-
 #pragma mark -
 #pragma ADBannerViewDelegate
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
 {
 	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
-    if (adBannerViewClass)
-    {
+  if (adBannerViewClass)
+  {
 		NSString* jsString = 
 		@"(function(){"
 		"var e = document.createEvent('Events');"
 		"e.initEvent('iAdBannerViewDidLoadAdEvent');"
 		"document.dispatchEvent(e);"
 		"})();";
-
+    
 		[super writeJavascript:jsString];
-    }
+  }
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError*)error
 {
 	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
-    if (adBannerViewClass)
-    {
+  if (adBannerViewClass)
+  {
 		NSString* jsString = 
 		@"(function(){"
 		"var e = document.createEvent('Events');"
@@ -230,7 +220,7 @@
 		"})();";
 		
 		[super writeJavascript:[NSString stringWithFormat:jsString, [error description]]];
-    }
+  }
 }
 
 - (void)bannerViewActionDidFinish:(ADBannerView *)banner
@@ -240,13 +230,13 @@
 
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
 {
-    NSLog(@"Banner view is beginning an ad action");
-    BOOL shouldExecuteAction = YES;//[self allowActionToRun]; // your application implements this method
-    if (!willLeave && shouldExecuteAction)
-    {
-        // insert code here to suspend any services that might conflict with the advertisement
-    }
-    return shouldExecuteAction;
+  NSLog(@"Banner view is beginning an ad action");
+  BOOL shouldExecuteAction = YES;//[self allowActionToRun]; // your application implements this method
+  if (!willLeave && shouldExecuteAction)
+  {
+    // insert code here to suspend any services that might conflict with the advertisement
+  }
+  return shouldExecuteAction;
 }
 
 @end

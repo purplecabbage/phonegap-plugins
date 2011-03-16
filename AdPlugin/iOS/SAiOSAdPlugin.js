@@ -8,9 +8,10 @@ function SAiOSAdPlugin()
 /**
  * show - true to show the ad, false to hide the ad
  */
-SAiOSAdPlugin.prototype.showAd = function(show)
+SAiOSAdPlugin.prototype.showAd = function(show, atBottom)
 {
-	PhoneGap.exec("SAiOSAdPlugin.showAd", show);
+    if (!atBottom) atBottom = false;
+    PhoneGap.exec("SAiOSAdPlugin.showAd", show, atBottom);
 }
 
 /**
@@ -18,10 +19,8 @@ SAiOSAdPlugin.prototype.showAd = function(show)
  */
 SAiOSAdPlugin.prototype.prepare = function(atBottom)
 {
-	if (!atBottom) {
-		atBottom = false;
-	}
-	PhoneGap.exec("SAiOSAdPlugin.prepare", atBottom);
+    if (!atBottom) atBottom = false;
+    PhoneGap.exec("SAiOSAdPlugin.prepare", atBottom);
 }
 
 /**
@@ -29,12 +28,8 @@ SAiOSAdPlugin.prototype.prepare = function(atBottom)
  */
 SAiOSAdPlugin.install = function()
 {
-	if ( !window.plugins ) 
-		window.plugins = {}; 
-	if ( !window.plugins.iAdPlugin ) 
-		window.plugins.iAdPlugin = new SAiOSAdPlugin();
-	
-	
+    if (!window.plugins) window.plugins = {}; 
+    if (!window.plugins.iAdPlugin) window.plugins.iAdPlugin = new SAiOSAdPlugin();
 }
 
 /**
