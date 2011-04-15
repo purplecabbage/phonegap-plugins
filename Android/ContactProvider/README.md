@@ -1,7 +1,7 @@
 # Contact Provider plugin for Phonegap #
 This plugin is a different philosophy to how contacts can work with PhoneGap Android. Rather than pulling in the contacts into HTML, this plugin allows you to leave the PhoneGap webview and enter into a native contact picker. Once the user has selected a contact, they will be sent back into the PhoneGap webview with the name of the contact available.
 
-Pick Contact function is refered to https://github.com/grandecomplex.
+Pick Contact function is refered to https://github.com/grandecomplex ContactView.
 Contact Provider created and edited by Ray Ling
 
 ## Adding the Plugin to your project ##
