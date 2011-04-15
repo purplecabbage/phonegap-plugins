@@ -6,7 +6,7 @@ Contact Provider created and edited by Ray Ling
 
 ## Adding the Plugin to your project ##
 
-1. Copy ContactProvider.java to your project src/com.phonegap/plugin/contact/ContactProvider.java
+1. Copy ContactProvider.java to your project src/com.phonegap/plugin/ContactProvider.java
 2. contactprovider.js should go in your android project assets, and add script reference in your html
 3. call plugin apis
 

@@ -1,15 +1,11 @@
 var ContactProvider = function() {};
 
-ContactProvider.prototype.add = function(name, email, successCallback, failCallback) {
+ContactProvider.prototype.add = function(name, email, successCallback) {
 
     function success(args) {
         successCallback(args);
     }
     
-    function fail(args) {
-    	failCallback(args);
-    }
-
 	return PhoneGap.exec(function(args) {
 		success(args);
 	}, function(args) {
@@ -35,5 +31,5 @@ ContactProvider.prototype.pick = function(successCallback, failCallback){
 
 PhoneGap.addConstructor(function() {
 	PhoneGap.addPlugin('contactprovider', new ContactProvider());
-	PluginManager.addService("ContactProvider","com.phonegap.plugin.contact.ContactProvider");
+	PluginManager.addService("ContactProvider","com.phonegap.plugin.ContactProvider");
 });

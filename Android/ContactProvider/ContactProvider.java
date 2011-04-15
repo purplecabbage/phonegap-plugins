@@ -1,4 +1,4 @@
-package com.phonegap.plugin.contact;
+package com.phonegap.plugin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +39,6 @@ public class ContactProvider extends Plugin {
 			PluginResult mPlugin = new PluginResult(
 					PluginResult.Status.NO_RESULT);
 			mPlugin.setKeepCallback(true);
-			this.callback = callbackId;
 			return mPlugin;
 		} catch (JSONException e) {
 			Log.e("ContactAdd", "execute args error", e);
