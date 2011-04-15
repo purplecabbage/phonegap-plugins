@@ -1,7 +1,59 @@
 /**
  * Constructor
  */
-function InMobiAdPlugin(){}
+function InMobiAdPlugin()
+{
+	// Currently unused ... jm
+	this.metaInfo = 
+	{
+		isLocationInquiryAllowed:false,
+		currentLocation:null,
+		testMode:false,
+		postalCode:"",
+		areaCode:"",
+		dateOfBirth:"",
+		gender:InMobiAdPlugin.Gender.None,
+		keywords:"",
+		searchString:"",
+		income:-1,
+		education:InMobiAdPlugin.Education.None,
+		ethnicity:InMobiAdPlugin.Ethnicity.None,
+		age:-1,
+		interests:""
+	};
+}
+
+// Enums
+InMobiAdPlugin.Gender = 
+{
+	None:0,
+	M:1,
+	F:2
+};
+
+InMobiAdPlugin.Ethnicity = 
+{
+	None:0,
+	Mixed:1,
+	Asian:2,
+	Black:3,
+	Hispanic:4,
+	NativeAmerican:5,
+	White:6,
+	Other:7
+};
+
+InMobiAdPlugin.Education = 
+{
+	None:0,
+	HighSchool:1,
+	SomeCollege:2,
+	InCollege:3,
+	BachelorsDegree:4,
+	MastersDegree:5,
+	DoctoralDegree:6,
+	Other:7
+};
 
 InMobiAdPlugin.prototype = 
 {
@@ -10,7 +62,7 @@ InMobiAdPlugin.prototype =
      */
     showAd:function(bShow)
     {
-        PhoneGap.exec("InMobiAdPlugin.showAd", bShow);
+        PhoneGap.exec("InMobiAdPlugin.showAd", !!bShow);
     },
     
     /**
@@ -26,7 +78,7 @@ InMobiAdPlugin.prototype =
         }
     	PhoneGap.exec("InMobiAdPlugin.init",siteId, adOptions);
     }
-}
+};
 
 /**
  * Install function
