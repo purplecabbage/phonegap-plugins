@@ -14,6 +14,7 @@
 @synthesize _siteId;
 @synthesize _atBottom;
 @synthesize inmobiAdView;
+@synthesize metaDict;
 
 - (void) init:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
@@ -23,22 +24,29 @@
 	{
 		self._siteId = siteID;
 	}
-	
+	self.metaDict = [ options valueForKey:@"meta"];
 	self._atBottom = [[options valueForKey:@"atBottom"] boolValue];
-	
-	if(!self.inmobiAdView)
-	{
-		self.inmobiAdView = [InMobiAdView requestAdUnit:INMOBI_AD_UNIT_320x48 withDelegate:self];
-	}
 }
-
 
 - (void) showAd:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
 	if(self.inmobiAdView)
 	{
-		[self.inmobiAdView loadNewAd];
+		if(self.inmobiAdView.superview)
+		{
+			[self.inmobiAdView removeFromSuperview];
+		
+			CGRect webViewFrame = webView.frame;		
+			webViewFrame.size.height = webViewFrame.size.height + 48;
+			webViewFrame.origin.y = 0;
+			self.webView.frame = webViewFrame;
+		}
+		
+		[self.inmobiAdView setDelegate:nil];
+		
+		//[self.inmobiAdView loadNewAd];
 	}
+	self.inmobiAdView = [InMobiAdView requestAdUnit:INMOBI_AD_UNIT_320x48 withDelegate:self];
 }
 
 #pragma mark InMobiAdDelegate required methods for an ad request.
@@ -50,7 +58,13 @@
  */
 - (NSString *)siteId
 {
-	return _siteId;
+	if(self._siteId)
+	{
+		return self._siteId;
+	}
+
+	NSLog(@"InMobiAdPlugin Error :: siteId is unknown",0);
+	return nil;
 }
 
 /**
@@ -74,7 +88,9 @@
  */
 - (BOOL)isLocationInquiryAllowed
 {
-	return NO; // Debugging
+	BOOL bAllowLoc = [[self.metaDict valueForKey:@"isLocationInquiryAllowed"] boolValue];
+	
+	return bAllowLoc;
 }
 
 /**
@@ -94,7 +110,8 @@
  */
 - (BOOL)testMode
 {
-	return NO; // debugging
+	BOOL bTestMode = [[self.metaDict valueForKey:@"testMode"] boolValue];
+	return bTestMode;
 }
 
 /* The following functions, if implemented, provide extra information
@@ -104,19 +121,35 @@
 /**
  * @return the postal code information about the user.If unknown, return nil.
  */
-// - (NSString *)postalCode; 
+ - (NSString *)postalCode
+{
+	NSString* dictPOCode = [self.metaDict valueForKey:@"postalCode"];
+	if((id)dictPOCode != [NSNull null])
+	{
+		return dictPOCode;
+	}
+	return nil;	
+}
 
 /**
  * @return the area code information about the user.If unknown, return nil.
  */
-// - (NSString *)areaCode; 
+ - (NSString *)areaCode
+{
+	NSString* dictAreaCode = [self.metaDict valueForKey:@"areaCode"];
+	if((id)dictAreaCode != [NSNull null])
+	{
+		return dictAreaCode;
+	}
+	return nil;
+}
 
 /**
  * @return DOB of the user.If unknown, return nil.
  */
  - (NSDate *)dateOfBirth
 {
-	return nil;
+	return nil;//[ NSDate date];
 }
 
 /**
@@ -124,6 +157,16 @@
  */
  - (Gender)gender
 {
+	id val = [self.metaDict valueForKey:@"gender"];
+	if(val != [NSNull null])
+	{
+		NSUInteger dictGender = [val intValue];
+		
+		if(dictGender)
+		{
+			return dictGender;
+		}
+	}
 	return G_None;
 }
 
@@ -134,7 +177,12 @@
  */
  - (NSString *)keywords
 {
-	return nil;
+	NSString* dictKeyWords = [self.metaDict valueForKey:@"keywords"];
+	if((id)dictKeyWords != [NSNull null])
+	{
+		return dictKeyWords;
+	}
+	return nil;	
 }
 
 /**
@@ -142,7 +190,12 @@
  */
  - (NSString *)searchString
 {
-	return nil;
+	NSString* dictSearchString = [self.metaDict valueForKey:@"searchString"];
+	if((id)dictSearchString != [NSNull null])
+	{
+		return dictSearchString;
+	}
+	return nil;	
 }
 
 /** 
@@ -151,7 +204,16 @@
  */
  - (NSUInteger)income
 {
-	return -1;
+	id val = [self.metaDict valueForKey:@"income"];
+	if(val != [NSNull null])
+	{
+		NSUInteger dictIncome = [val intValue];
+		if(dictIncome)
+		{
+			return dictIncome;
+		}
+	}
+	return -1;	
 }
 
 /**
@@ -160,6 +222,16 @@
  */
  - (Education)education
 {
+	id val = [self.metaDict valueForKey:@"education"];
+	if(val != [NSNull null])
+	{
+		NSUInteger dictEdu = [val intValue];
+		
+		if(dictEdu)
+		{
+			return dictEdu;
+		}
+	}
 	return Edu_None;
 }
 
@@ -169,6 +241,16 @@
  */
  - (Ethnicity)ethnicity
 {
+	id val = [self.metaDict valueForKey:@"ethnicity"];
+	if(val != [NSNull null])
+	{
+		NSUInteger dictEth = [val intValue];
+		
+		if(dictEth)
+		{
+			return dictEth;
+		}
+	}
 	return Eth_None;
 }
 
@@ -178,7 +260,17 @@
  */
  - (NSUInteger)age
 {
-	return -1;
+	id val = [self.metaDict valueForKey:@"age"];
+	if(val != [NSNull null])
+	{
+		NSUInteger dictAge = [val intValue];
+		
+		if(dictAge)
+		{
+			return dictAge;
+		}
+	}
+	return -1;	
 }
 
 /**
@@ -186,7 +278,15 @@
  * of ads to InMobi.If unknown, return nil.
  * Eg- @"sports,movies,clothes"
  */
-// - (NSString *)interests;
+ - (NSString *)interests
+{
+	NSString* dictInterests = [self.metaDict valueForKey:@"interests"];
+	if((id)dictInterests != [NSNull null])
+	{
+		return dictInterests;
+	}
+	return nil;
+}
 
 #pragma mark InMobiAdDelegate optional notification methods
 
@@ -270,7 +370,6 @@
 - (void) dealloc
 {
 	[inmobiAdView setDelegate:nil];
-	[inmobiAdView release];
 	
 	[super dealloc];
 }

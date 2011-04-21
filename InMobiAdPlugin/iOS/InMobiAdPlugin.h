@@ -20,11 +20,13 @@
 	NSString *_siteId;
 	BOOL _atBottom;
 	InMobiAdView *inmobiAdView;
+	NSMutableDictionary* metaDict;
 }
 
-@property (nonatomic, copy) NSString *_siteId;
-@property (assign)			BOOL _atBottom;
-@property(nonatomic,retain) InMobiAdView *inmobiAdView;
+@property (nonatomic, copy)   NSString *_siteId;
+@property (assign)			  BOOL _atBottom;
+@property (nonatomic,retain)  InMobiAdView *inmobiAdView;
+@property (nonatomic, retain) NSMutableDictionary* metaDict;
 
 
 - (void) init:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
