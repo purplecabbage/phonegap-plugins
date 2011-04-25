@@ -70,6 +70,7 @@ public class GoogleAnalytics extends Plugin {
 			try {
 				page = args.getString(0);
 				mTracker.trackPageView(page);
+				mTracker.dispatch();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -91,6 +92,7 @@ public class GoogleAnalytics extends Plugin {
 				String arg2 = args.length() >= 2 ? args.getString(2) : "";
 				int arg3 = args.length() == 3 ? args.getInt(3) : 0;
 				mTracker.trackEvent(arg0, arg1, arg2, arg3);
+				mTracker.dispatch();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
