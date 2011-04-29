@@ -61,7 +61,7 @@
 - (void)saveScreenshotAsFile:(NSArray*)arguments withDict:(NSDictionary*)options
 {
 	NSUInteger argc = [arguments count];
-	NSString* successCallback = nil, *fileName = nil;		
+	NSString* successCallback = nil, *fileName = nil, *returnBase64, *encodedString = "false";		
 	
 	if (argc < 2) {
 		NSLog(@"Screenshot.saveScreenshotAsFile: Not Enough Parameters.");
@@ -69,6 +69,7 @@
 	} else {
 		fileName = [arguments objectAtIndex:0];
 		successCallback = [arguments objectAtIndex:1];
+		returnBase64 = [arguments objectAtIndex:2];
 	}
 	
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -81,12 +82,20 @@
 	[webView.layer renderInContext:ctx];
 	
 	UIImage *image1 = UIGraphicsGetImageFromCurrentImageContext();
+	
+	if (returnBase64) {
+		NSData *imageData = UIImagePNGRepresentation(image1);
+		encodedString = [imageData base64Encoding];
+	} else {
+		encodedString = "false";
+	}
+	
 	UIGraphicsEndImageContext();
 	
 	[UIImagePNGRepresentation(image1) writeToFile:fileName atomically:YES];
 	
 	NSString *jsCallBack;
-	jsCallBack = [ NSString stringWithFormat:@"%@(\"%@\");", successCallback, fileName ];
+	jsCallBack = [ NSString stringWithFormat:@"%@(\"%@\", \"%@\");", successCallback, fileName, encodedString ];
 	[webView stringByEvaluatingJavaScriptFromString:jsCallBack];	
 }
 @end
