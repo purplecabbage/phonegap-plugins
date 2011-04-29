@@ -15,8 +15,8 @@ function Screenshot() {
 /**
  * Save the screenshot to the user's Photo Library
  */
-Screenshot.prototype.saveScreenshot = function() {
-    PhoneGap.exec("Screenshot.saveScreenshot");
+Screenshot.prototype.saveScreenshot = function( returnBase64, successCallbackString) {
+    PhoneGap.exec("Screenshot.saveScreenshot", returnBase64, successCallbackString );
 };
 
 PhoneGap.addConstructor(function() 

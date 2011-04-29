@@ -1,0 +1,31 @@
+This plugin lets you take a screenshot of the viewable screen in iOS without the top status bar.
+
+You can call this function with
+
+window.navigator.saveScreenshot( bool returnBase64, [string successCallbackString] )
+
+or
+
+PhoneGap.exec("Screenshot.saveScreenshot", returnBase64, [ successCallbackString ] );
+
+Where 
+
+returnBase64 (PNG format for now) is a BOOL to say whether or not we return a base64 encoded string back to Javascript or just let the screenshot get saved to the devices Saved Photos.
+
+and
+
+the optional successCallbackString which is the function that will be called  with the returned base64 encoded string given as the only parameter.
+
+So I used this with something like É
+
+É.
+<button onclick="takeScreenshot();">Take Screenshot</button>
+
+function takeScreenShot() {
+    	PhoneGap.exec("Screenshot.saveScreenshot", true, "returnScreenshotImage");		    	
+}	
+	
+function returnScreenshotImage(image) {		
+	base64string = "data:image/png;base64,"+image;
+	$("#image_container").css("background-image", "url("+base64string+")");		 				
+}
