@@ -29,3 +29,10 @@ function returnScreenshotImage(image) {
 	base64string = "data:image/png;base64,"+image;
 	$("#image_container").css("background-image", "url("+base64string+")");		 				
 }
+
+==========================
+Added ability to save screenshot as file to the docs path of the application
+
+saveScreenshotAsFile( fileName, callBackSuccessString )
+
+will call the given return function and pass the filename that was written

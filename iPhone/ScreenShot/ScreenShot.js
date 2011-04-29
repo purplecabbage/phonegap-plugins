@@ -19,6 +19,10 @@ Screenshot.prototype.saveScreenshot = function( returnBase64, successCallbackStr
     PhoneGap.exec("Screenshot.saveScreenshot", returnBase64, successCallbackString );
 };
 
+Screenshot.prototype.saveScreenshot = function( fileName, successCallbackString) {
+    PhoneGap.exec("Screenshot.saveScreenshotAsFile", fileName, successCallbackString );
+};
+
 PhoneGap.addConstructor(function() 
 {
 	if(!window.plugins)

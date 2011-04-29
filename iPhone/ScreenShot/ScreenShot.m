@@ -57,4 +57,36 @@
 	
 	UIGraphicsEndImageContext();
 }
+
+- (void)saveScreenshotAsFile:(NSArray*)arguments withDict:(NSDictionary*)options
+{
+	NSUInteger argc = [arguments count];
+	NSString* successCallback = nil, *fileName = nil;		
+	
+	if (argc < 2) {
+		NSLog(@"Screenshot.saveScreenshotAsFile: Not Enough Parameters.");
+		return;
+	} else {
+		fileName = [arguments objectAtIndex:0];
+		successCallback = [arguments objectAtIndex:1];
+	}
+	
+	CGRect screenRect = [[UIScreen mainScreen] bounds];
+	CGRect imageRect = CGRectMake(0, 0, CGRectGetWidth(screenRect), CGRectGetHeight(screenRect));
+	UIGraphicsBeginImageContext(imageRect.size);	
+	CGContextRef ctx = UIGraphicsGetCurrentContext();
+	[[UIColor blackColor] set];
+	CGContextTranslateCTM(ctx, 0, 0);
+	CGContextFillRect(ctx, imageRect);	
+	[webView.layer renderInContext:ctx];
+	
+	UIImage *image1 = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	[UIImagePNGRepresentation(image1) writeToFile:fileName atomically:YES];
+	
+	NSString *jsCallBack;
+	jsCallBack = [ NSString stringWithFormat:@"%@(\"%@\");", successCallback, fileName ];
+	[webView stringByEvaluatingJavaScriptFromString:jsCallBack];	
+}
 @end
