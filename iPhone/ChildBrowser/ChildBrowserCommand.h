@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
+///For xCode 4 Template only
+#import <PhoneGap/PhoneGapCommand.h>
 #import "ChildBrowserViewController.h"
 
 
