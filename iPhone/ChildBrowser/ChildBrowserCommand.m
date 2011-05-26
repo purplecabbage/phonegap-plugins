@@ -8,7 +8,8 @@
 
 #import "ChildBrowserCommand.h"
 
-#import "PhoneGapViewController.h"
+///For xCode 4 Template only
+#import <PhoneGap/PhoneGapViewController.h>
 
 @implementation ChildBrowserCommand
 
