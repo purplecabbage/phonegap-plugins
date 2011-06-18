@@ -7,18 +7,18 @@ by Paul Beusterien, Mobile Developer Solutions and Carl Stehle, Appception Inc.
 Using this plugin requires Android PhoneGap and the PayPal Mobile Payments Library. The PayPal Mobile Payments Library can be downloaded [here](https://www.x.com/community/ppx/xspaces/mobile/mep).
 
 1. Create an Android PhoneGap project. Details at http://www.mobiledevelopersolutions.com/home/start
-2. Put PayPal_MPL.jar into a libs directory and add it to the build path. In Eclipse, right click and select Add to Build Path.
-3. Copy assets/www files into your projects assets/www directory
-4. Copy src/com files into your projects src/com directory
+2. Put PayPal_MPL.jar into your project's libs directory and add it to the build path. In Eclipse, right click on PayPal_MPL.jar and select Add to Build Path.
+3. Copy assets/www files into your project's assets/www directory
+4. Copy src/com/phonegap/plugin/ files into your project's src/com/phonegap/plugin/ directory
 5. Make sure your AndroidManifest.xml includes a superset of the permissions shown in the reference AndroidManifest.xml
 6. Add the com.paypal.android.MEP.PayPalActivity as shown in the reference AndroidManifest.xml
 7. Make sure the phonegap.{version}.js filename in index.html matches the filename in your www directory.
-8. Deploy and test the app with ENV_NONE.
+8. Deploy and test the app. The default environment with ENV_NONE.
 
-## Using the PayPal sandbox ##
+## Using the PayPal Sandbox ##
 
-1. Set up a PayPal buyer and seller account from https://developer.paypal.com/us/cgi-bin/devscr?cmd=home/main
-2. Update demo to use ENV_SANDBOX instead of ENV_NONE. See comments near bottom of demo.'s
+1. Set up a PayPal buyer and seller sandbox account from https://developer.paypal.com/
+2. Update demo.js to use ENV_SANDBOX instead of ENV_NONE. See comments near bottom of demo.js
 3. Update the index.html pmt_recipient field to your sandbox seller account
 
 
@@ -28,7 +28,7 @@ Using this plugin requires Android PhoneGap and the PayPal Mobile Payments Libra
 * Initial release
 * By default the PayPalPlugin-Host runs in ENV_NONE (offline) with a dummy PayPal ID. Change to ENV_SANDBOX or ENV_LIVE
 * Only tested with ENV_NONE and ENV_SANDBOX 
-* The default payment type is HARD_GOODS. Change initializeMPL method in dem.'s to one of the PayPalPaymentType's listed at the bottom of paypal.js
+* The default payment type is HARD_GOODS. Change initializeMPL method in demo.js to one of the PayPalPaymentType's listed at the bottom of paypal.js
 * See the paypal.js file for API docs, and assets/www.demo.js assets/www/index.html for sample code
 
 ## BUGS AND CONTRIBUTIONS ##
