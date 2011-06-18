@@ -8,7 +8,7 @@ Using this plugin requires Android PhoneGap and the PayPal Mobile Payments Libra
 
 1. Create an Android PhoneGap project. Details at http://www.mobiledevelopersolutions.com/home/start
 2. Put PayPal_MPL.jar into your project's libs directory and add it to the build path. In Eclipse, right click on PayPal_MPL.jar and select Add to Build Path.
-3. Copy assets/www files into your project's assets/www directory
+3. Copy assets/www/ files into your project's assets/www/ directory
 4. Copy src/com/phonegap/plugin/ files into your project's src/com/phonegap/plugin/ directory
 5. Make sure your AndroidManifest.xml includes a superset of the permissions shown in the reference AndroidManifest.xml
 6. Add the com.paypal.android.MEP.PayPalActivity as shown in the reference AndroidManifest.xml
@@ -29,7 +29,7 @@ Using this plugin requires Android PhoneGap and the PayPal Mobile Payments Libra
 * By default the PayPalPlugin-Host runs in ENV_NONE (offline) with a dummy PayPal ID. Change to ENV_SANDBOX or ENV_LIVE
 * Only tested with ENV_NONE and ENV_SANDBOX 
 * The default payment type is HARD_GOODS. Change initializeMPL method in demo.js to one of the PayPalPaymentType's listed at the bottom of paypal.js
-* See the paypal.js file for API docs, and assets/www.demo.js assets/www/index.html for sample code
+* For API docs, see the assets/www/paypal.js. For sample code, see assets/www/demo.js assets/www/index.html for sample code
 
 ## BUGS AND CONTRIBUTIONS ##
 
