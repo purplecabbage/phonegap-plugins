@@ -1,0 +1,39 @@
+# PhoneGap PayPal-Plugin #
+by Paul Beusterien, Mobile Developer Solutions and Carl Stehle, Appception Inc.
+
+
+## Adding the Plugin to your project ##
+
+Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonegap-android) and the PayPal Mobile Payments Library. The PayPal Mobile Payments Library can be downloaded [here](https://www.x.com/community/ppx/xspaces/mobile/mep).
+
+1. Create an Android PhoneGap project
+2. Put PayPal_MPL.jar into a libs directory and add it to the build path. In Eclipse, right click and select Add to Build Path.
+3. Copy assets/www files into your projects assets/www directory
+4. Copy src/com files into your projects src/com directory
+5. Make sure your AndroidManifest.xml includes a superset of the permissions shown in the reference AndroidManifest.xml
+6. Add the com.paypal.android.MEP.PayPalActivity as shown in the reference AndroidManifest.xml
+7. Make sure the phonegap.{version}.js filename in index.html matches the filename in your www directory.
+8. Deploy and test the app with ENV_NONE.
+
+## Using the PayPal sandbox ##
+
+1. Set up a PayPal buyer and seller account from https://developer.paypal.com/us/cgi-bin/devscr?cmd=home/main
+2. Update demo to use ENV_SANDBOX instead of ENV_NONE. See comments near bottom of demo.'s
+3. Update the index.html pmt_recipient field to your sandbox seller account
+
+
+## RELEASE NOTES ##
+
+### 201100618 ###
+* Initial release
+* By default the PayPalPlugin-Host runs in ENV_NONE (offline) with a dummy PayPal ID. Change to ENV_SANDBOX or ENV_LIVE
+* Only tested with ENV_NONE and ENV_SANDBOX 
+* The default payment type is HARD_GOODS. Change initializeMPL method in dem.'s to one of the PayPalPaymentType's listed at the bottom of paypal.js
+* See the paypal.js file for API docs, and assets/www.demo.js assets/www/index.html for sample code
+
+## BUGS AND CONTRIBUTIONS ##
+
+Patches welcome! Send a pull request. Since this is not a part of PhoneGap Core (which requires a CLA), this should be easier.
+
+Post issues in the [PhoneGap Google Groups](http://groups.google.com/group/phonegap), include in the subject heading - "PayPalPlugin" or on [Github](http://github.com/phonegap/phonegap-plugins/issues)
+(preferred)
