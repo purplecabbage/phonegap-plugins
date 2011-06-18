@@ -4,9 +4,9 @@ by Paul Beusterien, Mobile Developer Solutions and Carl Stehle, Appception Inc.
 
 ## Adding the Plugin to your project ##
 
-Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonegap-android) and the PayPal Mobile Payments Library. The PayPal Mobile Payments Library can be downloaded [here](https://www.x.com/community/ppx/xspaces/mobile/mep).
+Using this plugin requires Android PhoneGap and the PayPal Mobile Payments Library. The PayPal Mobile Payments Library can be downloaded [here](https://www.x.com/community/ppx/xspaces/mobile/mep).
 
-1. Create an Android PhoneGap project
+1. Create an Android PhoneGap project. Details at http://www.mobiledevelopersolutions.com/home/start
 2. Put PayPal_MPL.jar into a libs directory and add it to the build path. In Eclipse, right click and select Add to Build Path.
 3. Copy assets/www files into your projects assets/www directory
 4. Copy src/com files into your projects src/com directory
