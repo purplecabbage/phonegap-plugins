@@ -13,13 +13,13 @@ Using this plugin requires Android PhoneGap and the PayPal Mobile Payments Libra
 5. Make sure your AndroidManifest.xml includes a superset of the permissions shown in the reference AndroidManifest.xml
 6. Add the com.paypal.android.MEP.PayPalActivity as shown in the reference AndroidManifest.xml
 7. Make sure the phonegap.{version}.js filename in index.html matches the filename in your www directory.
-8. Deploy and test the app. The default environment with ENV_NONE.
+8. Deploy and test the app. The default environment is ENV_NONE.
 
 ## Using the PayPal Sandbox ##
 
 1. Set up a PayPal buyer and seller sandbox account from https://developer.paypal.com/
 2. Update demo.js to use ENV_SANDBOX instead of ENV_NONE. See comments near bottom of demo.js
-3. Update the index.html pmt_recipient field to your sandbox seller account
+3. In index.html, update the pmt_recipient field to your sandbox seller account
 
 
 ## RELEASE NOTES ##
@@ -29,7 +29,7 @@ Using this plugin requires Android PhoneGap and the PayPal Mobile Payments Libra
 * By default the PayPalPlugin-Host runs in ENV_NONE (offline) with a dummy PayPal ID. Change to ENV_SANDBOX or ENV_LIVE
 * Only tested with ENV_NONE and ENV_SANDBOX 
 * The default payment type is HARD_GOODS. Change initializeMPL method in demo.js to one of the PayPalPaymentType's listed at the bottom of paypal.js
-* For API docs, see the assets/www/paypal.js. For sample code, see assets/www/demo.js assets/www/index.html for sample code
+* For API docs, see the assets/www/paypal.js. For sample code, see assets/www/demo.js and assets/www/index.html.
 
 ## BUGS AND CONTRIBUTIONS ##
 
