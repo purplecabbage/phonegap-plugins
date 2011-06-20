@@ -1,7 +1,7 @@
-# SoundPlug, iOS #
+# SoundPlug, iOS
 
-## Rationale ##
-This PhoneGap plugin it possible to play low latency audio in an iOS app.
+## Rationale
+This plugin makes it possible to play low-latency sounds in an iOS app.
 
 The native JavaScript "Audio" object in iOS is not usable at all. The same goes for the PhoneGap "Media" object, that has high latency and other problems.
 
@@ -9,14 +9,17 @@ Multiple sounds can play at the same time and the same sound can play overlappin
 
 The plugin has been developed for use with the game Orbium (https://github.com/bni/orbium), but It should be generally useful for all games and multimedia apps.
 
-## Usage ##
+## Usage
 Add SoundPlug.m and SoundPlug.h to your xcode project (in the Plugins dir).
 
 Add test.wav to xcode project as a resource.
 
-Play sound in JavaScript like this: PhoneGap.exec("SoundPlug.play", "test.wav");
+Play sound in JavaScript like this:
+```javascript
+PhoneGap.exec("SoundPlug.play", "test.wav");
+```
 
-## License ##
+## License
 The MIT License
 
 Copyright (c) 2011 Björn Nilsson
