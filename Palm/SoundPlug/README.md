@@ -14,7 +14,7 @@ The plugin has been developed for use with the game Orbium (https://github.com/b
 ## Usage
 You must define a "object" element like this somewhere in your page (eg index.html, or in a mojo scene):
 
-```
+```html
 <object id="soundPlug" width="1" height="1" type="application/x-palm-remote" x-palm-pass-event="true">
 <param name="appid" value="<your-app-id>">
 <param name="exe" value="soundplug_plugin">
@@ -25,8 +25,9 @@ You must define a "object" element like this somewhere in your page (eg index.ht
 
 Sounds can then be played from JavaScript like this:
 
-```
+```javascript
 document.getElementById("soundPlug").play("boink.wav");
+
 ```
 
 Copy boink.wav (and other sound files you have), to your project directory.
