@@ -14,7 +14,7 @@ The plugin has been developed for use with the game Orbium (https://github.com/b
 ## Usage
 You must define a "object" element like this somewhere in your page (eg index.html, or in a mojo scene):
 
-```html
+```
 <object id="soundPlug" width="1" height="1" type="application/x-palm-remote" x-palm-pass-event="true">
 <param name="appid" value="<your-app-id>">
 <param name="exe" value="soundplug_plugin">
@@ -24,7 +24,8 @@ You must define a "object" element like this somewhere in your page (eg index.ht
 ```
 
 Sounds can then be played from JavaScript like this:
-```javascript
+
+```
 document.getElementById("soundPlug").play("boink.wav");
 ```
 
@@ -38,6 +39,9 @@ For more details of the webOS JavaScript plugin interface:
 https://developer.palm.com/content/api/dev-guide/pdk/js-and-plug-in-interface.html
 
 This plugin has been built with the 3.0 SDK and verified to work on webOS 1.4.5 and 3.0. It should work on all versions and on all webOS hardware.
+
+For an example on how to use SoundPlug plugins on multiple platforms, see this:
+https://github.com/bni/orbium/blob/gh-pages/js/player.js
 
 ## License
 The MIT License

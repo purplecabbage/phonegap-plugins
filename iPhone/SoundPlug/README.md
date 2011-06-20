@@ -15,9 +15,13 @@ Add SoundPlug.m and SoundPlug.h to your xcode project (in the Plugins dir).
 Add test.wav to xcode project as a resource.
 
 Play sound in JavaScript like this:
-```javascript
+
+```
 PhoneGap.exec("SoundPlug.play", "test.wav");
 ```
+
+For an example on how to use SoundPlug plugins on multiple platforms, see this:
+https://github.com/bni/orbium/blob/gh-pages/js/player.js
 
 ## License
 The MIT License

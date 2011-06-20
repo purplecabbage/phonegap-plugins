@@ -42,27 +42,27 @@ static void PlaySound(const char *sound)
 
 static PDL_bool play(PDL_JSParameters *params)
 {
-    if (PDL_GetNumJSParams(params) != 1) {
-        PDL_JSException(params, "wrong number of parameters for play");
+	if (PDL_GetNumJSParams(params) != 1) {
+		PDL_JSException(params, "wrong number of parameters for play");
 
-        return PDL_FALSE;
-    }
+		return PDL_FALSE;
+	}
 
-    const char *sound = PDL_GetJSParamString(params, 0);
+	const char *sound = PDL_GetJSParamString(params, 0);
 
-    SDL_Event event;
-    event.user.type = SDL_USEREVENT;
-    event.user.code = 0;
-    event.user.data1 = strdup(sound);
+	SDL_Event event;
+	event.user.type = SDL_USEREVENT;
+	event.user.code = 0;
+	event.user.data1 = strdup(sound);
 
-    SDL_PushEvent(&event);
-    
-    return PDL_TRUE;
+	SDL_PushEvent(&event);
+
+	return PDL_TRUE;
 }
 
 int main(int argc, char** argv)
 {
-    PDL_Init(0);
+	PDL_Init(0);
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
 	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 1024);
@@ -74,22 +74,22 @@ int main(int argc, char** argv)
 		samples[i] = NULL;
 	}
 
-    PDL_RegisterJSHandler("play", play);
-    PDL_JSRegistrationComplete();
-    PDL_CallJS("ready", NULL, 0);
+	PDL_RegisterJSHandler("play", play);
+	PDL_JSRegistrationComplete();
+	PDL_CallJS("ready", NULL, 0);
 
-    SDL_Event event;
-    do {
-        SDL_WaitEvent(&event);
+	SDL_Event event;
+	do {
+		SDL_WaitEvent(&event);
 
-        if (event.type == SDL_USEREVENT && event.user.code == 0) {
-            char *sound = (char *)event.user.data1;
+		if (event.type == SDL_USEREVENT && event.user.code == 0) {
+			char *sound = (char *)event.user.data1;
 
-            PlaySound(sound);
+			PlaySound(sound);
 
-            free(sound);
-        }
-    } while (event.type != SDL_QUIT);
+			free(sound);
+		}
+	} while (event.type != SDL_QUIT);
 
 	for (int i = 0; i < MAX_SAMPLES; i++) {
 		Mix_FreeChunk(samples[i]);
@@ -97,8 +97,8 @@ int main(int argc, char** argv)
 
 	Mix_CloseAudio();
 
-    PDL_Quit();
-    SDL_Quit();
+	PDL_Quit();
+	SDL_Quit();
 
-    return 0;
+	return 0;
 }
