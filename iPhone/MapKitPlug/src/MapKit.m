@@ -6,9 +6,16 @@
 
 #import "MapKit.h"
 #import "PGAnnotation.h"
-#import "SBJsonParser.h"
-#import "SBJSON.h"
 #import "AsyncImageView.h"
+
+#ifdef PHONEGAP_FRAMEWORK
+	#import <PhoneGap/SBJsonParser.h>
+	#import <PhoneGap/SBJSON.h>
+#else
+	#import "SBJsonParser.h"
+	#import "SBJSON.h"
+#endif
+
 
 @implementation MapKitView
 
