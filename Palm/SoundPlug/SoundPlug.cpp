@@ -70,7 +70,7 @@ int main(int argc, char** argv)
 
 	// Initialize the arrays
 	for (int i = 0; i < MAX_SAMPLES; i++) {
-		strcpy(paths[0], "");
+		strcpy(paths[i], "");
 		samples[i] = NULL;
 	}
 
