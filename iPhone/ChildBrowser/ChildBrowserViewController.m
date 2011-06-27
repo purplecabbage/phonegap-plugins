@@ -94,6 +94,7 @@
 -(IBAction) onDoneButtonPress:(id)sender
 {
 	[ self closeBrowser];
+    NSLog(@"Done Button Pressed!");
 }
 
 
