@@ -42,7 +42,7 @@
 
 	webView.delegate = self;
 	webView.scalesPageToFit = TRUE;
-	webView.backgroundColor = [UIColor whiteColor];
+	webView.backgroundColor = [UIColor underPageBackgroundColor];
 	NSLog(@"View did load",@"");
 }
 
