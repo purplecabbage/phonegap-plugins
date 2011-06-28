@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PhoneGapCommand.h>
+#import <PhoneGap/PGPlugin.h>
 #else
-#import "PhoneGapCommand.h"
+#import "PGPlugin.h"
 #endif
-@interface Screenshot : PhoneGapCommand {
+@interface Screenshot : PGPlugin {
 }
 
 - (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options;
