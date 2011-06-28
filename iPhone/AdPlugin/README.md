@@ -9,7 +9,7 @@ Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap
 2. Add the "iAd" framework to your Frameworks folder, and set it to be weak linked (see "Weak Linking the iAd Framework" section below)
 3. Add the .h and .m files to your Plugins folder in your project
 4. Add the .js files to your "www" folder on disk, and add reference(s) to the .js files as <link> tags in your html file(s)
-5. See the sample project "iAdHost" for an example use (examine the code in www/index.html)
+5. See the sample index.html
 6. Make sure you check the "RELEASE NOTES" section below!
 
 ## Weak Linking the iAd Framework ##
@@ -30,6 +30,13 @@ Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap
 * Not tested on a 3.x device
 * WebView initial size being oversized is a PhoneGap Core issue, and is not addressed in this plugin. When an ad is shown, it correctly sizes the WebView, and when the ad is hidden, sets the WebView back to its original size.
 * Not tested with any other native UI plugins, like TabBar, and will not play nice with them (until we get a better layout management system/plugin)
+
+### 20110627 ###
+* Requires PhoneGap 0.9.6
+* Fixed size issues
+* Orientation change handling
+* Works on iPad 4.x
+* Still does not play nice with other native UI plugins like TabBar (yet)
 
 ## BUGS AND CONTRIBUTIONS ##
 
