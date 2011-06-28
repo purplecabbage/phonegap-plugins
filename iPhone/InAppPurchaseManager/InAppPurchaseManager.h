@@ -10,9 +10,9 @@
 #import <StoreKit/StoreKit.h>
 
 #ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PhoneGapCommand.h>
+#import <PhoneGap/PGPlugin.h>
 #else
-#import "PhoneGapCommand.h"
+#import "PGPlugin.h"
 #endif
 
 #ifdef PHONEGAP_FRAMEWORK
@@ -23,7 +23,7 @@
 
 #import "SKProduct+LocalizedPrice.h"
 
-@interface InAppPurchaseManager : PhoneGapCommand <SKPaymentTransactionObserver> {
+@interface InAppPurchaseManager : PGPlugin <SKPaymentTransactionObserver> {
 
 }
 - (void) setup:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
