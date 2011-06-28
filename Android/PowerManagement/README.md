@@ -6,11 +6,13 @@ The PowerManagement plugin offers access to the devices power-management functio
 It should be used for applications which keep running for a long time without any user interaction.
 
 For details on power functionality see:
+
 * Android: [PowerManager](http://developer.android.com/reference/android/os/PowerManager.html)
 
 Platforms
 ---------
 Currently available on:
+
 * Android (don't forget android.permission.WAKE_LOCK in your AndroidManifest.xml)
 
 License
