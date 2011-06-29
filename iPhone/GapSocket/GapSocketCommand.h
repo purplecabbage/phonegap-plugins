@@ -15,7 +15,7 @@
 #import "AsyncSocket.h"
 
 
-@interface GapSocketCommand : PhoneGapCommand  {
+@interface GapSocketCommand : PGPlugin  {
 
 	NSMutableArray *connectedSockets;
 }
