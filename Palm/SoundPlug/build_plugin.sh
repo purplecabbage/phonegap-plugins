@@ -21,4 +21,4 @@ fi
 CPPFLAGS="-I${PalmPDK}/include -I${PalmPDK}/include/SDL --sysroot=$SYSROOT"
 LDFLAGS="-L${LIBDIR} -Wl,--allow-shlib-undefined"
 
-$CC $DEVICEOPTS $CPPFLAGS $LDFLAGS -lSDL -lSDL_mixer -lpdl -o $OUTFILE $SRC
+$CC $DEVICEOPTS $CPPFLAGS $LDFLAGS -lSDL -lSDL_mixer -lpdl -s -o $OUTFILE $SRC
