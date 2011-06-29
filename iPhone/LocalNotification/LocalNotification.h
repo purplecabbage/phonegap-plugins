@@ -12,7 +12,7 @@
 #else
 #import "PhoneGapCommand.h"
 #endif
-@interface LocalNotification : PhoneGapCommand {
+@interface LocalNotification : PGPlugin {
 }
 - (void)addNotification:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)cancelNotification:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
