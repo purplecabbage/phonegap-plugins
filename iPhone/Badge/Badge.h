@@ -10,9 +10,9 @@
 
 
 #ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/PhoneGapCommand.h>
+    #import <PhoneGap/PGPlugin.h>
 #else
-    #import "PhoneGapCommand.h"
+    #import "PGPlugin.h"
 #endif
 @interface Badge : PGPlugin {
 }
