@@ -13,7 +13,7 @@
 #import "PhoneGapCommand.h"
 #endif
 
-@interface SplashScreen : PhoneGapCommand {
+@interface SplashScreen : PGPlugin {
 	IBOutlet UIImageView *imageView;
 }
 - (void)createSplashScreen;
