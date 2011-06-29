@@ -12,7 +12,7 @@
 #import "PhoneGapCommand.h"
 #endif
 
-@interface FileUploader : PhoneGapCommand {
+@interface FileUploader : PGPlugin {
 
 }
 - (void) upload:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
