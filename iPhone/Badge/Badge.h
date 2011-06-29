@@ -14,7 +14,7 @@
 #else
     #import "PhoneGapCommand.h"
 #endif
-@interface Badge : PhoneGapCommand {
+@interface Badge : PGPlugin {
 }
 - (void)setBadge:(NSMutableArray*)badgeNumber withDict:(NSMutableDictionary*)options;
 @end
