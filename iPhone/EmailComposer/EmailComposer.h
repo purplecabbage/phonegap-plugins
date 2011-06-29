@@ -15,7 +15,7 @@
 #endif
 
 
-@interface EmailComposer : PhoneGapCommand < MFMailComposeViewControllerDelegate > {
+@interface EmailComposer : PGPlugin < MFMailComposeViewControllerDelegate > {
 
 
 }
