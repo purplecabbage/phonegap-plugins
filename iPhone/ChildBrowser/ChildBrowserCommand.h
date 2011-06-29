@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-///For xCode 4 Template only
-#import <PhoneGap/PhoneGapCommand.h>
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
+
 #import "ChildBrowserViewController.h"
 
 
  
-@interface ChildBrowserCommand : PhoneGapCommand<ChildBrowserDelegate>  {
+@interface ChildBrowserCommand : PGPlugin<ChildBrowserDelegate>  {
 
 	ChildBrowserViewController* childBrowser;
 }

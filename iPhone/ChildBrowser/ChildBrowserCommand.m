@@ -8,7 +8,11 @@
 
 #import "ChildBrowserCommand.h"
 
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PhoneGapViewController.h>
+#else
 #import "PhoneGapViewController.h"
+#endif
 
 @implementation ChildBrowserCommand
 
