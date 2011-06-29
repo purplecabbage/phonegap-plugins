@@ -31,7 +31,7 @@
 @end
 
 
-@interface SAiOSPaypalPlugin : PhoneGapCommand<PayPalMEPDelegate> {
+@interface SAiOSPaypalPlugin : PGPlugin<PayPalMEPDelegate> {
 	UIButton* paypalButton;
 	PaypalPaymentInfo* paymentInfo;
 }
