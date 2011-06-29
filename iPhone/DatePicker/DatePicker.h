@@ -10,7 +10,7 @@
 #endif
 
 
-@interface DatePicker : PhoneGapCommand {
+@interface DatePicker : PGPlugin {
 	UIActionSheet *datePickerSheet;
 	UIDatePicker *datePicker;
 	BOOL isVisible;
