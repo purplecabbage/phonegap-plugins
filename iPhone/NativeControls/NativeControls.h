@@ -20,7 +20,7 @@
 #import "PhoneGapCommand.h"
 #endif
 
-@interface NativeControls : PhoneGapCommand <UITabBarDelegate, UIActionSheetDelegate> {
+@interface NativeControls : PGPlugin <UITabBarDelegate, UIActionSheetDelegate> {
 	UITabBar* tabBar;
 	NSMutableDictionary* tabBarItems;
 
