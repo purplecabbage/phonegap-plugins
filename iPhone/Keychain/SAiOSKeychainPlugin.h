@@ -13,7 +13,7 @@
 #import "PhoneGapCommand.h"
 #endif
 
-@interface SAiOSKeychainPlugin : PhoneGapCommand {
+@interface SAiOSKeychainPlugin : PGPlugin {
 }
 
 - (void) getForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
