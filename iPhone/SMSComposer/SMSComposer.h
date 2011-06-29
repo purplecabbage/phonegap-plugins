@@ -10,7 +10,7 @@
 #else
 #import "PhoneGapCommand.h"
 #endif
-@interface SMSComposer : PhoneGapCommand {
+@interface SMSComposer : PGPlugin {
 }
 
 - (void)showSMSComposer:(NSArray*)arguments withDict:(NSDictionary*)options;
