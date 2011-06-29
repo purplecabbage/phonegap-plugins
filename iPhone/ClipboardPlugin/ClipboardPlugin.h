@@ -12,7 +12,7 @@
 #import "PhoneGapCommand.h"
 #endif
 
-@interface ClipboardPlugin : PhoneGapCommand{ }
+@interface ClipboardPlugin : PGPlugin{ }
 
 -(void)setText:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 
