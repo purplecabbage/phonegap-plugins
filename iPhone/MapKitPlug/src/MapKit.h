@@ -13,7 +13,7 @@
     #import "PhoneGapCommand.h"
 #endif
 
-@interface MapKitView : PhoneGapCommand <MKMapViewDelegate> 
+@interface MapKitView : PGPlugin <MKMapViewDelegate> 
 {
 	UIView* childView;
     MKMapView* mapView;
