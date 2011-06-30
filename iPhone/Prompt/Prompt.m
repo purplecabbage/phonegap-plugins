@@ -9,21 +9,20 @@
 - (void) show:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options {
 
     NSString* callback = [arguments objectAtIndex:0];
-	NSString *title = [options objectForKey:@"title"];
+    NSString *title = [options objectForKey:@"title"];
     NSString *okButtonTitle = [options objectForKey:@"okButtonTitle"];
     NSString *cancelButtonTitle = [options objectForKey:@"cancelButtonTitle"];
 
     PromptAlertView *promptAlertView = [[PromptAlertView alloc]
-                                        initWithTitle:title
-                                        delegate:self
-                                        cancelButtonTitle:cancelButtonTitle
-                                        okButtonTitle:okButtonTitle];
-    
+                                            initWithTitle:title
+                                            delegate:self
+                                            cancelButtonTitle:cancelButtonTitle
+                                            okButtonTitle:okButtonTitle];
+
     promptAlertView.callback = callback;
 
-	[promptAlertView show];
-	[promptAlertView release];
-
+    [promptAlertView show];
+    [promptAlertView release];
 }
 
 - (void)alertView:(UIAlertView *)view clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -36,7 +35,7 @@
     }
     else {
         NSString* jsCallback = [ NSString 
-                                stringWithFormat:@"%@.cancelCallback();", [(PromptAlertView *)view getCallback]];
+            stringWithFormat:@"%@.cancelCallback();", [(PromptAlertView *)view getCallback]];
         [super writeJavascript : jsCallback];
     }
     [((PromptAlertView*)view).textField resignFirstResponder];
@@ -74,7 +73,6 @@
         if ([iOsVersion intValue] < 4) {
             [self setTransform:CGAffineTransformMakeTranslation(0,130)];
         }
-        
     }
     return self;
 }
@@ -97,7 +95,6 @@
 }
 
 - (void) dealloc {
-    [textField removeFromSuperview];
     [textField release];
     [super dealloc];
 }

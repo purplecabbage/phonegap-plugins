@@ -4,7 +4,7 @@ By Paul Panserrieu, Zenexity
 ## Credits ##
 This plugin is highly inspirated by a blog post from Jeff Lamarche 
 ( http://iphonedevelopment.blogspot.com/2009/02/alert-view-with-prompt.html )
-and the other PhoneGap plugins.
+and others PhoneGap plugins.
 
 ## Adding the Plugin to your project ##
 Copy the .h and .mm file to the Plugins directory in your project. 
@@ -12,7 +12,7 @@ Copy the .js file to your www directory and reference it from your html file(s)
 
 ## Usage ##
 
-   window.plugins.Prompt.show(
+    window.plugins.Prompt.show(
         "My Prompt Title",
         function (userText) { ...}, // ok callback
         function () { }, // cancel callback 
@@ -20,9 +20,6 @@ Copy the .js file to your www directory and reference it from your html file(s)
         "Cancel" // cancel button title (optional)
     );
 
-in a browser, the prompt alert is synchronous. Here, this is not the case.
-You can have multipels Prompts displayed a the same time, which makes no sense.
-	
 ## Licence ##
 
 The MIT License

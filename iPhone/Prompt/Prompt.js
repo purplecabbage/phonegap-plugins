@@ -17,17 +17,17 @@ Prompt.prototype.show = function(title, okCallback, cancelCallback, okButtonTitl
     };
 
     var key = 'f' + this.callbackIdx++;
-	window.plugins.Prompt.callbackMap[key] = {
-		okCallback: function(msg) {
+    window.plugins.Prompt.callbackMap[key] = {
+        okCallback: function(msg) {
             okCallback(msg);
             delete window.plugins.Prompt.callbackMap[key];
-		},
-		cancelCallback: function() {
+        },
+        cancelCallback: function() {
             cancelCallback();
             delete window.plugins.Prompt.callbackMap[key];
-		}
-	};
-	var callback = 'window.plugins.Prompt.callbackMap.' + key;
+        }
+    };
+    var callback = 'window.plugins.Prompt.callbackMap.' + key;
     PhoneGap.exec("Prompt.show", callback, defaults);
 };
 
