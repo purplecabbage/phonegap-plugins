@@ -8,7 +8,7 @@ function Prompt() {
 
 }
 
-Prompt.prototype.show = function(title, okCallback, cancelCallback, okButtonTitle, cancelButtonTitle) {
+Prompt.prototype.show = function(title, okCallback, cancelCallback, okButtonTitle, cancelButtonTitle) { 
 
     var defaults = {
         title : title,
@@ -19,11 +19,15 @@ Prompt.prototype.show = function(title, okCallback, cancelCallback, okButtonTitl
     var key = 'f' + this.callbackIdx++;
     window.plugins.Prompt.callbackMap[key] = {
         okCallback: function(msg) {
-            okCallback(msg);
+            if (okCallback && typeof okCallback === 'function') {
+                okCallback(msg);
+            }
             delete window.plugins.Prompt.callbackMap[key];
         },
         cancelCallback: function() {
-            cancelCallback();
+            if (cancelCallback && typeof cancelCallback === 'function') {
+                cancelCallback();
+            }
             delete window.plugins.Prompt.callbackMap[key];
         }
     };
