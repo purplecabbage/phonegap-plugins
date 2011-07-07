@@ -72,6 +72,9 @@
 		
         switch (transaction.transactionState)
         {
+			case SKPaymentTransactionStatePurchasing:
+				continue;
+
             case SKPaymentTransactionStatePurchased:
 				state = @"PaymentTransactionStatePurchased";
 				transactionIdentifier = transaction.transactionIdentifier;
