@@ -42,7 +42,7 @@
 
 	webView.delegate = self;
 	webView.scalesPageToFit = TRUE;
-	webView.backgroundColor = [UIColor whiteColor];
+	webView.backgroundColor = [UIColor underPageBackgroundColor];
 	NSLog(@"View did load",@"");
 }
 
@@ -68,7 +68,7 @@
 
 	webView.delegate = nil;
 	
-	[webView release];
+	/* [webView release];
 	[closeBtn release];
 	[refreshBtn release];
 	[addressLabel release];
@@ -77,6 +77,8 @@
 	[safariBtn release];
 	[spinner release];
 	[ supportedOrientations release];
+     */
+    
 	[super dealloc];
 }
 
@@ -94,6 +96,7 @@
 -(IBAction) onDoneButtonPress:(id)sender
 {
 	[ self closeBrowser];
+    NSLog(@"Done Button Pressed!");
 }
 
 
@@ -146,7 +149,7 @@
 		[url hasSuffix:@".bmp" ]  || 
 		[url hasSuffix:@".gif" ]  )
 	{
-		[ imageURL release ];
+		//[ imageURL release ];
 		imageURL = [url copy];
 		isImage = YES;
 		NSString* htmlText = @"<html><body style='background-color:#333;margin:0px;padding:0px;'><img style='min-height:200px;margin:0px;padding:0px;width:100%;height:auto;' alt='' src='IMGSRC'/></body></html>";
@@ -159,7 +162,10 @@
 	{
 		imageURL = @"";
 		isImage = NO;
-		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+		NSURLCache* childCache = [NSURLCache sharedURLCache];
+        [childCache setMemoryCapacity:4 * 1024 * 1024]; //refer NSURLCache line:130 for alt values
+        [childCache setDiskCapacity:512*1024];
+		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:10.0];
 		[webView loadRequest:request];
 	}
 	webView.hidden = NO;
