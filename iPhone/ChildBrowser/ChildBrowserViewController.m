@@ -162,7 +162,10 @@
 	{
 		imageURL = @"";
 		isImage = NO;
-		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+		NSURLCache* childCache = [NSURLCache sharedURLCache];
+        [childCache setMemoryCapacity:4 * 1024 * 1024]; //refer NSURLCache line:130 for alt values
+        [childCache setDiskCapacity:512*1024];
+		NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:10.0];
 		[webView loadRequest:request];
 	}
 	webView.hidden = NO;
