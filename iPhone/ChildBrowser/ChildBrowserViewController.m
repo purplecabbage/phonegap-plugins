@@ -147,6 +147,7 @@
 	    [url hasSuffix:@".jpg" ]  || 
 		[url hasSuffix:@".jpeg" ] || 
 		[url hasSuffix:@".bmp" ]  || 
+        [url hasSuffix:@".svg" ]  || 
 		[url hasSuffix:@".gif" ]  )
 	{
 		//[ imageURL release ];
