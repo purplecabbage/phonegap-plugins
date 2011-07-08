@@ -6,10 +6,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
 
-@interface FileUploader : PhoneGapCommand {
-	
+@interface FileUploader : PGPlugin {
+
 }
 - (void) upload:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) uploadByUri:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;

@@ -7,9 +7,13 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
 
-@interface SAiOSKeychainPlugin : PhoneGapCommand {
+@interface SAiOSKeychainPlugin : PGPlugin {
 }
 
 - (void) getForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
@@ -48,7 +52,7 @@
 //
 
 @interface SFHFKeychainUtils : NSObject {
-  
+
 }
 
 + (NSString *) getPasswordForUsername: (NSString *) username andServiceName: (NSString *) serviceName error: (NSError **) error;

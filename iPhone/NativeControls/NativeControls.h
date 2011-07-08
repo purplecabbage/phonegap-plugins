@@ -1,6 +1,6 @@
 //
 //  NativeControls.h
-//  
+//
 //
 //  Created by Jesse MacFadyen on 10-02-03.
 //  MIT Licensed
@@ -14,20 +14,24 @@
 #import <UIKit/UIKit.h>
 #import <UIKit/UITabBar.h>
 #import <UIKit/UIToolbar.h>
-#import "PhoneGapCommand.h"
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
 
-@interface NativeControls : PhoneGapCommand <UITabBarDelegate, UIActionSheetDelegate> {
+@interface NativeControls : PGPlugin <UITabBarDelegate, UIActionSheetDelegate> {
 	UITabBar* tabBar;
 	NSMutableDictionary* tabBarItems;
 
 	UIToolbar* toolBar;
 	UIBarButtonItem* toolBarTitle;
 	NSMutableArray* toolBarItems;
-	
+
 	CGRect	originalWebViewBounds;
 }
 
-/* Tab Bar methods 
+/* Tab Bar methods
  */
 - (void)createTabBar:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)showTabBar:(NSArray*)arguments withDict:(NSDictionary*)options;
@@ -45,7 +49,7 @@
 - (void)createToolBarItem:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)showToolBar:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)hideToolBar:(NSArray*)arguments withDict:(NSDictionary*)options;
-/* ActionSheet 
+/* ActionSheet
  */
 - (void)createActionSheet:(NSArray*)arguments withDict:(NSDictionary*)options;
 

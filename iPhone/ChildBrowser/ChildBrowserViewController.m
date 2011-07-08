@@ -25,6 +25,20 @@
 }
 */
 
++ (NSString*) resolveImageResource:(NSString*)resource
+{
+	NSString* systemVersion = [[UIDevice currentDevice] systemVersion];
+	BOOL isLessThaniOS4 = ([systemVersion compare:@"4.0" options:NSNumericSearch] == NSOrderedAscending);
+	
+	// the iPad image (nor retina) differentiation code was not in 3.x, and we have to explicitly set the path
+	if (isLessThaniOS4)
+	{
+        return [NSString stringWithFormat:@"%@.png", resource];
+	}
+	
+	return resource;
+}
+
 
 - (ChildBrowserViewController*)initWithScale:(BOOL)enabled
 {
@@ -39,11 +53,16 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+	refreshBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/but_refresh"]];
+	backBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_left"]];
+	fwdBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_right"]];
+	safariBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/compass"]];
 
 	webView.delegate = self;
 	webView.scalesPageToFit = TRUE;
 	webView.backgroundColor = [UIColor whiteColor];
-	NSLog(@"View did load",@"");
+	NSLog(@"View did load");
 }
 
 
@@ -60,7 +79,7 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
-	NSLog(@"View did UN-load",@"");
+	NSLog(@"View did UN-load");
 }
 
 

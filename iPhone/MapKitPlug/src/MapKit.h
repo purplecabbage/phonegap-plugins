@@ -7,9 +7,13 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-#import "PhoneGapCommand.h"
+#ifdef PHONEGAP_FRAMEWORK
+    #import <PhoneGap/PGPlugin.h>
+#else
+    #import "PGPlugin.h"
+#endif
 
-@interface MapKitView : PhoneGapCommand <MKMapViewDelegate> 
+@interface MapKitView : PGPlugin <MKMapViewDelegate> 
 {
 	UIView* childView;
     MKMapView* mapView;

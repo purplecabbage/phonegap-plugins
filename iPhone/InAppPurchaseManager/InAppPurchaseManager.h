@@ -8,17 +8,28 @@
 
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
-#import "PhoneGapCommand.h"
+
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
+
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/NSData+Base64.h>
+#else
 #import "NSData+Base64.h"
+#endif
 
 #import "SKProduct+LocalizedPrice.h"
 
-@interface InAppPurchaseManager : PhoneGapCommand <SKPaymentTransactionObserver> {
+@interface InAppPurchaseManager : PGPlugin <SKPaymentTransactionObserver> {
 
 }
 - (void) setup:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) makePurchase:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) requestProductData:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void) requestProductsData:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions;
 
 @end
@@ -36,3 +47,12 @@
 
 @end;
 
+@interface BatchProductsRequestDelegate : NSObject <SKProductsRequestDelegate> {
+	NSString* callback;
+	InAppPurchaseManager* command;
+}
+
+@property (nonatomic, copy) NSString* callback;
+@property (nonatomic, retain) InAppPurchaseManager* command;
+
+@end;
