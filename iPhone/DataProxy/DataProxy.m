@@ -36,9 +36,7 @@ static char dataInstanceKey;
     NSString *uuid = [self createUUID];
     
     // Create & store data keyed off of the UUID
-    NSMutableDictionary *ds = [[NSMutableData alloc] initWithCapacity:2048];
-    [dataStreams setObject:ds forKey:uuid];
-    [ds release];
+    [dataStreams setObject:[[NSMutableData alloc] initWithCapacity:2048] forKey:uuid];
     
     // Store the callbacks keyed off of the UUID
     [callbacks setObject:[NSArray arrayWithObjects:[arguments objectAtIndex:0], [arguments objectAtIndex:1], nil] forKey:uuid];
@@ -70,7 +68,7 @@ static char dataInstanceKey;
 -(void) removeDataStream: (NSString*) uuid{
     NSMutableData *data = (NSMutableData*) [dataStreams objectForKey:uuid];
     if(data != nil){
-        data = nil;
+        [data release], data = nil;
         [dataStreams removeObjectForKey:uuid];
     }
 }
