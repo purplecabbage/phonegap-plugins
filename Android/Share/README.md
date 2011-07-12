@@ -3,12 +3,12 @@ By Kevin Schaul - @foxyNinja7
 
 ## Using the plugin ##
 
-window.plugins.share.show({
-	subject: 'I like turtles',
-	text: 'http://www.mndaily.com'},
-	function() {},
-	function() {alert('Share failed')}
-);
+	window.plugins.share.show({
+		subject: 'I like turtles',
+		text: 'http://www.mndaily.com'},
+		function() {},
+		function() {alert('Share failed')}
+	);
 
 ## Release notes ##
 
