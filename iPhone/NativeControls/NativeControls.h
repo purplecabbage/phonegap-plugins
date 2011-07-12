@@ -1,6 +1,6 @@
 //
 //  NativeControls.h
-//  
+//
 //
 //  Created by Jesse MacFadyen on 10-02-03.
 //  MIT Licensed
@@ -14,7 +14,11 @@
 #import <UIKit/UIKit.h>
 #import <UIKit/UITabBar.h>
 #import <UIKit/UIToolbar.h>
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PhoneGapCommand.h>
+#else
 #import "PhoneGapCommand.h"
+#endif
 
 @interface NativeControls : PhoneGapCommand <UITabBarDelegate, UIActionSheetDelegate> {
 	UITabBar* tabBar;
@@ -22,12 +26,12 @@
 
 	UIToolbar* toolBar;
 	UIBarButtonItem* toolBarTitle;
-	NSMutableDictionary* toolBarItems;
+	NSMutableArray* toolBarItems;
+
 	CGRect	originalWebViewBounds;
-	
 }
 
-/* Tab Bar methods 
+/* Tab Bar methods
  */
 - (void)createTabBar:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)showTabBar:(NSArray*)arguments withDict:(NSDictionary*)options;
@@ -40,10 +44,12 @@
 /* Tool Bar methods
  */
 - (void)createToolBar:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void)resetToolBar:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)setToolBarTitle:(NSArray*)arguments withDict:(NSDictionary*)options;
-- (void)toolBarTitleClicked;
-
-/* ActionSheet 
+- (void)createToolBarItem:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void)showToolBar:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void)hideToolBar:(NSArray*)arguments withDict:(NSDictionary*)options;
+/* ActionSheet
  */
 - (void)createActionSheet:(NSArray*)arguments withDict:(NSDictionary*)options;
 

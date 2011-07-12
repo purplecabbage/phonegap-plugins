@@ -7,7 +7,11 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-#import "PhoneGapCommand.h"
+#ifdef PHONEGAP_FRAMEWORK
+    #import <PhoneGap/PhoneGapCommand.h>
+#else
+    #import "PhoneGapCommand.h"
+#endif
 
 @interface MapKitView : PhoneGapCommand <MKMapViewDelegate> 
 {
