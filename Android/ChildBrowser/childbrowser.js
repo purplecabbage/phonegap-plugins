@@ -30,5 +30,5 @@ ChildBrowser.prototype.showWebPage = function(url, usePhoneGap) {
  */
 PhoneGap.addConstructor(function() {
     PhoneGap.addPlugin("childBrowser", new ChildBrowser());
-    PluginManager.addService("ChildBrowser", "com.phonegap.plugins.childBrowser.ChildBrowser");
+    navigator.app.addService("ChildBrowser", "com.phonegap.plugins.childBrowser.ChildBrowser"); 
 });
