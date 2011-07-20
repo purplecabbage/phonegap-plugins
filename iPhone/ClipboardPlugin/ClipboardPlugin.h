@@ -12,4 +12,6 @@
 
 -(void)setText:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 
+-(void)getText:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+
 @end
