@@ -29,7 +29,7 @@
 	NSString *text = [pasteboard valueForPasteboardType:@"public.utf8-plain-text"];
   
   NSString* jsString = [[NSString alloc] initWithFormat:@"%@(\"%@\");", jsCallback, text];
-  [webView stringByEvaluatingJavaScriptFromString:jsString];
+  [self writeJavascript:jsString];
   
 	[jsString release];
 }
