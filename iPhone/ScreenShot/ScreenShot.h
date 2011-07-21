@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
-@interface Screenshot : PhoneGapCommand {
+#import <QuartzCore/QuartzCore.h>
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
+@interface Screenshot : PGPlugin {
 }
 
 - (void)saveScreenshot:(NSArray*)arguments withDict:(NSDictionary*)options;

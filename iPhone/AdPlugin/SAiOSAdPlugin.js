@@ -6,6 +6,14 @@ function SAiOSAdPlugin()
 }
 
 /**
+* show - true to show the ad, false to hide the ad
+*/
+SAiOSAdPlugin.prototype.orientationChanged = function()
+{
+    PhoneGap.exec("SAiOSAdPlugin.orientationChanged", window.orientation);
+}
+
+/**
  * show - true to show the ad, false to hide the ad
  */
 SAiOSAdPlugin.prototype.showAd = function(show)

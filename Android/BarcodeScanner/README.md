@@ -7,7 +7,12 @@ If the user doesn't have the app install they will be promped to install it the 
 
 1. To install the plugin, move barcodescanner.js to your project's www folder and include a reference to it 
 in your html files. 
-2. Create a folder called "beetight" within your project's src/com/ folder and move the java file into it.
+2. Create a folder called 'src/com/beetight/barcodescanner' within your project's src/com/ folder.
+3. And copy the java file into that new folder.
+
+`mkdir <your_project>/src/com/beetight/barcodescanner`
+
+`cp ./BarcodeScanner.java <your_project>/src/com/beetight/barcodescanner`
 
 ## Using the plugin ##
 The plugin creates the object `window.plugins.barcodeScanner` with one method `scan(types, success, fail, options)`
@@ -50,6 +55,25 @@ A full example could be:
 		    alert("Scanning failed: " + error);
 	    }, {yesString: "Install"}
 	);
+
+## Encoding a Barcode ##
+Supported encoding types:
+
+* TEXT_TYPE
+* EMAIL_TYPE
+* PHONE_TYPE
+* SMS_TYPE
+
+
+A full example could be:
+
+            window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, "http://www.nytimes.com", function(success) {
+  	        alert("encode success: " + success);
+  	      }, function(fail) {
+  	        alert("encoding failed: " + fail);
+  	      }, {yesString: "Install"}
+  	    );
+
 	
 ## BUGS AND CONTRIBUTIONS ##
 The latest bleeding-edge version is available [on GitHub](http://github.com/ascorbic/phonegap-plugins/tree/master/Android/)

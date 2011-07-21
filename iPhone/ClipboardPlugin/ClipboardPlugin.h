@@ -6,9 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
 
-@interface ClipboardPlugin : PhoneGapCommand{ }
+@interface ClipboardPlugin : PGPlugin{ }
 
 -(void)setText:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 

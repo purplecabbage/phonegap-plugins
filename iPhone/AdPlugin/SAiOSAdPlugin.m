@@ -8,6 +8,13 @@
 
 #import "SAiOSAdPlugin.h"
 
+#ifdef PHONEGAP_FRAMEWORK
+    #import <PhoneGap/PGDebug.h>
+#else
+    #import "PGDebug.h"
+#endif
+
+
 @interface SAiOSAdPlugin(PrivateMethods)
 
 - (void) __prepare:(BOOL)atBottom;
@@ -19,10 +26,73 @@
 @implementation SAiOSAdPlugin
 
 @synthesize adView;
-@synthesize bannerIsVisible, bannerIsInitialized, bannerIsAtBottom;
+@synthesize bannerIsVisible, bannerIsInitialized, bannerIsAtBottom, isLandscape;
 
 #pragma mark -
 #pragma mark Public Methods
+
+- (void) resizeViews
+{
+    Class adBannerViewClass = NSClassFromString(@"ADBannerView");
+	if (adBannerViewClass && self.adView)
+	{
+        CGRect webViewFrame = [super webView].frame;
+        CGRect superViewFrame = [[super webView] superview].frame;
+        CGRect adViewFrame = self.adView.frame;
+        
+        BOOL adIsShowing = [[[super webView] superview].subviews containsObject:self.adView];
+        if (adIsShowing) 
+        {
+            if (self.bannerIsAtBottom) {
+                webViewFrame.origin.y = 0;
+            } else {
+                webViewFrame.origin.y = adViewFrame.size.height;
+            }
+            
+            webViewFrame.size.height = self.isLandscape? (superViewFrame.size.width - adViewFrame.size.height) : (superViewFrame.size.height - adViewFrame.size.height);
+        } 
+        else 
+        {
+            webViewFrame.size = self.isLandscape? CGSizeMake(superViewFrame.size.height, superViewFrame.size.width) : superViewFrame.size;
+            webViewFrame.origin = CGPointZero;
+        }
+        
+        [UIView beginAnimations:@"blah" context:NULL];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        
+        [super webView].frame = webViewFrame;
+        
+        [UIView commitAnimations];
+    }
+}
+
+- (void) orientationChanged:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+{
+    NSInteger orientation = [[arguments objectAtIndex:0] integerValue];
+    
+    Class adBannerViewClass = NSClassFromString(@"ADBannerView");
+	if (adBannerViewClass && self.adView)
+	{
+        switch (orientation) {
+            // landscape
+            case 90:
+            case -90:
+                self.adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifier480x32;
+                self.isLandscape = YES;
+                break;
+            // portrait
+            case 0:
+            case 180:
+                self.adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifier320x50;
+                self.isLandscape = NO;
+                break;
+            default:
+                break;
+        }
+        
+        [self resizeViews];
+    }
+}
 
 - (void) prepare:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
@@ -30,7 +100,23 @@
 	if (argc > 1) {
 		return;
 	}
-	
+    
+    self.isLandscape = NO;
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    switch (orientation) {
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationPortraitUpsideDown:
+            self.isLandscape = NO;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+        case UIDeviceOrientationLandscapeRight:
+            self.isLandscape = YES;
+            break;
+        default:
+            self.isLandscape = YES;
+            break;
+    }
+    
 	NSString* atBottomValue = [arguments objectAtIndex:0];
 	[self __prepare:[atBottomValue boolValue]];
 }
@@ -51,24 +137,30 @@
 
 - (void) __prepare:(BOOL)atBottom
 {
-	NSLog(@"SAiOSAdPlugin Prepare Ad At Bottom: %d", atBottom);
+	DLog(@"SAiOSAdPlugin Prepare Ad At Bottom: %d", atBottom);
 	
 	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
 	if (adBannerViewClass && !self.adView)
 	{
-		self.adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
+        CGRect superViewFrame = [[super webView] superview].frame;
+        
+		self.adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        // we are still using these constants even though they are deprecated - if it is changed, iOS 4 devices < 4.3 will crash.
+        // will need to do a run-time iOS version check
 		self.adView.requiredContentSizeIdentifiers = [NSSet setWithObjects: ADBannerContentSizeIdentifier320x50, ADBannerContentSizeIdentifier480x32, nil];		
 		self.adView.delegate = self;
+        
+        NSString* contentSizeId = (self.isLandscape ? ADBannerContentSizeIdentifier480x32 : ADBannerContentSizeIdentifier320x50);
+        self.adView.currentContentSizeIdentifier = contentSizeId;
 		
-		CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
 		if (atBottom) {
 			CGRect adViewFrame = self.adView.frame;
-			adViewFrame.origin.y = [UIScreen mainScreen].bounds.size.height - statusBarHeight - adViewFrame.size.height;
+			adViewFrame.origin.y = superViewFrame.size.height - adViewFrame.size.height;
 			self.adView.frame = adViewFrame;
 			
 			self.bannerIsAtBottom = YES;
 		}
-		
+        
 		self.bannerIsVisible = NO;
 		self.bannerIsInitialized = YES;
 	}
@@ -76,7 +168,7 @@
 
 - (void) __showAd:(BOOL)show
 {
-	NSLog(@"SAiOSAdPlugin Show Ad: %d", show);
+	DLog(@"SAiOSAdPlugin Show Ad: %d", show);
 	
 	if (!self.bannerIsInitialized){
 		[self __prepare:NO];
@@ -90,27 +182,14 @@
 		return;
 	}
 	
-	CGRect adViewFrame = self.adView.frame;
-	CGRect webViewFrame = [super webView].frame;
-	CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-	
 	if (show)
 	{
-		if (self.bannerIsAtBottom)
-		{
-			webViewFrame.size.height -= (adViewFrame.size.height + statusBarHeight);
-		}
-		else
-		{
-			webViewFrame.origin.y += adViewFrame.size.height;
-			webViewFrame.size.height -= (adViewFrame.size.height + statusBarHeight);
-		}
-
 		[UIView beginAnimations:@"blah" context:NULL];
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 
-		[super webView].frame = webViewFrame;
 		[[[super webView] superview] addSubview:self.adView];
+		[[[super webView] superview] bringSubviewToFront:self.adView];
+        [self resizeViews];
 		
 		[UIView commitAnimations];
 
@@ -118,21 +197,11 @@
 	}
 	else 
 	{
-		if (self.bannerIsAtBottom)
-		{
-			webViewFrame.size.height += (adViewFrame.size.height + statusBarHeight);
-		}
-		else
-		{
-			webViewFrame.origin.y -= adViewFrame.size.height;
-			webViewFrame.size.height += (adViewFrame.size.height + statusBarHeight);
-		}
-		
 		[UIView beginAnimations:@"blah" context:NULL];
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 		
-		[super webView].frame = webViewFrame;
 		[self.adView removeFromSuperview];
+        [self resizeViews];
 		
 		[UIView commitAnimations];
 		
@@ -149,14 +218,7 @@
 	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
     if (adBannerViewClass)
     {
-		NSString* jsString = 
-		@"(function(){"
-		"var e = document.createEvent('Events');"
-		"e.initEvent('iAdBannerViewDidLoadAdEvent');"
-		"document.dispatchEvent(e);"
-		"})();";
-
-		[super writeJavascript:jsString];
+		[super writeJavascript:@"PhoneGap.fireEvent('iAdBannerViewDidLoadAdEvent');"];
     }
 }
 

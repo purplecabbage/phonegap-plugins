@@ -45,6 +45,8 @@ Some general rules for interacting with plugins:
   ex. window.plugins.emailComposer.showEmailComposer( ...
           // CORRECT, this is calling an instance method.
 
+- if using the Xcode 4 Template using the PhoneGap.framework, see https://github.com/phonegap/phonegap-plugins/issues/21
+
 
 
 

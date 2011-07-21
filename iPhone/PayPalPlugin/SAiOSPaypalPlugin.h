@@ -6,7 +6,11 @@
 //  Copyright 2010 Shazron Abdullah. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
 #import "PayPal.h"
 
 @interface PaypalPaymentInfo : NSObject
@@ -27,7 +31,7 @@
 @end
 
 
-@interface SAiOSPaypalPlugin : PhoneGapCommand<PayPalMEPDelegate> {
+@interface SAiOSPaypalPlugin : PGPlugin<PayPalMEPDelegate> {
 	UIButton* paypalButton;
 	PaypalPaymentInfo* paymentInfo;
 }
