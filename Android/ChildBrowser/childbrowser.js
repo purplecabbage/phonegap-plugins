@@ -30,5 +30,7 @@ ChildBrowser.prototype.showWebPage = function(url, usePhoneGap) {
  */
 PhoneGap.addConstructor(function() {
     PhoneGap.addPlugin("childBrowser", new ChildBrowser());
-    PluginManager.addService("ChildBrowser", "com.phonegap.plugins.childBrowser.ChildBrowser");
+// @deprecated: No longer needed in PhoneGap 1.0. Uncomment the addService code for earlier 
+// PhoneGap releases.
+//    PluginManager.addService("ChildBrowser", "com.phonegap.plugins.childBrowser.ChildBrowser");
 });

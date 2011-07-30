@@ -26,6 +26,9 @@ Using this plugin requires [Android PhoneGap](http://github.com/phonegap/phonega
       &lt;/intent-filter&gt;<br/>
     &lt;/activity&gt;
 
+4. In your res/xml/plugins.xml file add the following line:
+
+    &lt;plugin name="ChildBrowser" value="com.phonegap.plugins.childBrowser.ChildBrowser"/&gt;
 
 ## Using the plugin ##
 
