@@ -7,16 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PGPlugin.h>
+    #import <PhoneGap/PhoneGapCommand.h>
 #else
-#import "PGPlugin.h"
+    #import "PhoneGapCommand.h"
 #endif
 
-@interface SplashScreen : PGPlugin {
+@interface SplashScreen : PhoneGapCommand {
 	IBOutlet UIImageView *imageView;
 }
-- (void)createSplashScreen;
+- (void)createSplashScreen:(NSString*)imageName : (NSString*)imageType;
 - (void)show:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)hide:(NSArray*)arguments withDict:(NSDictionary*)options;
 @end
