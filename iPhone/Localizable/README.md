@@ -17,7 +17,8 @@ In the `da` file, you could write
 
 
 ## Adding the Plugin to your project ##
-Copy the .h and .m file to the Plugins directory in your project. Copy the .js file to your www directory and reference it from your html file(s). 
+Copy the .h and .m file to the Plugins directory in your project. Copy the .js file to your www directory and reference it from your html file(s).
+Remember to add it to the plugins in PhoneGap.plist 
 
 
 ## Using the plugin ##

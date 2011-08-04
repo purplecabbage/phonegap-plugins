@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
 
-@interface localizable : PhoneGapCommand {}
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
+
+@interface localizable : PGPlugin {}
 -	(void) get:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 @end
