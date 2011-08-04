@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
 
-@interface networkActivityIndicator : PhoneGapCommand {
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
 
-}
+@interface networkActivityIndicator : PGPlugin {}
 -	(void) setIndicator:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 
 @end

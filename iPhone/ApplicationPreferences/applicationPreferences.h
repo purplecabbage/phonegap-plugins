@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "PhoneGapCommand.h"
-@interface applicationPreferences : PhoneGapCommand {}
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#else
+#import "PGPlugin.h"
+#endif
+
+@interface applicationPreferences : PGPlugin {}
 -	(void) getSetting:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 -	(void) setSetting:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 -	(NSString*) getSettingFromBundle:(NSString*)settingName;
