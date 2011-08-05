@@ -1,7 +1,7 @@
 #import <AudioToolbox/AudioServices.h>
-#import "PhoneGapCommand.h"
+#import "PGPlugin.h"
 
-@interface SoundPlug : PhoneGapCommand {
+@interface SoundPlug : PGPlugin {
 }
 
 - (void) play:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
