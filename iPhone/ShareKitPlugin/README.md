@@ -1,15 +1,15 @@
-ShareKit plugin for Phonegap 
-=============
+#ShareKit plugin for Phonegap 
+
 By Erick Camacho
 
-Adding ShareKit to a PhoneGap Project
-______________________________________
+## Adding ShareKit to a PhoneGap Project
+
 
 Download [ShareKit](http://www.getsharekit.com) and install it on your project following the instructions provided in [the site](http://getsharekit.com/install/).
 
 Most of the services used by ShareKit need API keys, add them in the SHKConfig.h you can find more information about the topic inside that file.
 
-Both ShareKit and Phonegap uses a class called Reachability. So, if you compile it you will get the following compiler error:
+Both ShareKit and Phonegap use a class called Reachability. Thus, if you compile the project at this point, you will get the following compiler error:
 
 Command /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/llvm-gcc-4.2 failed with exit code 1
 
@@ -21,23 +21,23 @@ To fix this error you need to delete the files Reachabily.h and Reachability.m f
 
 To this:
 
-`#ifdef PHONEGAP_FRAMEWORK`
-`#import <PhoneGap/Reachability.h>`
-`#else`
-`#import "Reachability.h"`
+	#ifdef PHONEGAP_FRAMEWORK
+	#import <PhoneGap/Reachability.h>
+	#else
+	#import "Reachability.h"
  
 Now you should be able to succesfully compile your project.
 
-Adding the Plugin to the Project
-________________________________
 
-Copy ShareKitPlugin.h and ShareKitPlugin.m to your project. Now add both files to the Plugins Folder in Xcode.
-
-Copy the ShareKitPlugin.js to your www folder.
+## Adding the Plugin to the Project
 
 
-Using the plugin
-________________
+1. Copy ShareKitPlugin.h and ShareKitPlugin.m to your project. 
+2. Add both files to the Plugins Folder in Xcode.
+3. Copy the ShareKitPlugin.js to your www folder.
+
+
+## Using the plugin
 
 Add the js file to your html. 
 
@@ -64,8 +64,18 @@ you must logout the current one first );
 you must logout the current one first );
 
 
-License 
-_______
+## Running the example
+The example is a project for XCode 4. It shows a basic use for the plugin, in order to use it you must add the API keys of the services that you want to test in the SHKConfig.h file.
+
+## Limitations
+
+Currently the plugin can only share messages and URLs. In the future I will add functionality to share images as well.
+
+Because in my current project I'm only sharing content to Twitter and Facebook, I've only added methods to logout from this two social networks. You can easily methods to logout from other networks following the example from these methods. 
+
+
+## License 
+
 
 The MIT License
 
