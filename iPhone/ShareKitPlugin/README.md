@@ -65,13 +65,13 @@ you must logout the current one first );
 
 
 ## Running the example
-The example is a project for XCode 4. It shows a basic use for the plugin, in order to use it you must add the API keys of the services that you want to test in the SHKConfig.h file.
+The example is a project for XCode 4. It shows a basic use case for the plugin, in order to use it you must add the API keys of the services that you want to test in the SHKConfig.h file.
 
 ## Limitations
 
 Currently the plugin can only share messages and URLs. In the future I will add functionality to share images as well.
 
-Because in my current project I'm only sharing content to Twitter and Facebook, I've only added methods to logout from this two social networks. You can easily methods to logout from other networks following the example from these methods. 
+Because in my current project I'm only sharing content to Twitter and Facebook, I've only added methods to logout from this two social networks. You can easily add methods to logout from other networks following these examples.
 
 
 ## License 
