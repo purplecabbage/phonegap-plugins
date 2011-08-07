@@ -35,6 +35,8 @@ Now you should be able to succesfully compile your project.
 1. Copy ShareKitPlugin.h and ShareKitPlugin.m to your project. 
 2. Add both files to the Plugins Folder in Xcode.
 3. Copy the ShareKitPlugin.js to your www folder.
+4. Modify the PhoneGap.plist file of your application. Under the key "Plugins" add another one with key name
+ShareKitPlugin and value ShareKitPlugin.
 
 
 ## Using the plugin
