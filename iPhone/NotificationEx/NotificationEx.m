@@ -9,7 +9,11 @@
 //
 
 #import "NotificationEx.h"
-#import "Categories.h"
+#ifdef PHONEGAP_FRAMEWORK
+    #import <PhoneGap/Categories.h>
+#else
+    #import "Categories.h"
+#endif 
 #import "UIColor-Expanded.h"
 
 
@@ -109,5 +113,20 @@
 		}
 	}
 }
+
+- (void)activityStart:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+{
+    NSLog(@"Activity starting");
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
+}
+
+- (void)activityStop:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+{
+    NSLog(@"Activitiy stopping ");
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = NO;
+}
+
 
 @end

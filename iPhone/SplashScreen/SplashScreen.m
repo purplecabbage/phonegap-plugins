@@ -21,22 +21,10 @@
     [super dealloc];
 }
 
-- (void)createSplashScreen
+- (void)createSplashScreen:(NSString*)imageName : (NSString*) imageType
 {
 	UIImage* image;
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		// The device is an iPad running iOS 3.2 or later
-		if([UIApplication sharedApplication].statusBarOrientation == 1)
-			image = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default-Portrait" ofType:@"png"]];
-		else 
-			image = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default-Landscape" ofType:@"png"]];
-	}
-	else
-	{
-		// The device is an iPhone or iPod touch
-		image = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default" ofType:@"png"]];
-	}
+	image = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:imageName ofType:imageType]];
 	imageView = [[UIImageView alloc] initWithImage:image];
 	[image release];
 	
@@ -58,20 +46,27 @@
 
 - (void)show:(NSArray*)arguments withDict:(NSDictionary*)options
 {
-	if (!imageView)
-        [self createSplashScreen];
+	NSUInteger argc = [arguments count];
+    if(argc == 2)
+    {
+        NSString* imageName = [arguments objectAtIndex:0];
+        NSString* imageType = [arguments objectAtIndex:1];
+        
+        if (!imageView)
+            [self createSplashScreen:imageName : imageType];
 	
-	if (!imageView.hidden) {
-		return;
-	}
+        if (!imageView.hidden) {
+            return;
+        }
 	
-	imageView.hidden = NO;
+        imageView.hidden = NO;
+    }
 }
 
 - (void)hide:(NSArray*)arguments withDict:(NSDictionary*)options
 {
 	if (!imageView)
-        [self createSplashScreen];
+        [self createSplashScreen:@"" : @""];
 	
 	if (imageView.hidden) {
 		return;
