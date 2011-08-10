@@ -2,12 +2,15 @@
 Ionut Voda <ionut.voda@zitec.ro>
 
 ## About ## 
+
 The current plugin will help you produce UTF-8 compatible HMAC hashes(http://en.wikipedia.org/wiki/HMAC). It currently supports 2 hasher functions: sha1 which produces a HMAC-SHA1 hash and md5 which generates a HMAC-MD5.
 
 ## Installing the plugin ##
+
 There are no special steps to follow when installing the plugin beside the official recommendation http://wiki.phonegap.com/w/page/43708611/How%20to%20Install%20a%20PhoneGap%20Plugin%20for%20Android
 
 ## Using the plugin ## 
+
 <pre>
 // to generate a HMAC-SHA1 hash
 window.plugins.hmac.sha1(
@@ -32,6 +35,7 @@ window.plugins.hmac.md5(
 </pre>
 
 ## Licence ##
+
 The MIT License
 
 Copyright (c) 2011 Ionut Voda
