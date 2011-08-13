@@ -1,5 +1,5 @@
 # PhoneGap Print-Plugin #
-by Ian Tipton
+by Ian Tipton (github.com/itip).
 
 Print from iOS devices to AirPrint compatible printers. 
 
@@ -8,7 +8,7 @@ Print from iOS devices to AirPrint compatible printers.
 
 Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap-iphone).
 
-1. Make sure your PhoneGap Xcode project has been [updated for the iOS 4 SDK](http://wiki.phonegap.com/Upgrade-your-PhoneGap-Xcode-Template-for-iOS-4)
+1. Make sure your PhoneGap Xcode project has been [updated for the iOS 4 SDK](http://wiki.phonegap.com/Upgrade-your-PhoneGap-Xcode-Template-for-iOS-4), and you are using PhoneGap version 1 or higher.
 2. Add the .h and .m files to your Plugins folder in your project
 3. Add the .js files to your "www" folder on disk, and add reference(s) to the .js files as <link> tags in your html file(s)
 4. Update the PhoneGap.plist file: Find PhoneGap.plist in your project, expand the "Plugins" section, click on "+" on the last line to add a new line. Add a new value with a key of 'printPlugin' and a value of 'PrintPlugin'
