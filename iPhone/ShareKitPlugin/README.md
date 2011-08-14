@@ -67,7 +67,7 @@ you must logout the current one first );
 
 6. `facebookConnect( )` Shows the Facebook Login form, if the user is not logged in. Convenient method for login to Facebook without showing the post in the wall form.
 
-7. `shareToFacebook( )` Shows only the post in the wall form of Facebook if the user is logged in. 
+7. `shareToFacebook(message, url )` Shows only the post in the wall form of Facebook if the user is logged in. 
 
 ## Running the example
 The example is a project for XCode 4. It shows a basic use case for the plugin, in order to use it you must add the API keys of the services that you want to test in the SHKConfig.h file.
