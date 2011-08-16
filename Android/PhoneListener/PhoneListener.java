@@ -29,7 +29,7 @@ public class PhoneListener extends Plugin {
 	public static final String TYPE_NONE = "NONE";
 	private static final String LOG_TAG = "PhoneListener";
 	
-	private String connectionCallbackId;
+	private String phoneListenerCallbackId;
 
 	BroadcastReceiver receiver;
 	
@@ -48,7 +48,7 @@ public class PhoneListener extends Plugin {
 	 */
 	public void setContext(PhonegapActivity ctx) {
 		super.setContext(ctx);
-		this.connectionCallbackId = null;
+		this.phoneListenerCallbackId = null;
 		
 		// We need to listen to connectivity events to update navigator.connection
 		IntentFilter intentFilter = new IntentFilter() ;
@@ -78,7 +78,7 @@ public class PhoneListener extends Plugin {
 			            	state = TYPE_NONE;
 			            	Log.i(LOG_TAG,state);
 			            }
-			            updatePhoneState(state);
+			            updatePhoneState(state,true);
 			        }
 				}
 			};
@@ -92,10 +92,12 @@ public class PhoneListener extends Plugin {
 	 * 
 	 * @param phone state sent back to the designated success callback
 	 */
-	private void updatePhoneState(String phoneState) {
-		PluginResult result = new PluginResult(PluginResult.Status.OK, phoneState);
-		result.setKeepCallback(true);
-		this.success(result, this.connectionCallbackId);
+	private void updatePhoneState(String phoneState, boolean keepCallback) {
+		if (this.phoneListenerCallbackId != null) {
+			PluginResult result = new PluginResult(PluginResult.Status.OK, phoneState);
+			result.setKeepCallback(keepCallback);
+			this.success(result, this.phoneListenerCallbackId);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -105,28 +107,45 @@ public class PhoneListener extends Plugin {
 	public PluginResult execute(String action, JSONArray args, String callbackId) {
 		PluginResult.Status status = PluginResult.Status.INVALID_ACTION;
 		String result = "Unsupported Operation: " + action;	
-		// Only one valid 'action' at the moment 
-		if (action.equals("monitorPhoneState")) {
-			this.connectionCallbackId = callbackId;
-			PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT, 0);
+		// either start or stop the listener...
+		if (action.equals("startMonitoringPhoneState")) {
+			if (this.phoneListenerCallbackId != null) {
+        		return new PluginResult(PluginResult.Status.ERROR, "Phone listener already running.");
+        	}
+			this.phoneListenerCallbackId = callbackId;
+			PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
 			pluginResult.setKeepCallback(true);
 			return pluginResult;
 		}
+		else if (action.equals("stopMonitoringPhoneState")) {
+			removePhoneListener();
+            this.updatePhoneState("", false); // release status callback
+            this.phoneListenerCallbackId = null;
+            return new PluginResult(PluginResult.Status.NO_RESULT);
+		}
 		
-		return new PluginResult(status, result);
+		return new PluginResult(status, result); // no valid action called
 	}
+	
+	/**
+     * Stop the phone listener receiver and set it to null.
+     */
+    private void removePhoneListener() {
+        if (this.receiver != null) {
+            try {
+                this.ctx.unregisterReceiver(this.receiver);
+                this.receiver = null;
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "Error unregistering phone listener receiver: " + e.getMessage(), e);
+            }
+        }
+    }
 	
 	/**
 	 * Stop phone listener receiver.
 	 */
 	public void onDestroy() {
-		if (this.receiver != null) {
-			try {
-				this.ctx.unregisterReceiver(this.receiver);
-			} catch (Exception e) {
-				Log.e(LOG_TAG, "Error unregistering phone listener receiver: " + e.getMessage(), e);
-			}
-		}
+		removePhoneListener();
 	}
 
 }

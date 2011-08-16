@@ -7,12 +7,20 @@
  * 	MIT Licensed
  */
 var PhoneListener = { 
-	monitorPhoneState: function(successCallback, failureCallback) {
+	start: function(successCallback, failureCallback) {
 		return PhoneGap.exec(    
 			successCallback,
 			failureCallback,
 			'PhoneListener',
-			'monitorPhoneState',
+			'startMonitoringPhoneState',
+			[]); // no arguments required
+	},
+	stop: function(successCallback, failureCallback) {
+		return PhoneGap.exec(    
+			successCallback,
+			failureCallback,
+			'PhoneListener',
+			'stopMonitoringPhoneState',
 			[]); // no arguments required
 	}
 };
