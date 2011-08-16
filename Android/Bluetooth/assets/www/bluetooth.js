@@ -17,20 +17,16 @@
 
 
 
-/**
- *  
- * @return Instance of Bluetooth
- */
-var Bluetooth = function() { 
-
+function bluetooth() { 
 }
+
 
 /**
  * @param argument Argument that we are going to pass to the plugin - for this method no arguments are needed
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.listDevices = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.listDevices = function(argument,successCallback, failureCallback) {
 	
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'listDevices', [argument]);       
 };
@@ -42,7 +38,7 @@ Bluetooth.prototype.listDevices = function(argument,successCallback, failureCall
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.isBTEnabled = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.isBTEnabled = function(argument,successCallback, failureCallback) {
 	
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'isBTEnabled', [argument]);       
 };
@@ -54,7 +50,7 @@ Bluetooth.prototype.isBTEnabled = function(argument,successCallback, failureCall
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.enableBT = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.enableBT = function(argument,successCallback, failureCallback) {
 	
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'enableBT', [argument]);       
 };
@@ -66,7 +62,7 @@ Bluetooth.prototype.enableBT = function(argument,successCallback, failureCallbac
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.disableBT = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.disableBT = function(argument,successCallback, failureCallback) {
 
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'disableBT', [argument]);       
 };
@@ -77,7 +73,7 @@ Bluetooth.prototype.disableBT = function(argument,successCallback, failureCallba
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.pairBT = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.pairBT = function(argument,successCallback, failureCallback) {
 	
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'pairBT', [argument]);    
 };
@@ -89,7 +85,7 @@ Bluetooth.prototype.pairBT = function(argument,successCallback, failureCallback)
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.listBoundDevices = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.listBoundDevices = function(argument,successCallback, failureCallback) {
 	
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'listBoundDevices', [argument]);      
 };
@@ -101,7 +97,7 @@ Bluetooth.prototype.listBoundDevices = function(argument,successCallback, failur
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.stopDiscovering = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.stopDiscovering = function(argument,successCallback, failureCallback) {
 
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'stopDiscovering', [argument]);      
 };
@@ -112,24 +108,12 @@ Bluetooth.prototype.stopDiscovering = function(argument,successCallback, failure
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
-Bluetooth.prototype.isBound = function(argument,successCallback, failureCallback) {
+bluetooth.prototype.isBound = function(argument,successCallback, failureCallback) {
 	
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'isBound', [argument]);   
 };
 
 
 
-/**
- * <ul>
- * <li>Register the Bluetooth Javascript plugin.</li>
- * <li>Also register native call which will be called when this plugin runs</li>
- * </ul>
- */
-PhoneGap.addConstructor(function() {
-	//Register the javascript plugin with PhoneGap
-	PhoneGap.addPlugin('bluetooth', new Bluetooth());
-	
-	//Register the native class of plugin with PhoneGap
-	navigator.app.addService("BluetoothPlugin","com.phonegap.plugin.bluetooth.BluetoothPlugin");
-	//PluginManager.addService("BluetoothPlugin","com.phonegap.plugin.bluetooth.BluetoothPlugin");
-});
+ window.plugins.bluetooth = new bluetooth();
+
