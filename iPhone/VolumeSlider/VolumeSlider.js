@@ -3,7 +3,7 @@
 //  	Volume Slider PhoneGap Plugin
 //
 //  	Created by Tommy-Carlos Williams on 20/07/25.
-//  	Copyright 2011 Devgeeks. All rights reserved.
+//  	Copyright 2011 Tommy-Carlos Williams. All rights reserved.
 //      MIT Licensed
 //
 
