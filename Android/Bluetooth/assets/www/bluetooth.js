@@ -69,7 +69,7 @@ Bluetooth.prototype.disableBT = function(argument,successCallback, failureCallba
 
 
 /**
- * @param argument Argument that we are going to pass to the plugin, you need pass the MAC address of the mobile with wich you want to pair
+ * @param argument Argument that we are going to pass to the plugin, you need pass the MAC address of the bluetooth device with wich you want to pair
  * @param successCallback The callback which will be called when listDevices is successful
  * @param failureCallback The callback which will be called when listDevices encouters an error
  */
@@ -78,6 +78,16 @@ Bluetooth.prototype.pairBT = function(argument,successCallback, failureCallback)
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'pairBT', [argument]);    
 };
 
+
+/**
+ * @param argument Argument that we are going to pass to the plugin, you need pass the MAC address of the bluetooth device that you want unpair
+ * @param successCallback The callback which will be called when listDevices is successful
+ * @param failureCallback The callback which will be called when listDevices encouters an error
+ */
+Bluetooth.prototype.unPairBT = function(argument,successCallback, failureCallback) {
+	
+    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'unPairBT', [argument]);    
+};
 
 
 /**
@@ -116,9 +126,4 @@ Bluetooth.prototype.isBound = function(argument,successCallback, failureCallback
 
 
 window.plugins.bluetooth = new Bluetooth();
-
-PhoneGap.addConstructor(function() {
-    PhoneGap.addPlugin('Bluetooth', new Bluetooth());
-});
-
 

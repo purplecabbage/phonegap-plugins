@@ -124,21 +124,44 @@
 
 	 function printResult5(resultado){
 
-		 var htmlText="<ul><li>Pairing with my mobile: "+resultado+"</li></ul>";
+		 var htmlText="<ul><li>Pairing with Bluetooth Device: "+resultado+"</li></ul>";
 	     document.getElementById("result").innerHTML=htmlText;
 	 }
 
 
 
 
-					 
+
+//------------------------------------------------------ unPairBT example ------------------------------------------------------
+ document.addEventListener('deviceready', function() {
+	   	var btn = document.getElementById("unPairBT");
+		    btn.onclick = function() {
+		    
+		    	window.plugins.bluetooth.unPairBT("6C:9B:02:44:FA:BF",
+				    function(r){printResult6(r)},
+				    function(e){log(e)}
+			    );
+		    }
+		    btn.disabled=false;
+	}, true);
+
+	 function printResult6(resultado){
+
+		 var htmlText="<ul><li>unPairing Bluetooth Device: "+resultado+"</li></ul>";
+	     document.getElementById("result").innerHTML=htmlText;
+	 }
+
+
+
+
+	 
 //------------------------------------------------------ listBoundDevices example ------------------------------------------------------
  document.addEventListener('deviceready', function() {
       	var btn = document.getElementById("list-bound-devices");
 	    btn.onclick = function() {
 	    
 	    	window.plugins.bluetooth.listBoundDevices(null,
-			    function(r){printResult6(r)},
+			    function(r){printResult7(r)},
 			    function(e){log(e)}
 		    );
 	    }
@@ -146,7 +169,7 @@
  }, true);
  
  
- function printResult6(resultadoString){
+ function printResult7(resultadoString){
 	 var htmlText ="";
 	 var i=0;
 
@@ -170,14 +193,14 @@
 		    btn.onclick = function() {
 		    
 		    	window.plugins.bluetooth.stopDiscovering(null,
-				    function(r){printResult7(r)},
+				    function(r){printResult8(r)},
 				    function(e){log(e)}
 			    );
 		    }
 		    btn.disabled=false;
 	}, true);
 
-	 function printResult7(resultado){
+	 function printResult8(resultado){
 
 		 var htmlText="<ul><li>Stopping Discovering Bluetooth Devices: "+resultado+"</li></ul>";
 	     document.getElementById("result").innerHTML=htmlText;
@@ -193,14 +216,14 @@
 		    btn.onclick = function() {
 		    
 		    	window.plugins.bluetooth.isBound("6C:9B:02:44:FA:BF",
-				    function(r){printResult8(r)},
+				    function(r){printResult9(r)},
 				    function(e){log(e)}
 			    );
 		    }
 		    btn.disabled=false;
 	}, true);
 
-	 function printResult8(resultado){
+	 function printResult9(resultado){
 
 		 var htmlText="<ul><li>is Device bound with mobile address 6C:9B:02:44:FA:BF?: "+resultado+"</li></ul>";
 	     document.getElementById("result").innerHTML=htmlText;
@@ -215,6 +238,7 @@
     <input disabled id="list-devices" type="button" value="List Bluetooth Devices"  />
     <input disabled id="list-bound-devices" type="button" value="List Bluetooth Bound Devices"  />
     <input disabled id="pairBT" type="button" value="Pair Device"  />
+    <input disabled id="unPairBT" type="button" value="Unpair Device"  />
     <input disabled id="stopDiscovering" type="button" value="Stop Discovering"  />
     <input disabled id="isBound" type="button" value="Is Device bound with mobile"  />
     
