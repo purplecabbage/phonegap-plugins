@@ -3,14 +3,21 @@ By Kevin Schaul - @foxyNinja7
 
 ## Using the plugin ##
 
+### PhoneGap 1.0 and later
+* Register the plugin in the plugins.xml file
+	<plugin name="Share" value="com.schaul.plugins.share.Share"/>
+
 	window.plugins.share.show({
 		subject: 'I like turtles',
 		text: 'http://www.mndaily.com'},
-		function() {},
-		function() {alert('Share failed')}
+		function() {}, // Success function
+		function() {alert('Share failed')} // Failure function
 	);
 
 ## Release notes ##
+
+### 8/22/2011 ###
+* Updated for PhoneGap 1.0
 
 ### 7/11/2011 ###
 * Initial release
