@@ -3,7 +3,7 @@ By Kevin Schaul - @foxyNinja7
 
 ## Using the plugin ##
 
-### PhoneGap 1.0 and later
+### PhoneGap 1.0 and later ###
 * Register the plugin in the plugins.xml file
 	<plugin name="Share" value="com.schaul.plugins.share.Share"/>
 
