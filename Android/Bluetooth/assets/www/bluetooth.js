@@ -122,8 +122,3 @@ Bluetooth.prototype.isBound = function(argument,successCallback, failureCallback
 	
     return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'isBound', [argument]);   
 };
-
-
-
-window.plugins.bluetooth = new Bluetooth();
-
