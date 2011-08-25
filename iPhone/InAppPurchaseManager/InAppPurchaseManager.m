@@ -21,7 +21,8 @@
 		return;	
 	}
 	NSLog(@"Getting product data");
-	NSSet *productIdentifiers = [NSSet setWithObject:[arguments objectAtIndex:0]];
+	//NSSet *productIdentifiers = [NSSet setWithObject:[arguments objectAtIndex:0]];
+	NSSet *productIdentifiers = [NSSet setWithArray:[(NSString*)[options objectForKey:@"productIds"] componentsSeparatedByString:@" "]];
     SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
 	
 	ProductsRequestDelegate* delegate = [[[ProductsRequestDelegate alloc] init] retain];
