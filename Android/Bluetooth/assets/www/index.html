@@ -18,14 +18,13 @@ function onBodyLoad()
 
 function onDeviceReady()
 {
-    window.plugins.bluetooth = new Bluetooth();
 
 
  //------------------------------------------------------ listDevices example ------------------------------------------------------
     
     var btnListDevices = document.getElementById("list-devices");
     btnListDevices.onclick = function() {
-	   	window.plugins.bluetooth.listDevices(null,
+	   	Bluetooth.listDevices(null,
 			    function(r){printResult(r)},
 			    function(e){log(e)}
 		    );
@@ -37,7 +36,7 @@ function onDeviceReady()
    	var btnIsBTEnabled = document.getElementById("isBTEnabled");
    	btnIsBTEnabled.onclick = function() {
 	    
-	    	window.plugins.bluetooth.isBTEnabled(null,
+	    	Bluetooth.isBTEnabled(null,
 			    function(r){printResult2(r)},
 			    function(e){log(e)}
 		    );
@@ -51,7 +50,7 @@ function onDeviceReady()
 	   	var btnEnableBT = document.getElementById("enableBT");
 	   	btnEnableBT.onclick = function() {
 		    
-		    	window.plugins.bluetooth.enableBT(null,
+		    	Bluetooth.enableBT(null,
 				    function(r){printResult3(r)},
 				    function(e){log(e)}
 			    );
@@ -64,7 +63,7 @@ function onDeviceReady()
 	   	var btnDisableBT = document.getElementById("disableBT");
 	   	btnDisableBT.onclick = function() {
 		    
-		    	window.plugins.bluetooth.disableBT(null,
+		    	Bluetooth.disableBT(null,
 				    function(r){printResult4(r)},
 				    function(e){log(e)}
 			    );
@@ -78,7 +77,7 @@ function onDeviceReady()
 	   	var btnPairBT = document.getElementById("pairBT");
 	   	btnPairBT.onclick = function() {
 		    
-		    	window.plugins.bluetooth.pairBT("6C:9B:02:44:FA:BF",
+		    	Bluetooth.pairBT("6C:9B:02:44:FA:BF",
 				    function(r){printResult5(r)},
 				    function(e){log(e)}
 			    );
@@ -93,7 +92,7 @@ function onDeviceReady()
 	   	var btnUnPairBT = document.getElementById("unPairBT");
 	   	btnUnPairBT.onclick = function() {
 		    
-		    	window.plugins.bluetooth.unPairBT("6C:9B:02:44:FA:BF",
+		    	Bluetooth.unPairBT("6C:9B:02:44:FA:BF",
 				    function(r){printResult6(r)},
 				    function(e){log(e)}
 			    );
@@ -108,7 +107,7 @@ function onDeviceReady()
       	var btnListBoundDevices = document.getElementById("list-bound-devices");
       	btnListBoundDevices.onclick = function() {
 	    
-	    	window.plugins.bluetooth.listBoundDevices(null,
+	    	Bluetooth.listBoundDevices(null,
 			    function(r){printResult7(r)},
 			    function(e){log(e)}
 		    );
@@ -122,7 +121,7 @@ function onDeviceReady()
 	   	var btnStopDiscovering = document.getElementById("stopDiscovering");
 	   	btnStopDiscovering.onclick = function() {
 		    
-		    	window.plugins.bluetooth.stopDiscovering(null,
+		    	Bluetooth.stopDiscovering(null,
 				    function(r){printResult8(r)},
 				    function(e){log(e)}
 			    );
@@ -136,7 +135,7 @@ function onDeviceReady()
 	   	var btnIsBound = document.getElementById("isBound");
 	   	btnIsBound.onclick = function() {
 		    
-		    	window.plugins.bluetooth.isBound("6C:9B:02:44:FA:BF",
+		    	Bluetooth.isBound("6C:9B:02:44:FA:BF",
 				    function(r){printResult9(r)},
 				    function(e){log(e)}
 			    );
