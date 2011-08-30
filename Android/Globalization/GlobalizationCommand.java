@@ -84,10 +84,8 @@ public class GlobalizationCommand extends Plugin  {
 	 */	
 	private JSONObject getLocaleName() throws GlobalizationError{
 		JSONObject obj = new JSONObject();
-		String value = null;		
 		try{			
-			value = Locale.getDefault().getDisplayName(); //get the locale from the Android Device
-			obj.put("value",value);		
+			obj.put("value",Locale.getDefault().toString());//get the locale from the Android Device		
 			return obj;		
 		}catch(Exception e){
 			throw new GlobalizationError(GlobalizationError.UNKNOWN_ERROR);
