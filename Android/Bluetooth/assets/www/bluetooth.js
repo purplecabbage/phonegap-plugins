@@ -122,3 +122,8 @@ isBound : function(argument,successCallback, failureCallback) {
 }
 
 };
+
+
+PhoneGap.addConstructor(function() {
+PhoneGap.addPlugin('Bluetooth', new Bluetooth());
+});
