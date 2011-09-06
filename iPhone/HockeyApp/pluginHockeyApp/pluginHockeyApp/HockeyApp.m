@@ -41,9 +41,17 @@
     [self writeJavascript:jsString]; // magic ...
 }
 
-- (void) initiateAppDownload:(NSArray*)arguments withDict:(NSDictionary*)options
+- (void) initiateAppDownload:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
-    [[BWHockeyManager sharedHockeyManager] initiateAppDownload]; // ignore boolean result for time being
+    NSString *jsString;
+    NSString *callback = [arguments objectAtIndex:0]; // no error checking ...
+    
+    if ([[BWHockeyManager sharedHockeyManager] initiateAppDownload]){
+        jsString = [NSString stringWithFormat:@"%@(\"1\");",callback];
+    }else{
+        jsString = [NSString stringWithFormat:@"%@(\"\");",callback];
+    }
+    [self writeJavascript:jsString]; // magic ...
 }
 
 - (void) crashTest:(NSArray*)arguments withDict:(NSDictionary*)options

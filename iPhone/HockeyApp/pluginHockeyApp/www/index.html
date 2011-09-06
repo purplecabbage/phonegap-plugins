@@ -35,7 +35,7 @@
 	*/
 	
 	function onBodyLoad()
-	{		°
+	{
 		document.addEventListener("deviceready",onDeviceReady,false);
 	}
 	
@@ -63,6 +63,14 @@
         }
     }
     
+    function cbInitiateAppDownload(wentWell){
+        if (wentWell){
+            alert("App Downloaded");
+        }else{
+           alert("App Download problem");
+        }
+    }
+    
     </script>
   </head>
   <body onload="onBodyLoad()">
@@ -81,7 +89,7 @@
       </form>
       
       <form>
-          <input type="button" value="HockeyApp.initiateAppDownload" name="initiateAppDownload" onClick="HockeyApp.initiateAppDownload(); return false;">
+          <input type="button" value="HockeyApp.initiateAppDownload" name="initiateAppDownload" onClick="HockeyApp.initiateAppDownload(cbInitiateAppDownload); return false;">
       </form>      
       
       <h1>Hey, it's QuincyKit!</h1>

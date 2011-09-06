@@ -4,22 +4,22 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
  
-/* experimental
+/*
+ Experimental:
  change BWHockeyManager.m defaults and use isUpdateAvailable and initiateAppDownload for another type of user experience
+ 
  self.alwaysShowUpdateReminder = NO;
  self.checkForUpdateOnLaunch = NO;
  self.updateSetting = HockeyUpdateCheckManually;
- */
+*/
 
 
 var HockeyApp = (function() {  
-    // only works with default HockeyKit defaults
-	checkForUpdate = function() {
+	checkForUpdate = function() { // only works with default HockeyKit defaults and not the experimental above
         PhoneGap.exec("HockeyApp.checkForUpdate");
     },
     
-    // provide a function that can be called back with result: ''/1
-    isUpdateAvailable = function(cb) {
+    isUpdateAvailable = function(cb) { // provide a function that can be called back with result: ''/1
         PhoneGap.exec("HockeyApp.isUpdateAvailable", GetFunctionName(cb)); 
     },
     
@@ -31,16 +31,16 @@ var HockeyApp = (function() {
         PhoneGap.exec("HockeyApp.crashTest");
     },
                                 
-    init = function(args){    
+    init = function(args){
         PhoneGap.exec("HockeyApp.init", args);
     };
     
     return{
-        checkForUpdate :    checkForUpdate,
-        crashTest :         crashTest,
-        isUpdateAvailable : isUpdateAvailable,
-        initiateAppDownload : initiateAppDownload,
-        init : init
+        checkForUpdate :        checkForUpdate,         // causes a requester if new software is found
+        crashTest :             crashTest,              // cause crash to test QuincyKit
+        isUpdateAvailable :     isUpdateAvailable,      // checks if new software is available
+        initiateAppDownload :   initiateAppDownload,    // causes an requester for download of new software
+        init :                  init                    // called before use
     };
 
 })();
