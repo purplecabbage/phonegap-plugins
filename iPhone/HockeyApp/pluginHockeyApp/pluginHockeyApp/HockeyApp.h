@@ -13,7 +13,10 @@
     
 }
 
-- (void) checkForUpdates:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void) init:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void) checkForUpdate:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void) isUpdateAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) crashTest:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void) initiateAppDownload:(NSArray*)arguments withDict:(NSDictionary*)options;
 
 @end
