@@ -59,6 +59,10 @@ ChildBrowser.prototype._onLocationChange = function(newLoc) {
     }
 };
 
+ChildBrowser.install = function() {
+    
+}
+
 /**
  * Load ChildBrowser
  */
