@@ -26,7 +26,7 @@ var HockeyApp = (function() {
         PhoneGap.exec("HockeyApp.crashTest");
     },
                                                  
-    init = function(args){
+    init = function(args){ // args.appIdentifier 
         PhoneGap.exec("HockeyApp.init", args);
     };
     
@@ -36,7 +36,7 @@ var HockeyApp = (function() {
         isUpdateAvailable :     isUpdateAvailable,      // checks if new software is available
         initiateAppDownload :   initiateAppDownload,    // causes an requester for download of new software
         crashTest :             crashTest,              // cause crash to test QuincyKit        
-        init :                  init                    // called before use
+        init :                  init                    // called before use with the appIdentifier
     };
 
 })();

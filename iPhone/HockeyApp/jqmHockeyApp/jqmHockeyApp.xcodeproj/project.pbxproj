@@ -11,9 +11,6 @@
 		2E09C52E141F387000F1004C /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E09C52A141F387000F1004C /* CrashReporter.framework */; };
 		2E09C52F141F387000F1004C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2E09C52B141F387000F1004C /* LICENSE.txt */; };
 		2E09C530141F387000F1004C /* Quincy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2E09C52C141F387000F1004C /* Quincy.bundle */; };
-		2E09C559141F388300F1004C /* Beta Automatisation.sh in Resources */ = {isa = PBXBuildFile; fileRef = 2E09C533141F388300F1004C /* Beta Automatisation.sh */; };
-		2E09C55A141F388300F1004C /* buildmanifest.sh in Resources */ = {isa = PBXBuildFile; fileRef = 2E09C534141F388300F1004C /* buildmanifest.sh */; };
-		2E09C55B141F388300F1004C /* README.mkdown in Resources */ = {isa = PBXBuildFile; fileRef = 2E09C535141F388300F1004C /* README.mkdown */; };
 		2E09C55C141F388300F1004C /* BWApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E09C537141F388300F1004C /* BWApp.m */; };
 		2E09C55D141F388300F1004C /* BWGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E09C539141F388300F1004C /* BWGlobal.m */; };
 		2E09C55E141F388300F1004C /* BWHockeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E09C53B141F388300F1004C /* BWHockeyManager.m */; };
@@ -75,9 +72,6 @@
 		2E09C52A141F387000F1004C /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		2E09C52B141F387000F1004C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		2E09C52C141F387000F1004C /* Quincy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Quincy.bundle; sourceTree = "<group>"; };
-		2E09C533141F388300F1004C /* Beta Automatisation.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "Beta Automatisation.sh"; sourceTree = "<group>"; };
-		2E09C534141F388300F1004C /* buildmanifest.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = buildmanifest.sh; sourceTree = "<group>"; };
-		2E09C535141F388300F1004C /* README.mkdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mkdown; sourceTree = "<group>"; };
 		2E09C536141F388300F1004C /* BWApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWApp.h; sourceTree = "<group>"; };
 		2E09C537141F388300F1004C /* BWApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWApp.m; sourceTree = "<group>"; };
 		2E09C538141F388300F1004C /* BWGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWGlobal.h; sourceTree = "<group>"; };
@@ -191,7 +185,6 @@
 		2E09C531141F388300F1004C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				2E09C532141F388300F1004C /* Beta Automatisation */,
 				2E09C536141F388300F1004C /* BWApp.h */,
 				2E09C537141F388300F1004C /* BWApp.m */,
 				2E09C538141F388300F1004C /* BWGlobal.h */,
@@ -210,16 +203,6 @@
 			);
 			name = iOS;
 			path = ../../../../HockeyAppKit/HockeyKit/client/iOS;
-			sourceTree = "<group>";
-		};
-		2E09C532141F388300F1004C /* Beta Automatisation */ = {
-			isa = PBXGroup;
-			children = (
-				2E09C533141F388300F1004C /* Beta Automatisation.sh */,
-				2E09C534141F388300F1004C /* buildmanifest.sh */,
-				2E09C535141F388300F1004C /* README.mkdown */,
-			);
-			path = "Beta Automatisation";
 			sourceTree = "<group>";
 		};
 		2E09C540141F388300F1004C /* Helper */ = {
@@ -505,9 +488,6 @@
 				2E90989F141E395600240444 /* www in Resources */,
 				2E09C52F141F387000F1004C /* LICENSE.txt in Resources */,
 				2E09C530141F387000F1004C /* Quincy.bundle in Resources */,
-				2E09C559141F388300F1004C /* Beta Automatisation.sh in Resources */,
-				2E09C55A141F388300F1004C /* buildmanifest.sh in Resources */,
-				2E09C55B141F388300F1004C /* README.mkdown in Resources */,
 				2E09C566141F388300F1004C /* Hockey.bundle in Resources */,
 				2E09C568141F388300F1004C /* README.md in Resources */,
 				2E09C569141F388300F1004C /* README.mkdown in Resources */,
