@@ -1,6 +1,5 @@
 //
 //  PGTestFlight.m
-//  TestFlightTest
 //
 //  Created by Shazron Abdullah on 11-09-13.
 //  Copyright 2011 Nitobi Software Inc. All rights reserved.
@@ -8,7 +7,12 @@
 
 #import "PGTestFlight.h"
 #import "TestFlight.h"
-#import <PhoneGap/PluginResult.h>
+
+#ifdef PHONEGAP_FRAMEWORK
+    #import <PhoneGap/PluginResult.h>
+#else
+    #import "PluginResult.h"
+#endif
 
 @implementation PGTestFlight
 
