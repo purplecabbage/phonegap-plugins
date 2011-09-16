@@ -1,10 +1,10 @@
 /**
- * 	SpeechRecognizer.js
- * 	Speech Recognizer PhoneGap plugin (Android)
+ *  SpeechRecognizer.js
+ *  Speech Recognizer PhoneGap plugin (Android)
  *
- * 	@author Colin Turner
+ *  @author Colin Turner
  *
- * 	MIT Licensed
+ *  MIT Licensed
  */
  
 /**
