@@ -124,7 +124,7 @@ public class SpeechRecognizer extends Plugin {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         if (maxMatches > 0)
-            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, Integer.toString(maxMatches));
+            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, maxMatches);
         if (!prompt.isEmpty())
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, prompt);
         ctx.startActivityForResult(this, intent, reqCode);
@@ -169,14 +169,14 @@ public class SpeechRecognizer extends Plugin {
 
         PluginResult result = new PluginResult(PluginResult.Status.OK, sb.toString());
         result.setKeepCallback(false);
-        this.speechRecognizerCallbackId = "";       
         this.success(result, this.speechRecognizerCallbackId);      
+        this.speechRecognizerCallbackId = "";       
     }
     
     private void ReturnSpeechFailure(int resultCode) {
         PluginResult result = new PluginResult(PluginResult.Status.ERROR, Integer.toString(resultCode));
         result.setKeepCallback(false);
-        this.speechRecognizerCallbackId = "";       
         this.error(result, this.speechRecognizerCallbackId);        
+        this.speechRecognizerCallbackId = "";       
     }    
 }
