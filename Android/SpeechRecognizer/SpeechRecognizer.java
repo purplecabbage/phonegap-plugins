@@ -169,13 +169,14 @@ public class SpeechRecognizer extends Plugin {
 
         PluginResult result = new PluginResult(PluginResult.Status.OK, sb.toString());
         result.setKeepCallback(false);
-        this.success(result, this.speechRecognizerCallbackId);      
         this.speechRecognizerCallbackId = "";       
+        this.success(result, this.speechRecognizerCallbackId);      
     }
     
     private void ReturnSpeechFailure(int resultCode) {
         PluginResult result = new PluginResult(PluginResult.Status.ERROR, Integer.toString(resultCode));
         result.setKeepCallback(false);
+        this.speechRecognizerCallbackId = "";       
         this.error(result, this.speechRecognizerCallbackId);        
     }    
 }
