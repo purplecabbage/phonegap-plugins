@@ -1,0 +1,106 @@
+/*
+ * PhoneGap is available under *either* the terms of the modified BSD license *or* the
+ * MIT License (2008). See http://opensource.org/licenses/alphabetical for full text.
+ * 
+ * Copyright (c) 2011, IBM Corporation
+ */
+
+package com.phonegap.plugins.barcodescanner;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import android.app.Activity;
+import android.content.Intent;
+
+import com.phonegap.api.Plugin;
+import com.phonegap.api.PluginResult;
+
+/**
+ * This calls out to the ZXing barcode reader and returns the result.
+ */
+public class BarcodeScanner extends Plugin {
+    public static final int REQUEST_CODE = 0x0ba7c0de;
+
+    public String callback;
+
+    /**
+     * Constructor.
+     */
+    public BarcodeScanner() {
+    }
+
+    /**
+     * Executes the request and returns PluginResult.
+     *
+     * @param action        The action to execute.
+     * @param args          JSONArray of arguments for the plugin.
+     * @param callbackId    The callback id used when calling back into JavaScript.
+     * @return              A PluginResult object with a status and message.
+     */
+    public PluginResult execute(String action, JSONArray args, String callbackId) {
+        this.callback = callbackId;
+
+        try {
+            if (action.equals("encode")) {
+                if(args.length() < 1) {
+                    return new PluginResult(PluginResult.Status.ERROR, "User did not specify data to encode");
+                }
+                encode(args.getString(0));
+            }
+            else if (action.equals("scan")) {
+                scan();
+            } else {
+                return new PluginResult(PluginResult.Status.INVALID_ACTION);
+            }
+            PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
+            r.setKeepCallback(true);
+            return r;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new PluginResult(PluginResult.Status.JSON_EXCEPTION);
+        }
+    }
+
+
+    /**
+     * Starts an intent to scan and decode a barcode.
+     */
+    public void scan() {
+        Intent intentScan = new Intent("com.google.zxing.client.android.SCAN");
+        intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+
+        this.ctx.startActivityForResult((Plugin) this, intentScan, REQUEST_CODE);
+    }
+
+    /**
+     * Called when the barcode scanner intent completes
+     *
+     * @param requestCode       The request code originally supplied to startActivityForResult(),
+     *                          allowing you to identify who this result came from.
+     * @param resultCode        The integer result code returned by the child activity through its setResult().
+     * @param intent            An Intent, which can return result data to the caller (various data can be attached to Intent "extras").
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                this.success(new PluginResult(PluginResult.Status.OK, contents), this.callback);
+            } else {
+                this.error(new PluginResult(PluginResult.Status.ERROR), this.callback);
+            }
+        }
+    }
+
+    /**
+     * Initiates a barcode encode. 
+     * @param data  The data to encode in the bar code
+     */
+    public void encode(String data) {
+        Intent intentEncode = new Intent("com.google.zxing.client.android.ENCODE");
+        intentEncode.putExtra("ENCODE_TYPE", "TEXT_TYPE");
+        intentEncode.putExtra("ENCODE_DATA", data);
+        
+        this.ctx.startActivity(intentEncode);
+    }
+}
