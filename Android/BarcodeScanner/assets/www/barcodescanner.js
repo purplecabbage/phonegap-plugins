@@ -8,14 +8,51 @@
 var BarcodeScanner = function() {
 };
 
+//-------------------------------------------------------------------
+BarcodeScanner.Encode = {
+        TEXT_TYPE: "TEXT_TYPE",
+        EMAIL_TYPE: "EMAIL_TYPE",
+        PHONE_TYPE: "PHONE_TYPE",
+        SMS_TYPE: "SMS_TYPE",
+        //  CONTACT_TYPE: "CONTACT_TYPE",  // TODO:  not implemented, requires passing a Bundle class from Javascriopt to Java
+        //  LOCATION_TYPE: "LOCATION_TYPE" // TODO:  not implemented, requires passing a Bundle class from Javascriopt to Java
+};
+
+//-------------------------------------------------------------------
 BarcodeScanner.prototype.scan = function(successCallback, errorCallback) {
+    if (errorCallback == null) { errorCallback = function() {}}
+
+    if (typeof errorCallback != "function")  {
+        console.log("BarcodeScanner.scan failure: failure parameter not a function");
+        return
+    }
+
+    if (typeof successCallback != "function") {
+        console.log("BarcodeScanner.scan failure: success callback parameter must be a function");
+        return
+    }
+
     PhoneGap.exec(successCallback, errorCallback, 'BarcodeScanner', 'scan', []);
 };
 
-BarcodeScanner.prototype.encode = function(data, successCallback, errorCallback) {
-    PhoneGap.exec(successCallback, errorCallback, 'BarcodeScanner', 'encode', [data]);
+//-------------------------------------------------------------------
+BarcodeScanner.prototype.encode = function(type, data, successCallback, errorCallback, options) {
+    if (errorCallback == null) { errorCallback = function() {}}
+
+    if (typeof errorCallback != "function")  {
+        console.log("BarcodeScanner.scan failure: failure parameter not a function");
+        return
+    }
+
+    if (typeof successCallback != "function") {
+        console.log("BarcodeScanner.scan failure: success callback parameter must be a function");
+        return
+    }
+
+    PhoneGap.exec(successCallback, errorCallback, 'BarcodeScanner', 'encode', [{"type": type, "data": data, "options": options}]);
 };
 
+//-------------------------------------------------------------------
 PhoneGap.addConstructor(function() {
     PhoneGap.addPlugin('barcodeScanner', new BarcodeScanner());
 });

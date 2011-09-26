@@ -8,7 +8,7 @@
 package com.phonegap.plugins.barcodescanner;
 
 import org.json.JSONArray;
-import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +20,11 @@ import com.phonegap.api.PluginResult;
  * This calls out to the ZXing barcode reader and returns the result.
  */
 public class BarcodeScanner extends Plugin {
+    private static final String TEXT_TYPE = "TEXT_TYPE";
+    private static final String EMAIL_TYPE = "EMAIL_TYPE";
+    private static final String PHONE_TYPE = "PHONE_TYPE";
+    private static final String SMS_TYPE = "SMS_TYPE";
+
     public static final int REQUEST_CODE = 0x0ba7c0de;
 
     public String callback;
@@ -41,25 +46,34 @@ public class BarcodeScanner extends Plugin {
     public PluginResult execute(String action, JSONArray args, String callbackId) {
         this.callback = callbackId;
 
-        try {
-            if (action.equals("encode")) {
-                if(args.length() < 1) {
-                    return new PluginResult(PluginResult.Status.ERROR, "User did not specify data to encode");
+        if (action.equals("encode")) {
+            JSONObject obj = args.optJSONObject(0);
+            if (obj != null) {
+                String type = obj.optString("type");
+                String data = obj.optString("data");
+                
+                // If the type is null then force the type to text
+                if (type == null) {
+                    type = TEXT_TYPE;
                 }
-                encode(args.getString(0));
-            }
-            else if (action.equals("scan")) {
-                scan();
+                
+                if (data == null) {
+                    return new PluginResult(PluginResult.Status.ERROR, "User did not specify data to encode");                                            
+                }
+                
+                encode(type, data);                    
             } else {
-                return new PluginResult(PluginResult.Status.INVALID_ACTION);
+                return new PluginResult(PluginResult.Status.ERROR, "User did not specify data to encode");                    
             }
-            PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
-            r.setKeepCallback(true);
-            return r;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return new PluginResult(PluginResult.Status.JSON_EXCEPTION);
         }
+        else if (action.equals("scan")) {
+            scan();
+        } else {
+            return new PluginResult(PluginResult.Status.INVALID_ACTION);
+        }
+        PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
+        r.setKeepCallback(true);
+        return r;
     }
 
 
@@ -95,10 +109,11 @@ public class BarcodeScanner extends Plugin {
     /**
      * Initiates a barcode encode. 
      * @param data  The data to encode in the bar code
+     * @param data2 
      */
-    public void encode(String data) {
+    public void encode(String type, String data) {
         Intent intentEncode = new Intent("com.google.zxing.client.android.ENCODE");
-        intentEncode.putExtra("ENCODE_TYPE", "TEXT_TYPE");
+        intentEncode.putExtra("ENCODE_TYPE", type);
         intentEncode.putExtra("ENCODE_DATA", data);
         
         this.ctx.startActivity(intentEncode);
