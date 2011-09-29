@@ -16,6 +16,7 @@
 @synthesize supportedOrientations;
 @synthesize isImage;
 @synthesize delegate;
+@synthesize docController;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -96,8 +97,9 @@
 	[backBtn release];
 	[fwdBtn release];
 	[safariBtn release];
+	[documentBtn release];
 	[spinner release];
-	[ supportedOrientations release];
+	[supportedOrientations release];
 	[super dealloc];
 }
 
@@ -142,10 +144,51 @@
 	{
 		NSURLRequest *request = webView.request;
 		[[UIApplication sharedApplication] openURL:request.URL];
-	}
-
-	 
+	}	 
 }
+
+
+- (IBAction)onDocumentButtonPress:(id)sender
+{
+  NSURLRequest *request = webView.request;
+  NSURL *url = request.URL;
+  
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *filePath = [NSString stringWithFormat:@"%@/%@", [paths objectAtIndex:0],@"child_browser_temp.pdf"];
+  
+  NSData *urlData = [NSData dataWithContentsOfURL:url];
+  [urlData writeToFile:filePath atomically:YES];
+  
+  docController = [[self setupControllerWithURL:[NSURL fileURLWithPath:filePath] usingDelegate:docControllerDelegate] retain];
+  
+  if (docController)
+  {
+    BOOL canOpen = [docController presentOpenInMenuFromBarButtonItem:documentBtn animated:NO];
+    [docController dismissMenuAnimated:NO];
+   
+    if (canOpen)
+    {
+      [docController presentOpenInMenuFromBarButtonItem:documentBtn animated:YES];    
+    }
+    else
+    {
+      UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"No applications were found that support this filetype." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      [message show];
+      [message release];
+    }
+  }
+}
+
+
+- (UIDocumentInteractionController *)setupControllerWithURL:(NSURL *)fileURL usingDelegate:(id <UIDocumentInteractionControllerDelegate>)interactionDelegate {
+  
+  UIDocumentInteractionController *interactionController =
+  [UIDocumentInteractionController interactionControllerWithURL: fileURL];
+  interactionController.delegate = interactionDelegate;
+  
+  return interactionController;
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation 
 {
