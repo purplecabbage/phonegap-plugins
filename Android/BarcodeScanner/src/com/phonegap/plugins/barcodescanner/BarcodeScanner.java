@@ -8,6 +8,7 @@
 package com.phonegap.plugins.barcodescanner;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -98,8 +99,15 @@ public class BarcodeScanner extends Plugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                String contents = intent.getStringExtra("SCAN_RESULT");
-                this.success(new PluginResult(PluginResult.Status.OK, contents), this.callback);
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("text", intent.getStringExtra("SCAN_RESULT"));
+                    obj.put("format", intent.getStringExtra("SCAN_RESULT_FORMAT"));
+                    obj.put("cancelled", false);
+                } catch(JSONException e) {
+                    //Log.d(LOG_TAG, "This should never happen");
+                }
+                this.success(new PluginResult(PluginResult.Status.OK, obj), this.callback);
             } else {
                 this.error(new PluginResult(PluginResult.Status.ERROR), this.callback);
             }
