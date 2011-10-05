@@ -1,21 +1,17 @@
 //
 //  GoogleAnalyticsPlugin.h
-//  Google Analytics plugin for PhoneGap
+//  Gapalytics
 //
 //  Created by Jesse MacFadyen on 11-04-21.
-//  Updated to 1.x by Olivier Louvignes on 11-11-24.
-//  MIT Licensed
+//  Copyright 2011 Nitobi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PGPlugin.h>
-#else
-#import "PGPlugin.h"
-#endif
+#import "PhoneGapCommand.h"
 #import "GANTracker.h"
 
-@interface GoogleAnalyticsPlugin : PGPlugin <GANTrackerDelegate> {
+
+@interface GoogleAnalyticsPlugin : PhoneGapCommand<GANTrackerDelegate> {
 
 }
 

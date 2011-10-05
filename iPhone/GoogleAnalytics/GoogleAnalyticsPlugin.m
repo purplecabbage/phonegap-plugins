@@ -1,16 +1,18 @@
 //
 //  GoogleAnalyticsPlugin.m
-//  Google Analytics plugin for PhoneGap
+//  Gapalytics
 //
 //  Created by Jesse MacFadyen on 11-04-21.
-//  Updated to 1.x by Olivier Louvignes on 11-11-24.
-//  MIT Licensed
+//  Copyright 2011 Nitobi. All rights reserved.
 //
 
 #import "GoogleAnalyticsPlugin.h"
 
+
+
 // Dispatch period in seconds
 static const NSInteger kGANDispatchPeriodSec = 10;
+
 
 @implementation GoogleAnalyticsPlugin
 
@@ -21,19 +23,19 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 	[[GANTracker sharedTracker] startTrackerWithAccountID:accountId
 										   dispatchPeriod:kGANDispatchPeriodSec
 												 delegate:self];
-
+	
 }
 
 - (void) trackEvent:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
-
+	
 	NSString* category = [options valueForKey:@"category"];
 	NSString* action = [options valueForKey:@"action"];
 	NSString* label = [options valueForKey:@"label"];
 	int value = [[options valueForKey:@"value"] intValue];
-
+	
 	NSError *error;
-
+	
 	if (![[GANTracker sharedTracker] trackEvent:category
 										 action:action
 										  label:label
@@ -42,10 +44,10 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 		// Handle error here
 		NSLog(@"GoogleAnalyticsPlugin.trackEvent Error::",[error localizedDescription]);
 	}
-
-
+	
+	
 	NSLog(@"GoogleAnalyticsPlugin.trackEvent::%@, %@, %@, %d",category,action,label,value);
-
+	
 }
 
 - (void) trackPageview:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
@@ -58,22 +60,16 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 	}
 }
 
-- (void) hitDispatched:(NSString *)hitString
-{
-	NSString* callback = [NSString stringWithFormat:@"window.plugins.googleAnalyticsPlugin.hitDispatched(%d);",
-						  hitString];
-	[ self.webView stringByEvaluatingJavaScriptFromString:callback];
 
-}
 
-- (void) trackerDispatchDidComplete:(GANTracker *)tracker
-                  eventsDispatched:(NSUInteger)hitsDispatched
-              eventsFailedDispatch:(NSUInteger)hitsFailedDispatch
+- (void)trackerDispatchDidComplete:(GANTracker *)tracker
+                  eventsDispatched:(NSUInteger)eventsDispatched
+              eventsFailedDispatch:(NSUInteger)eventsFailedDispatch
 {
 	NSString* callback = [NSString stringWithFormat:@"window.plugins.googleAnalyticsPlugin.trackerDispatchDidComplete(%d);",
-							hitsDispatched];
+							eventsDispatched];
 	[ self.webView stringByEvaluatingJavaScriptFromString:callback];
-
+	
 }
 
 - (void) dealloc
