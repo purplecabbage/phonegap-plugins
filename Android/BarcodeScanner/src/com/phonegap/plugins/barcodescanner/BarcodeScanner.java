@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
@@ -82,7 +83,7 @@ public class BarcodeScanner extends Plugin {
      * Starts an intent to scan and decode a barcode.
      */
     public void scan() {
-        Intent intentScan = new Intent("com.google.zxing.client.android.SCAN");
+        Intent intentScan = new Intent("com.phonegap.plugins.barcodescanner.SCAN");
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
         this.ctx.startActivityForResult((Plugin) this, intentScan, REQUEST_CODE);
@@ -120,7 +121,7 @@ public class BarcodeScanner extends Plugin {
      * @param data2 
      */
     public void encode(String type, String data) {
-        Intent intentEncode = new Intent("com.google.zxing.client.android.ENCODE");
+        Intent intentEncode = new Intent("com.phonegap.plugins.barcodescanner.ENCODE");
         intentEncode.putExtra("ENCODE_TYPE", type);
         intentEncode.putExtra("ENCODE_DATA", data);
         
