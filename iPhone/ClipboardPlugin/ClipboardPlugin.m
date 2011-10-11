@@ -26,10 +26,13 @@
 	UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
 	NSString     *jsCallback = [arguments objectAtIndex:0];
 
-	NSString *text = [pasteboard valueForPasteboardType:@"public.utf8-plain-text"];
+	NSString *text = [[[[pasteboard valueForPasteboardType:@"public.utf8-plain-text"] 
+                       stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"] 
+                       stringByReplacingOccurrencesOfString:@"\r" withString:@"\\r"] 
+                       stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
   
-  NSString* jsString = [[NSString alloc] initWithFormat:@"%@(\"%@\");", jsCallback, text];
-  [self writeJavascript:jsString];
+    NSString* jsString = [[NSString alloc] initWithFormat:@"%@(\"%@\");", jsCallback, text];
+    [self writeJavascript:jsString];
   
 	[jsString release];
 }
