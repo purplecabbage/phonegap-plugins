@@ -4,8 +4,8 @@ The Augmented Reality Camera view integrated with Wikitude SDK.
 By Sasa Coh, Spletart.
 
 ## Adding the Plugin to your project ##
-This plugin requires the end user to install [the Wikitude browser](http://www.wikitude.com/tour/wikitude-world-browser/download)
-If the user doesn't have the app install they will be promped to install it the first time the plugin is used.
+This plugin requires the end user to install [the Wikitude World Browser](http://www.wikitude.com/tour/wikitude-world-browser/download).
+If the app is not installed the user will be prompted to install it first time the plugin is used.
 
 1. To install the plugin, move `wikitudecamera.js` to your project's www folder and include a reference to it 
 in your html files. 
@@ -22,13 +22,12 @@ in your html files.
     `<plugin name="WikitudeCamera" value="com.spletart.mobile.WikitudeCamera"/>`
 
 ## Using the plugin ##
-The plugin creates the object `window.plugins.wikitudeCamera` with one method `scan(data, success, fail, options)`
-`data` is a JSON array of POI's as specified in WikitudePOI class from Wikitude SDK. If you pass null then error will be reported.
+The plugin creates the object `window.plugins.wikitudeCamera` with method `show(data, success, fail, options)`.
+Argument `data` is a JSON array of POI's as specified in WikitudePOI class from Wikitude SDK. If you pass null then error will be reported.
 
-`success` and `fail` are callback functions. Success is passed the decoded barcode as a string. `options` allows
-you to change the strings used in the dialog box which is displayed if the user doesn't have Barcode Scanner 
-installed. The defaults are:
-
+The `success` and `fail` are callback functions. `options` allows you to change the strings used in the dialog box displayed 
+if the user doesn't have Wikitude installed. The defaults are:
+```javascript
     {
         title = "AR Camera",
 		installTitle = "Install Wikitude browser?",
@@ -36,9 +35,10 @@ installed. The defaults are:
         yesString = "Yes",
         noString = "No"
     }
+```
 
 A full example could be:
-
+```javascript
 	var data = [{ 
 					longitude: 15.643724,
 					latitude: 46.560732,
@@ -47,7 +47,7 @@ A full example could be:
 					description: 'Nice place to write phonegap plugins...',
 				}
 				//, {
-				//	...next POI
+				//	...the next POI
 				//}
 	];			
 	window.plugins.wikitudeCamera.show(data, function(result) {
@@ -61,7 +61,8 @@ A full example could be:
 			yesString = "Yes",
 			noString = "No"
 		});
-	
+```
+
 ## BUGS AND CONTRIBUTIONS ##
 The latest version is available [on GitHub](http://github.com/sasacoh/phonegap-plugins/tree/master/Android/WikitudeCamera)
 If you have a patch, fork my repo baby and send me a pull request. Submit bug reports on GitHub, please.
