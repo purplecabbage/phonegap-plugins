@@ -24,7 +24,7 @@ ClipboardPlugin.prototype.setText = function(text)
  */
 ClipboardPlugin.prototype.getText = function(callback)
 {
-	PhoneGap.exec("ClipboardPlugin.getText", callback);
+	PhoneGap.exec(callback, null, "ClipboardPlugin", "getText", []);
 }
 
 /**
