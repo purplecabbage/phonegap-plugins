@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>		
+        <script src="jquery-1.6.min.js" type= "text/javascript"/>
+        <script src="jquery.mobile-1.0b3.min.js" type="text/javascript"/>
+        <script src="phonegap-1.0.0.js" type="text/javascript"/>
+		<Script src="demoplugin.js" type="text/javascript" />
+        <script type="text/javascript">              
+        function onDeviceReady () {
+			$('#send').bind('click', function () {
+				alert('Phone: ' + $('#phone').val() + ' Message: ' + $('#message').val());
+				var plugin = new DemoPlugin();
+				plugin.sendSMS(function () { 
+					alert('Message sent successfully');	
+				},
+				function (e) {
+					alert('Message Failed:' + e);
+				},
+				$('#phone').val(), 
+				$('#message').val());
+			});    			        	
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+        </script>        
+        <link rel="stylesheet" type="text/css" href= "jquery.mobile-1.0b3.min.css">
+        <meta name="viewport" content= "width=device-width; height=device-height; user-scalable=no">              
+	</head>
+	<body>
+		<div id="startPage" data-role="page" data-theme="a">
+			<div data-role="header">
+				<h1>SMS Demo</h1>
+			</div>
+			<div data-role="content">
+				<label for="phone">Recipient Number:</label>
+				<input type="tel" id="phone" name="phone" placeholder="SMS Number"/>
+				<label for="message">Message:</label>
+				<textarea id="message" name="message">
+				</textarea>		
+				<a href="#" id="send" data-role="button">Send</a>		
+			</div>
+		</div>
+	</body>
+</html>
