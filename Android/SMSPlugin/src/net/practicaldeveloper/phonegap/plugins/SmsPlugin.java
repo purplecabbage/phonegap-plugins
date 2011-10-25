@@ -1,4 +1,4 @@
-package net.practicaldeveloper.demo;
+package net.practicaldeveloper.phonegap.plugins;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +11,7 @@ import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 import com.phonegap.api.PluginResult.Status;
 
-public class DemoPlugin extends Plugin {
+public class SmsPlugin extends Plugin {
 	public final String ACTION_SEND_SMS = "SendSMS";
 	
 	@Override
@@ -26,7 +26,7 @@ public class DemoPlugin extends Plugin {
 				result = new PluginResult(Status.OK);
 			}
 			catch (JSONException ex) {
-				result = new PluginResult(Status.ERROR, ex.getMessage());
+				result = new PluginResult(Status.JSON_EXCEPTION, ex.getMessage());
 			}			
 		}
 		
