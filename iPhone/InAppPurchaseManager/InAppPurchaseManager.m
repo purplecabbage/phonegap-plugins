@@ -7,7 +7,24 @@
 //
 
 #import "InAppPurchaseManager.h"
-#import "JSONKit.h"
+
+// To avoid compilation warning, declare JSONKit and SBJson's
+// category methods without including their header files.
+@interface NSArray (StubsForSerializers)
+- (NSString *)JSONString;
+- (NSString *)JSONRepresentation;
+@end
+
+// Helper category method to choose which JSON serializer to use.
+@interface NSArray (JSONSerialize)
+- (NSString *)JSONSerialize;
+@end
+
+@implementation NSArray (JSONSerialize)
+- (NSString *)JSONSerialize {
+    return [self respondsToSelector:@selector(JSONString)] ? [self JSONString] : [self JSONRepresentation];
+}
+@end
 
 @implementation InAppPurchaseManager
 
@@ -125,7 +142,7 @@
                 continue;
         }
 		NSLog(@"state: %@", state);
-		NSString *js = [NSString stringWithFormat:@"plugins.inAppPurchaseManager.updatedTransactionCallback('%@',%d, '%@','%@','%@','%@')", state, errorCode, error, transactionIdentifier, productId, transactionReceipt ];
+		NSString *js = [NSString stringWithFormat:@"plugins.inAppPurchaseManager.updatedTransactionCallback.apply(null, %@)", [[NSArray arrayWithObjects:state, errorCode, error, transactionIdentifier, productId, transactionReceipt, nil] JSONSerialize]];
 		NSLog(@"js: %@", js);
 		[self writeJavascript: js];
 		[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -157,7 +174,7 @@
 	NSLog(@"got iap product response");
     for (SKProduct *product in response.products) {
 		NSLog(@"sending js for %@", product.productIdentifier);
-		NSString *js = [NSString stringWithFormat:@"%@('%@','%@','%@','%@')", successCallback, product.productIdentifier, product.localizedTitle, product.localizedDescription, product.localizedPrice];
+		NSString *js = [NSString stringWithFormat:@"%@.apply(null, %@)", successCallback, [[NSArray arrayWithObjects:product.productIdentifier, product.localizedTitle, product.localizedDescription, product.localizedPrice, nil] JSONSerialize]];
 		NSLog(@"js: %@", js);
 		[command writeJavascript: js];
     }
@@ -207,7 +224,7 @@
           nil]];
     }
 
-	NSString *js = [NSString stringWithFormat:@"%@(%@, %@);", callback, [validProducts JSONString], [response.invalidProductIdentifiers JSONString]];
+	NSString *js = [NSString stringWithFormat:@"%@.apply(null, %@);", callback, [[NSArray arrayWithObjects:validProducts, response.invalidProductIdentifiers, nil] JSONSerialize]];
 	[command writeJavascript: js];
 
 	[request release];
