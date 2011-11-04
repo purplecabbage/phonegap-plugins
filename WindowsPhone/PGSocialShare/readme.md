@@ -1,8 +1,14 @@
 Sample Use:
 ===============
 
-&lt;script type="text/javascript" charset="utf-8" src="PGSocialShare.js"&gt;&lt;/script&gt;
+In your <head>
+---
 
+<script type="text/javascript" charset="utf-8" src="PGSocialShare.js"></script>
+
+
+Somewhere in your code 
+---
 
         function shareStatus()
         {
@@ -17,6 +23,8 @@ Sample Use:
         }
 
 
+In your markup :
+---
 
     <input style="display:block;margin:40px 0px" type="button" onclick="shareLink()" value="Share a Link"/>
     <input style="display:block;margin:40px 0px" type="button" onclick="shareStatus()" value="Update your Status"/>
