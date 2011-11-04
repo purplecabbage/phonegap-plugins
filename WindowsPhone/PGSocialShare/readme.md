@@ -4,7 +4,7 @@ Sample Use:
 In your head
 ---
 
-<script type="text/javascript" charset="utf-8" src="PGSocialShare.js"></script>
+[script type="text/javascript" charset="utf-8" src="PGSocialShare.js"][/script]
 
 
 Somewhere in your code 
