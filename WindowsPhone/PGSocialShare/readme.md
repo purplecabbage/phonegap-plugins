@@ -18,5 +18,5 @@ Sample Use:
 
 
 
-    &lt;input style="display:block;margin:40px 0px" type="button" onclick="shareLink()" value="Share a Link"/&gt;
-    &lt;input style="display:block;margin:40px 0px" type="button" onclick="shareStatus()" value="Update your Status"/&gt;
+    <input style="display:block;margin:40px 0px" type="button" onclick="shareLink()" value="Share a Link"/>
+    <input style="display:block;margin:40px 0px" type="button" onclick="shareStatus()" value="Update your Status"/>
