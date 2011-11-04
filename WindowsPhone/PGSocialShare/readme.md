@@ -1,7 +1,7 @@
 Sample Use:
 ===============
 
-&lt;script type="text/javascript" charset="utf-8" src="PGSocialShare.js"&gt;&lt;/script&gt
+&lt;script type="text/javascript" charset="utf-8" src="PGSocialShare.js"&gt;&lt;/script&gt;
 
 
         function shareStatus()
