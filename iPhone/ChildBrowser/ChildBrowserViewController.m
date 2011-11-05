@@ -109,7 +109,7 @@
 		[delegate onClose];		
 	}
 	
-	[ [super parentViewController] dismissModalViewControllerAnimated:YES];
+	[super dismissModalViewControllerAnimated:YES];
 }
 
 -(IBAction) onDoneButtonPress:(id)sender
