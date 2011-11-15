@@ -65,11 +65,15 @@
                                         initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)]; 
         [theTextField setBackgroundColor:[UIColor clearColor]];
         [theTextField setBorderStyle : UITextBorderStyleRoundedRect];
+        NSString *iOsVersion = [[UIDevice currentDevice] systemVersion];
+        // fixing the textfield background color for ios 5
+        if ([iOsVersion intValue] >= 5) {
+            [theTextField setBackgroundColor:[UIColor whiteColor]];
+        }
         [self addSubview:theTextField];
         self.textField = theTextField;
         [theTextField release];
         // position fix for iOS < 4
-        NSString *iOsVersion = [[UIDevice currentDevice] systemVersion];
         if ([iOsVersion intValue] < 4) {
             [self setTransform:CGAffineTransformMakeTranslation(0,130)];
         }
