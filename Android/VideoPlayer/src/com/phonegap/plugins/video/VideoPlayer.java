@@ -46,6 +46,7 @@ public class VideoPlayer extends Plugin {
         // Check to see if someone is trying to play a YouTube page.
         if (url.contains(YOU_TUBE)) {
             // If we don't do it this way you don't have the option for youtube
+            uri = Uri.parse("vnd.youtube:" + uri.getQueryParameter("v"));
             intent = new Intent(Intent.ACTION_VIEW, uri);
         } else {        
             // Display video player
