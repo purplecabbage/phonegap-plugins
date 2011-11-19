@@ -6,12 +6,21 @@
 //  Copyright 2011 Nitobi. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "PhoneGapCommand.h"
+import <Foundation/Foundation.h>
+#ifdef PHONEGAP_FRAMEWORK
+#import <PhoneGap/PGPlugin.h>
+#import <PhoneGap/NSData+Base64.h>
+#import <PhoneGap/JSONKit.h>
+#else
+#import "PGPlugin.h"
+#import "NSData+Base64.h"
+#import "JSONKit.h"
+#endif
+
 #import "GANTracker.h"
 
 
-@interface GoogleAnalyticsPlugin : PhoneGapCommand<GANTrackerDelegate> {
+@interface GoogleAnalyticsPlugin : PGPlugin<GANTrackerDelegate> {
 
 }
 
