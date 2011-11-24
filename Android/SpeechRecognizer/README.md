@@ -27,11 +27,22 @@ function speechInitFail(m) {
 	// recognizer not present?
 }
 
+// Show the list of the supported languages
+function supportedLanguages() {
+	window.plugins.speechrecognizer.getSupportedLanguages(function(languages){
+			// display the json array
+			alert(languages);
+		}, function(error){
+			alert("Could not retrieve the supported languages");
+	});
+}
+
 function recognizeSpeech() {
     var requestCode = 1234;
     var maxMatches = 5;
-    var promptString = "Please say a command";
-    window.plugins.speechrecognizer.startRecognize(speechOk, speechFail, requestCode, maxMatches, promptString);
+    var promptString = "Please say a command";	// optional
+	var language = "en-US";						// optional
+    window.plugins.speechrecognizer.startRecognize(speechOk, speechFail, requestCode, maxMatches, promptString, language);
 }
 
 function speechOk(result) {
@@ -50,13 +61,21 @@ function speechOk(result) {
     }
 }
 
-function speechFail(m) {
-    console.log("speechFail: " + m.toString());
+function speechFail(message) {
+    console.log("speechFail: " + message);
 }
 
 ```
 
 ## RELEASE NOTES ##
+
+### November 23, 2011 ###
+
+* Java code to java convention (functions starts with a lowercase characater)
+* New getSupportedLanguages method
+* Java file warnings removed
+* Better error handling 
+* New language parameter
 
 ### September 16, 2011 ###
 
@@ -66,7 +85,10 @@ function speechFail(m) {
 
 The MIT License
 
-Copyright (c) 2011 Colin Turner (github.com/koolspin)
+Copyright (c) 2011 
+Colin Turner (github.com/koolspin)
+Guillaume Charhon (github/poiuytrez)
+
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
