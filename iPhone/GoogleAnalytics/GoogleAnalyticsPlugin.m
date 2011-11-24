@@ -20,7 +20,7 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 
 	[[GANTracker sharedTracker] startTrackerWithAccountID:accountId
 										   dispatchPeriod:kGANDispatchPeriodSec
-												 delegate:self];
+												 delegate:nil];
 
 }
 
