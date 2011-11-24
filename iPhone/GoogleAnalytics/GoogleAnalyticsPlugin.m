@@ -3,16 +3,14 @@
 //  Google Analytics plugin for PhoneGap
 //
 //  Created by Jesse MacFadyen on 11-04-21.
+//  Updated to 1.x by Olivier Louvignes on 11-11-24.
 //  MIT Licensed
 //
 
 #import "GoogleAnalyticsPlugin.h"
 
-
-
 // Dispatch period in seconds
 static const NSInteger kGANDispatchPeriodSec = 10;
-
 
 @implementation GoogleAnalyticsPlugin
 
@@ -59,8 +57,6 @@ static const NSInteger kGANDispatchPeriodSec = 10;
 		// TODO: Handle error here
 	}
 }
-
-
 
 - (void)trackerDispatchDidComplete:(GANTracker *)tracker
                   eventsDispatched:(NSUInteger)eventsDispatched
