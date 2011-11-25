@@ -221,6 +221,7 @@
         self.viewController = nil;
         self.captureSession = nil;
         self.previewLayer = nil;
+        self.alternateXib = nil;
 
         self.capturing = NO;
 
@@ -606,6 +607,7 @@
         self.view = nil;
         self.processor = nil;
         self.shutterPressed = NO;
+        self.alternateXib = nil;
 
         [super dealloc];
     }
