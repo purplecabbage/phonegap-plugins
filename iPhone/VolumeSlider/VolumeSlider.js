@@ -15,20 +15,20 @@ var VolumeSlider = function(){
  * Create a volume slider.
  */
 VolumeSlider.prototype.createVolumeSlider = function(originx,originy,width,height) {
-    PhoneGap.exec("VolumeSlider.createVolumeSlider", originx, originy, width, height);
+    PhoneGap.exec(null, null, "VolumeSlider","createVolumeSlider", [originx, originy, width, height]);
 };
 
 /**
  * Show the volume slider
  */
 VolumeSlider.prototype.showVolumeSlider = function() {
-    PhoneGap.exec("VolumeSlider.showVolumeSlider");
+    PhoneGap.exec(null, null, "VolumeSlider","showVolumeSlider", []);
 };
 /**
  * Hide the volume slider
  */
 VolumeSlider.prototype.hideVolumeSlider = function() {
-    PhoneGap.exec("VolumeSlider.hideVolumeSlider");
+    PhoneGap.exec(null, null, "VolumeSlider","hideVolumeSlider", []);
 };
 
 
