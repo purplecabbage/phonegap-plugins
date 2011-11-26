@@ -9,10 +9,11 @@
 #import "AsyncImageView.h"
 
 #ifdef PHONEGAP_FRAMEWORK
-	#import <PhoneGap/JSONKit.h>
+    // PhoneGap >= 1.2.0
+    #import <PhoneGap/JSONKit.h>
 #else
-	// https://github.com/johnezang/JSONKit
-	#import "JSONKit.h"
+    // https://github.com/johnezang/JSONKit
+    #import "JSONKit.h"
 #endif
 
 @implementation MapKitView
