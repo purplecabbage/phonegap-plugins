@@ -44,6 +44,10 @@ TwitterDemo = {
             "http://zomgdinosaurs.com/zomg.jpg");
     },
     
+    compose: function() {
+          window.plugins.twitter.composeTweet();
+    },
+    
     timeline:function(){
         window.plugins.twitter.getPublicTimeline(
             function(s){ TwitterDemo.log("timeline success: " + JSON.stringify(s)); }, 
