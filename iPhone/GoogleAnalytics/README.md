@@ -7,10 +7,10 @@ updated by Olivier Louvignes
 Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap-iphone) and the Google Analytics for Mobile Apps SDK (included). The Google Analytics for Mobile Apps SDK can be downloaded [here](http://code.google.com/mobile/analytics/download.html).
 
 1. Make sure your PhoneGap Xcode project has been [updated for the iOS 4 SDK](http://wiki.phonegap.com/Upgrade-your-PhoneGap-Xcode-Template-for-iOS-4)
-2. Add the `GoogleAnalytics` folder to your project, using "Create groups for any added folders" (put in a suitable location under your project, then drag and drop it in)
-3. Add the .h and .m files to your Plugins folder in your project
+2. Drag and drop the `GoogleAnalytics` folder from Finder to your Plugins folder in XCode, using "Create groups for any added folders"
 4. Include the CFNetwork framework in your project and link against libsqlite3.0.dylib.
 5. Add the .js files to your `www` folder on disk, and add reference(s) to the .js files as <link> tags in your html file(s)
+5. Add new entry with key `GoogleAnalyticsPlugin` and value `GoogleAnalyticsPlugin` to `Plugins` in `PhoneGap.plist`
 6. Add `google-analytics.com` to `ExternalHosts` in `PhoneGap.plist`
 
 ## JAVASCRIPT INTERFACE ##
