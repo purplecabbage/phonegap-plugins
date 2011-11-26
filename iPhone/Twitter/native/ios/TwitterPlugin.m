@@ -93,6 +93,16 @@
     [tweetViewController release];
 }
 
+- (void) composeTweet:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
+  TWTweetComposeViewController *tweetComposeViewController =
+    [[TWTweetComposeViewController alloc] init];
+  [tweetComposeViewController setCompletionHandler:
+    ^(TWTweetComposeViewControllerResult result) {
+    [[ super appViewController ] dismissModalViewControllerAnimated:YES];
+  }];
+
+  [[ super appViewController ] presentModalViewController:tweetComposeViewController animated:YES];
+}
 
 - (void) getPublicTimeline:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     NSString *callbackId = [arguments objectAtIndex:0];
