@@ -4,6 +4,8 @@ Just add the .m.h files to your project ( you can add them directly to your own 
 
 Place the .js file in your app root, and include it from your html.
 
+Add to PhoneGap.plist Plugins: key com.phonegap.emailComposer value EmailComposer
+
 This is intended to also demonstrate how to pass arguments to native code using the options/map object.
 
 Please review the js file to understand the interface you can call, and reply with any questions.
