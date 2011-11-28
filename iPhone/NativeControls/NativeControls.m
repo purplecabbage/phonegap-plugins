@@ -472,7 +472,7 @@
   NSString  *tagId      = [arguments objectAtIndex:0];
   NSString  *title     = [arguments objectAtIndex:1];
 	NSString  *imageName = nil;
-	
+
 	if (arguments.count >= 2)
 	{
 		imageName = [arguments objectAtIndex:2];
