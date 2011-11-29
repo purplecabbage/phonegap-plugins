@@ -106,7 +106,6 @@ The MIT License
 
 Copyright (c) 2011 
 Colin Turner (github.com/koolspin)
-
 Guillaume Charhon (github/poiuytrez)
 
 
