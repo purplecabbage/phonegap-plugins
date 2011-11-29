@@ -7,8 +7,8 @@ A collection of possible matches (strings) are returned to your app.
 
 Of course this plugin requires [Android PhoneGap](http://github.com/phonegap/phonegap-android).
 
-1. To install the plugin, copy SpeechRecognizer.js to your project's www folder.
-2. Add SpeechRecognizer.js to your html file, eg: `<script type="text/javascript" charset="utf-8" src="SpeechRecognizer.js"></script>`
+1. To install the plugin, copy speechrecognizer.js to your project's www folder.
+2. Add speechrecognizer.js to your html file, eg: `<script type="text/javascript" charset="utf-8" src="speechrecognizer.js"></script>`
 3. Create an 'com/urbtek/phonegap' path under 'src' and add the SpeechRecognizer.java file to it
 4. Add the plugin to the 'res/xml/plugins.xml' file. eg: `<plugin name="SpeechRecognizer" value="com.urbtek.phonegap.SpeechRecognizer"/>`
 
@@ -46,15 +46,14 @@ function recognizeSpeech() {
 }
 
 function speechOk(result) {
-    var match, respObj, requestCode;
+    var respObj, requestCode, matches;
     if (result) {
         respObj = JSON.parse(result);
         if (respObj) {
-            // This is the code that was sent with the original request
-            requestCode = respObj.speechMatches.requestCode;
+            var matches = respObj.speechMatches.speechMatch;
             
-            for (match in respObj.speechMatches.speechMatch) {
-                console.log("possible match: " + match);
+            for (x in matches) {
+                console.log("possible match: " + matches[x]);
                 // regex comes in handy for dealing with these match strings
             }
         }        
@@ -76,6 +75,7 @@ function speechFail(message) {
 * Java file warnings removed
 * Better error handling 
 * New language parameter
+* SpeechOk demo code fixed (show the recognized text instead of the id)
 
 ### September 16, 2011 ###
 

@@ -47,6 +47,7 @@ class HintReceiver extends BroadcastReceiver {
         JSONArray languageArray = new JSONArray(hints);
         PluginResult result = new PluginResult(PluginResult.Status.OK, languageArray);
         result.setKeepCallback(false);
+        speechRecognizer.callbackId = "";
         speechRecognizer.success(result, this.callBackId);      
     }
     
@@ -69,7 +70,7 @@ public class SpeechRecognizer extends Plugin {
     public static final String ACTION_SPEECH_RECOGNIZE = "startRecognize";
     public static final String NOT_PRESENT_MESSAGE = "Speech recognition is not present or enabled";
     
-    private String callbackId = "";
+    public String callbackId = "";
     private boolean recognizerPresent = false;
 
     /* (non-Javadoc)
