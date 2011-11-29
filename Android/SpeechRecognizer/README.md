@@ -104,8 +104,8 @@ Of course this plugin requires [Android PhoneGap](http://github.com/phonegap/pho
 
 The MIT License
 
-Copyright (c) 2011 
-Colin Turner (github.com/koolspin)
+Copyright (c) 2011 \n
+Colin Turner (github.com/koolspin)\n
 Guillaume Charhon (github/poiuytrez)
 
 
