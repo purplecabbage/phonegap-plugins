@@ -47,8 +47,8 @@ class HintReceiver extends BroadcastReceiver {
         JSONArray languageArray = new JSONArray(hints);
         PluginResult result = new PluginResult(PluginResult.Status.OK, languageArray);
         result.setKeepCallback(false);
-        speechRecognizer.callbackId = "";
-        speechRecognizer.success(result, this.callBackId);      
+        //speechRecognizer.callbackId = "";
+        speechRecognizer.success(result, "");      
     }
     
     public void setSpeechRecognizer(SpeechRecognizer speechRecognizer){
@@ -103,7 +103,7 @@ public class SpeechRecognizer extends Plugin {
         }
         else if("getSupportedLanguages".equals(action)){
         	// save the call back id
-        	this.callbackId = callbackId;
+        	//this.callbackId = callbackId;
         	// Get the list of supported languages
         	getSupportedLanguages();
         	// wait for the intent callback
@@ -126,7 +126,7 @@ public class SpeechRecognizer extends Plugin {
     	Intent intent = new Intent(RecognizerIntent.ACTION_GET_LANGUAGE_DETAILS);
     	HintReceiver hintReceiver = new HintReceiver();
     	hintReceiver.setSpeechRecognizer(this);
-    	hintReceiver.setCallBackId(this.callbackId);
+    	//hintReceiver.setCallBackId(this.callbackId);
     	ctx.getApplicationContext().sendOrderedBroadcast(intent, null, hintReceiver, null, Activity.RESULT_OK, null, null);
 	}
 
