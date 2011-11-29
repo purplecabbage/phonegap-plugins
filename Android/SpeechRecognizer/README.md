@@ -13,56 +13,75 @@ Of course this plugin requires [Android PhoneGap](http://github.com/phonegap/pho
 4. Add the plugin to the 'res/xml/plugins.xml' file. eg: `<plugin name="SpeechRecognizer" value="com.urbtek.phonegap.SpeechRecognizer"/>`
 
 ### Example
-```javascript
-function onDeviceReady()
-{
-    window.plugins.speechrecognizer.init(speechInitOk, speechInitFail);
-    // etc.
-}
+```html
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>PhoneGap</title>
+  <script type="text/javascript" charset="utf-8" src="phonegap.js"></script> 
+  <script type="text/javascript" charset="utf-8" src="speechrecognizer.js"></script>      
+  <script type="text/javascript" charset="utf-8">
+     function onLoad(){
+          document.addEventListener("deviceready", onDeviceReady, true);
+     }
+     function onDeviceReady()
+	{
+	    window.plugins.speechrecognizer.init(speechInitOk, speechInitFail);
+	    // etc.
+	}
 
-function speechInitOk() {
-	// we're good
-}
-function speechInitFail(m) {
-	// recognizer not present?
-}
+	function speechInitOk() {
+		alert("we are good");
+		supportedLanguages();
+		recognizeSpeech();
+	}
+	function speechInitFail(m) {
+		alert(m);
+	}
 
-// Show the list of the supported languages
-function supportedLanguages() {
-	window.plugins.speechrecognizer.getSupportedLanguages(function(languages){
-			// display the json array
-			alert(languages);
-		}, function(error){
-			alert("Could not retrieve the supported languages");
-	});
-}
+	// Show the list of the supported languages
+	function supportedLanguages() {
+		window.plugins.speechrecognizer.getSupportedLanguages(function(languages){
+				// display the json array
+				alert(languages);
+			}, function(error){
+				alert("Could not retrieve the supported languages");
+		});
+	}
 
-function recognizeSpeech() {
-    var requestCode = 1234;
-    var maxMatches = 5;
-    var promptString = "Please say a command";	// optional
-	var language = "en-US";						// optional
-    window.plugins.speechrecognizer.startRecognize(speechOk, speechFail, requestCode, maxMatches, promptString, language);
-}
-
-function speechOk(result) {
-    var respObj, requestCode, matches;
-    if (result) {
-        respObj = JSON.parse(result);
-        if (respObj) {
-            var matches = respObj.speechMatches.speechMatch;
-            
-            for (x in matches) {
-                console.log("possible match: " + matches[x]);
-                // regex comes in handy for dealing with these match strings
-            }
-        }        
-    }
-}
-
-function speechFail(message) {
-    console.log("speechFail: " + message);
-}
+	function recognizeSpeech() {
+	    var requestCode = 1234;
+	    var maxMatches = 5;
+	    var promptString = "Please say a command";	// optional
+		var language = "en-US";						// optional
+	    window.plugins.speechrecognizer.startRecognize(speechOk, speechFail, requestCode, maxMatches, promptString, language);
+	}
+	
+	function speechOk(result) {
+	    var respObj, requestCode, matches;
+	    if (result) {
+	        respObj = JSON.parse(result);
+	        if (respObj) {
+	            var matches = respObj.speechMatches.speechMatch;
+	            
+	            for (x in matches) {
+	                alert("possible match: " + matches[x]);
+	                // regex comes in handy for dealing with these match strings
+	            }
+	        }        
+	    }
+	}
+	
+	function speechFail(message) {
+	    console.log("speechFail: " + message);
+	}
+  </script>
+  </head>
+  <body onload="onLoad();">
+       <h1>Welcome to PhoneGap</h1>
+       <h2>Edit assets/www/index.html</h2>
+  </body>
+</html>
 
 ```
 
