@@ -46,6 +46,12 @@ ChildBrowser.prototype.showWebPage = function(loc,geolocationEnabled)
   var success = function(msg)
   {
      console.log("ChildBrowser.showWebPage success :: " + msg);
+
+        var event = JSON.parse(msg);
+
+        if (event.type == "locationChanged") {
+            ChildBrowser._onLocationChange(event.location);
+        }
   };
 
   var error = function(e)
