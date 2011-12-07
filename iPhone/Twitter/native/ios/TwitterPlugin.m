@@ -7,9 +7,9 @@
 
 #import "TwitterPlugin.h"
 #ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/JSONKit.h>
+    #import <PhoneGap/JSON.h>
 #else
-    #import "JSONKit.h"
+    #import "JSON.h"
 #endif
 
 #define TWITTER_URL @"http://api.twitter.com/1/"
@@ -94,12 +94,14 @@
 }
 
 - (void) composeTweet:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
-    TWTweetComposeViewController *tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
-    [tweetComposeViewController setCompletionHandler: ^(TWTweetComposeViewControllerResult result) {
-        [[super appViewController] dismissModalViewControllerAnimated:YES];
-    }];
+  TWTweetComposeViewController *tweetComposeViewController =
+    [[TWTweetComposeViewController alloc] init];
+  [tweetComposeViewController setCompletionHandler:
+    ^(TWTweetComposeViewControllerResult result) {
+    [[ super appViewController ] dismissModalViewControllerAnimated:YES];
+  }];
 
-    [[super appViewController] presentModalViewController:tweetComposeViewController animated:YES];
+  [[ super appViewController ] presentModalViewController:tweetComposeViewController animated:YES];
 }
 
 - (void) getPublicTimeline:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
@@ -113,7 +115,7 @@
 		if([urlResponse statusCode] == 200) {
 
             NSString *dataString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-            NSDictionary *dict = [dataString objectFromJSONString];
+            NSDictionary *dict = [dataString JSONValue];
             jsResponse = [[PluginResult resultWithStatus:PGCommandStatus_OK messageAsDictionary:dict] toSuccessCallbackString:callbackId];
             [dataString release];
 		}
@@ -147,7 +149,7 @@
                     NSString *jsResponse;
                     if([urlResponse statusCode] == 200) {
                         NSString *dataString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-                        NSDictionary *dict = [dataString objectFromJSONString];
+                        NSDictionary *dict = [dataString JSONValue];
                         jsResponse = [[PluginResult resultWithStatus:PGCommandStatus_OK messageAsDictionary:dict] toSuccessCallbackString:callbackId];
                         [dataString release];
                     }
