@@ -1,10 +1,27 @@
-//
-//  AppDelegate.m
-//  testmonkey
-//
-//  Created by lobsterwizard on 12/16/11.
-//  Copyright __MyCompanyName__ 2011. All rights reserved.
-//
+/*
+ Copyright 2009-2011 Urban Airship Inc. All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ 
+ 1. Redistributions of source code must retain the above copyright notice, this
+ list of conditions and the following disclaimer.
+ 
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+ this list of conditions and the following disclaimer in the documentation
+ and/or other materials provided withthe distribution.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE URBAN AIRSHIP INC``AS IS'' AND ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ EVENT SHALL URBAN AIRSHIP INC OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #import "AppDelegate.h"
 #ifdef PHONEGAP_FRAMEWORK
@@ -13,9 +30,12 @@
 	#import "PhoneGapViewController.h"
 #endif
 
+#import "PushNotification.h"
+
 @implementation AppDelegate
 
 @synthesize invokeString;
+@synthesize launchNotification;
 
 - (id) init
 {	
@@ -30,20 +50,26 @@
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	
-	NSArray *keyArray = [launchOptions allKeys];
-	if ([launchOptions objectForKey:[keyArray objectAtIndex:0]]!=nil) 
-	{
-		NSURL *url = [launchOptions objectForKey:[keyArray objectAtIndex:0]];
-		self.invokeString = [url absoluteString];
-		NSLog(@"testmonkey launchOptions = %@",url);
-	}
-	
-	return [super application:application didFinishLaunchingWithOptions:launchOptions];
+    
+    // ******** NOTE: modified the following block from the default app delegate as it assumes
+    // your app will never receive push notifications
+
+    //	NSArray *keyArray = [launchOptions allKeys];
+    //	if ([launchOptions objectForKey:[keyArray objectAtIndex:0]]!=nil) 
+    //	...
+    NSURL *url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+    self.invokeString = [url absoluteString];
+    
+    // cache notification, if any, until webview finished loading, then process it if needed
+    // assume will not receive another message before webview loaded
+    self.launchNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    application.applicationIconBadgeNumber = 0;
+    
+    return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
 // this happens while we are running ( in the background, or from within our own app )
-// only valid if testmonkey.plist specifies a protocol to handle
+// only valid if UAPhoneGap.plist specifies a protocol to handle
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url 
 {
     // must call super so all plugins will get the notification, and their handlers will be called 
@@ -64,13 +90,24 @@
  */
 - (void)webViewDidFinishLoad:(UIWebView *)theWebView 
 {
-	// only valid if testmonkey.plist specifies a protocol to handle
-	if(self.invokeString)
-	{
+	// only valid if UAPhoneGap.plist specifies a protocol to handle
+	if (self.invokeString) {
 		// this is passed before the deviceready event is fired, so you can access it in js when you receive deviceready
 		NSString* jsString = [NSString stringWithFormat:@"var invokeString = \"%@\";", self.invokeString];
 		[theWebView stringByEvaluatingJavaScriptFromString:jsString];
 	}
+    
+    //Now that the web view has loaded, pass on the notfication
+    if (launchNotification) {
+        PushNotification *pushHandler = [self getCommandInstance:@"PushNotification"];
+        
+        //NOTE: this drops payloads outside of the "aps" key
+        pushHandler.notificationMessage = [launchNotification objectForKey:@"aps"];
+        
+        //clear the launchNotification
+        self.launchNotification = nil;
+    }
+    
 	return [ super webViewDidFinishLoad:theWebView ];
 }
 
@@ -99,14 +136,64 @@
 }
 
 
-- (BOOL) execute:(InvokedUrlCommand*)command
+- (BOOL)execute:(InvokedUrlCommand*)command
 {
-	return [ super execute:command];
+	return [super execute:command];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    PushNotification *pushHandler = [self getCommandInstance:@"PushNotification"];
+    [pushHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    PushNotification *pushHandler = [self getCommandInstance:@"PushNotification"];
+    [pushHandler didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"didReceiveNotification");
+    
+    // Get application state for iOS4.x+ devices, otherwise assume active
+    UIApplicationState appState = UIApplicationStateActive;
+    if ([application respondsToSelector:@selector(applicationState)]) {
+        appState = application.applicationState;
+    }
+    
+    // NOTE this is a 4.x only block -- TODO: add 3.x compatibility
+    if (appState == UIApplicationStateActive) {
+        PushNotification *pushHandler = [self getCommandInstance:@"PushNotification"];
+        pushHandler.notificationMessage = [userInfo objectForKey:@"aps"];
+        [pushHandler notificationReceived];
+    } else {
+        //save it for later
+        self.launchNotification = userInfo;
+    }
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    
+    NSLog(@"active");
+    
+    //zero badge
+    application.applicationIconBadgeNumber = 0;
+
+    if (![self.webView isLoading] && self.launchNotification) {
+        PushNotification *pushHandler = [self getCommandInstance:@"PushNotification"];
+        pushHandler.notificationMessage = [self.launchNotification objectForKey:@"aps"];
+        
+        self.launchNotification = nil;
+        
+        [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+    }
+    
+    [super applicationDidBecomeActive:application];
 }
 
 - (void)dealloc
 {
-	[ super dealloc ];
+  launchNotification = nil;
+	[super dealloc];
 }
 
 @end
