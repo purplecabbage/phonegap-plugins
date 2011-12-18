@@ -88,14 +88,69 @@
 }
 
 - (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+
+    NSMutableDictionary *results = [NSMutableDictionary dictionary];
     NSString *token = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
                         stringByReplacingOccurrencesOfString:@">" withString:@""]
                        stringByReplacingOccurrencesOfString: @" " withString: @""];
-
-    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken:%@", token);
-
-    NSMutableDictionary *results = [NSMutableDictionary dictionary];
     [results setValue:token forKey:@"deviceToken"];
+    
+    #if !TARGET_IPHONE_SIMULATOR
+        // Get Bundle Info for Remote Registration (handy if you have more than one app)
+        [results setValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"] forKey:@"appName"];
+        [results setValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVersion"];
+        
+        // Check what Notifications the user has turned on.  We registered for all three, but they may have manually disabled some or all of them.
+        NSUInteger rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+
+        // Set the defaults to disabled unless we find otherwise...
+        NSString *pushBadge = @"disabled";
+        NSString *pushAlert = @"disabled";
+        NSString *pushSound = @"disabled";
+
+        // Check what Registered Types are turned on. This is a bit tricky since if two are enabled, and one is off, it will return a number 2... not telling you which
+        // one is actually disabled. So we are literally checking to see if rnTypes matches what is turned on, instead of by number. The "tricky" part is that the
+        // single notification types will only match if they are the ONLY one enabled.  Likewise, when we are checking for a pair of notifications, it will only be
+        // true if those two notifications are on.  This is why the code is written this way
+        if(rntypes == UIRemoteNotificationTypeBadge){
+          pushBadge = @"enabled";
+        }
+        else if(rntypes == UIRemoteNotificationTypeAlert){
+          pushAlert = @"enabled";
+        }
+        else if(rntypes == UIRemoteNotificationTypeSound){
+          pushSound = @"enabled";
+        }
+        else if(rntypes == ( UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert)){
+          pushBadge = @"enabled";
+          pushAlert = @"enabled";
+        }
+        else if(rntypes == ( UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)){
+          pushBadge = @"enabled";
+          pushSound = @"enabled";
+        }
+        else if(rntypes == ( UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)){
+          pushAlert = @"enabled";
+          pushSound = @"enabled";
+        }
+        else if(rntypes == ( UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)){
+          pushBadge = @"enabled";
+          pushAlert = @"enabled";
+          pushSound = @"enabled";
+        }
+
+        [results setValue:pushBadge forKey:@"pushBadge"];
+        [results setValue:pushAlert forKey:@"pushAlert"];
+        [results setValue:pushSound forKey:@"pushSound"];
+
+        // Get the users Device Model, Display Name, Unique ID, Token & Version Number
+        UIDevice *dev = [UIDevice currentDevice];
+        [results setValue:dev.uniqueIdentifier forKey:@"deviceUuid"];
+        [results setValue:dev.name forKey:@"deviceName"];
+        [results setValue:dev.model forKey:@"deviceModel"];
+        [results setValue:dev.systemVersion forKey:@"deviceSystemVersion"];
+
+    #endif
 
     PluginResult* pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsDictionary:results];
     [self writeJavascript:[pluginResult toSuccessCallbackString:self.callbackId]];
