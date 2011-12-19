@@ -46,11 +46,9 @@
 
 - (void)registerAPN:(NSMutableArray *)arguments
            withDict:(NSMutableDictionary *)options {
-    NSLog(@"registerAPN:%@\n withDict:%@", [arguments description], [options description]);
 
     NSUInteger argc = [arguments count];
     if (argc > 0 && [[arguments objectAtIndex:0] length] > 0) {
-        NSLog(@"Register success callback set");
         //self.registerSuccessCallback = [arguments objectAtIndex:0];
         self.callbackId = [arguments objectAtIndex:0];
     }
@@ -75,10 +73,6 @@
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
 
-}
-
-- (void)log:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options {
-    NSLog(@"JSLOG: %@", [options valueForKey:@"msg"]);
 }
 
 - (void)isEnabled:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options {

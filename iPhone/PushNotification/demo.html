@@ -30,7 +30,6 @@
     
     /* When this function is called, PhoneGap has been initialized and is ready to roll */
     function onDeviceReady() {
-        window.plugins.pushNotification.log("onDeviceReady called");
         registerAPN()
     }
 
@@ -40,7 +39,6 @@
     
     // Customized callback for receiving notification
     PushNotification.prototype.notificationCallback = function (notification) {
-        window.plugins.pushNotification.log("Received a notification.");
         var msg = '';
         for (var property in notification) {
             msg += property + ' : ' + notification[property] + '<br>';
@@ -66,9 +64,6 @@
     // register button action
     function registerAPN() {
         
-        window.plugins.pushNotification.log("Registering with APNS via the App Delegate");
-
-        
         registerButton.disabled=true;
         result.innerHTML='Registering...';
         
@@ -80,8 +75,6 @@
     
     // register urban airship push service after APN is registered successfully
     function registerUAPush(deviceToken, host, appKey, appSecret) {
-        
-        window.plugins.pushNotification.log("Registering with Urban Airship.");
         
         var resultStr = result.innerHTML;
         result.innerHTML += 'Registering with Urban Airship Push Service...';
