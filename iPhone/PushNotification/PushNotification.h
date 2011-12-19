@@ -50,7 +50,6 @@
 @property (nonatomic, retain) NSString *registerErrorCallback;
 
 - (void)registerAPN:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options;
-- (void)log:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options;
 
 - (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
 - (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
