@@ -31,11 +31,11 @@ if the user doesn't have Wikitude installed. The defaults are:
 
 ```javascript
 {
-	title = "AR Camera",
-	installTitle = "Install Wikitude browser?",
-	installMessage = "This requires the free Wikitude World Browser app. Would you like to install it now?",
-	yesString = "Yes",
-	noString = "No"
+	title : "AR Camera",
+	installTitle : "Install Wikitude browser?",
+	installMessage : "This requires the free Wikitude World Browser app. Would you like to install it now?",
+	yesString : "Yes",
+	noString : "No"
 }
 ```
 
@@ -58,11 +58,11 @@ window.plugins.wikitudeCamera.show(data, function(result) {
 	}, function(error) {
 		alert("Camera view failed: " + error);
 	}, {
-		title = "AR Camera",
-		installTitle = "Install Wikitude browser?",
-		installMessage = "This requires the free Wikitude World Browser app. Would you like to install it now?",
-		yesString = "Yes",
-		noString = "No"
+		title : "AR Camera",
+		installTitle : "Install Wikitude browser?",
+		installMessage : "This requires the free Wikitude World Browser app. Would you like to install it now?",
+		yesString : "Yes",
+		noString : "No"
 	});
 ```
 
