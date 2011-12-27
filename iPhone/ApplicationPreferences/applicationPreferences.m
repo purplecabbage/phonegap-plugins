@@ -49,8 +49,6 @@
 		}
 }
 
-
-/***** This hasn't been updated *****/
 - (void)setSetting:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
     NSString* callbackID = [arguments pop];
