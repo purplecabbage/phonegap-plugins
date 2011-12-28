@@ -4,7 +4,7 @@ function applicationPreferences() {
 applicationPreferences.prototype.get = function(key,success,fail) 
 {
     var args = {};
-    args.key = name;
+    args.key = key;
     PhoneGap.exec(success,fail,"applicationPreferences","getSetting",[args]);
 };
 
