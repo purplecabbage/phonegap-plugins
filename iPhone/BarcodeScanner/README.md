@@ -65,6 +65,25 @@ Barcode formats constants in the zxing code.
 * CODE_128
 * CODE_39
 
+## Creating and using custom UI overlay XIB
+
+You can customize the scanning UI by creating a new overlay in XCode4. Heres how:
+
+* File -> New File
+* Select "User Interface" > "View" and click "Next"
+* Select "iPhone" for device family and click "Next"
+* Enter a file name, say "BarcodeOverlay" and click "Create"
+* Select the "File's Owner" and click on the "Identity Inspector" icon, or on your keyboard press OPTION-CMD-3
+* Change the "Class' from NSObject to PGbcsViewController
+* Add any UI elements to the view that you want in your overlay.
+* Add a Button to your view and ensure it's selected.
+* Click the "Connections Inspector" or on your keyboard press OPTION-CMD-6
+* Drag from the circle beside "Touch Up Inside" to the "File's Owner" object.
+* Select "cancelButtonPressed:" from the popup.
+* Save the interface file and use it by passing the overlay name in as an argument to the `scan` function:
+
+    window.plugins.barcodeScanner.scan(success, fail, ["BarcodeOverlay"])
+
 ## Adding the plugin to your project ##
 
 * Copy the .h, .cpp and .mm files to the Plugins directory in your project.
