@@ -22,5 +22,5 @@
 
 - (void) turnOn:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) turnOff:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-
+- (void) checkLight:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 @end

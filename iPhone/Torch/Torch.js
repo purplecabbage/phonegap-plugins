@@ -7,12 +7,19 @@
 // Created by Shazron Abdullah May 26th 2011
 //
 
-function Torch()
-{
-	this._isOn = false;
-	var self = this;
-	
-	this.__defineGetter__("isOn", function() { return self._isOn; });	
+function Torch() {
+    this._isOn = false;
+    this._checkForLight = false;
+    var self = this;
+
+    this.__defineGetter__("isOn", function () {
+        return self._isOn;
+    });
+
+    this.__defineGetter__("checkForLight", function () {
+        return self._checkForLight;
+    });
+
 }
 
 Torch.prototype.turnOn = function()
@@ -23,6 +30,10 @@ Torch.prototype.turnOn = function()
 Torch.prototype.turnOff = function()
 {
 	PhoneGap.exec("Torch.turnOff");
+};
+
+Torch.prototype.checkLight = function () {
+    PhoneGap.exec("Torch.checkLight");
 };
 
 Torch.install = function()

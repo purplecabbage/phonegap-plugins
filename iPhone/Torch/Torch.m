@@ -3,6 +3,7 @@
 //  PhoneGap Plugin
 //
 // Created by Shazron Abdullah May 26th 2011
+// Forked by Michael Pfütze, Jan 11th 2012
 //
 
 #import "Torch.h"
@@ -58,16 +59,19 @@
 			[captureSession release];
         }
 		else {
-			NSLog(@"Torch not available, hasFlash: %d hasTorch: %d torchMode: %d", 
+            
+            NSLog(@"Torchblaa not available, hasFlash: %d hasTorch: %d torchMode: %d", 
 				  captureDevice.hasFlash,
 				  captureDevice.hasTorch,
 				  captureDevice.torchMode
 				  );
+            
 		}
-
+        
     }
 	else {
-		NSLog(@"Torch not available, AVCaptureDevice class not found.");
+		NSLog(@"Torchblablabla not available, AVCaptureDevice class not found.");
+        
 	}
 }
 
@@ -103,7 +107,7 @@
 		[captureDevice setFlashMode:AVCaptureFlashModeOff];
 		
 		[captureDevice unlockForConfiguration];
-
+        
 		[super writeJavascript:@"window.plugins.torch._isOn = false;"];
 	}	
 }
@@ -115,5 +119,20 @@
 	
 	[super dealloc];
 }
+
+- (void) checkLight:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+{
+    AVCaptureDevice* captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	if ([captureDevice hasTorch] && [captureDevice hasFlash] ) {
+		
+        [super writeJavascript:@"window.plugins.torch._checkForLight = true;"];
+	}	
+    else{
+        [super writeJavascript:@"window.plugins.torch._checkForLight = false;"];
+    }
+}
+
+
+
 
 @end
