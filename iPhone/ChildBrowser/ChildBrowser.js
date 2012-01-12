@@ -5,6 +5,7 @@
 
 function ChildBrowser() {
   // Does nothing
+    this.isActive = false;
 }
 
 // Callback when the location of the page changes
@@ -18,7 +19,8 @@ ChildBrowser._onLocationChange = function(newLoc)
 // called from native
 ChildBrowser._onClose = function()
 {
-  window.plugins.childBrowser.onClose();
+    window.plugins.childBrowser.isActive = false;
+    window.plugins.childBrowser.onClose();
 };
 
 // Callback when the user chooses the 'open in Safari' button
@@ -43,13 +45,24 @@ ChildBrowser._onJSCallback = function(js,loc)
 // Show a webpage, will result in a callback to onLocationChange
 ChildBrowser.prototype.showWebPage = function(loc)
 {
-  PhoneGap.exec("ChildBrowserCommand.showWebPage", loc);
+  if(!this.isActive)
+  {
+      PhoneGap.exec("ChildBrowserCommand.showWebPage", loc);
+      this.isActive = true;
+  }
+  else
+  {
+      console.log("oops, ChildBrowser is already active ...  consider calling close first.");
+      
+  }
 };
 
 // close the browser, will NOT result in close callback
 ChildBrowser.prototype.close = function()
 {
-  PhoneGap.exec("ChildBrowserCommand.close");
+    
+    PhoneGap.exec("ChildBrowserCommand.close");
+    this.isActive = false;
 };
 
 // Not Implemented
