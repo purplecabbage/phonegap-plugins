@@ -64,6 +64,7 @@
         // Note that the image is loaded syncronously
         UIImage *img = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageAttach]]];
         ok = [tweetViewController addImage:img];
+        [img release];
         if(!ok){
             errorMessage = @"Image could not be added";
         }
@@ -104,18 +105,18 @@
     }];
 
     [[super appViewController] presentModalViewController:tweetComposeViewController animated:YES];
+    [tweetComposeViewController release];
 }
 
 - (void) getPublicTimeline:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     NSString *callbackId = [arguments objectAtIndex:0];
     NSString *url = [NSString stringWithFormat:@"%@statuses/public_timeline.json", TWITTER_URL];
     
-	TWRequest *postRequest = [[TWRequest alloc] initWithURL:[NSURL URLWithString:url] parameters:nil requestMethod:TWRequestMethodGET];
+    TWRequest *postRequest = [[TWRequest alloc] initWithURL:[NSURL URLWithString:url] parameters:nil requestMethod:TWRequestMethodGET];
     [postRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
         NSString *jsResponse;
         
-		if([urlResponse statusCode] == 200) {
-
+        if([urlResponse statusCode] == 200) {
             NSString *dataString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
             NSDictionary *dict = [dataString objectFromJSONString];
             jsResponse = [[PluginResult resultWithStatus:PGCommandStatus_OK messageAsDictionary:dict] toSuccessCallbackString:callbackId];
@@ -124,10 +125,10 @@
 		else{
             jsResponse = [[PluginResult resultWithStatus:PGCommandStatus_ERROR 
                                         messageAsString:[NSString stringWithFormat:@"HTTP Error: %i", [urlResponse statusCode]]] 
-                          toErrorCallbackString:callbackId];
+                            	  toErrorCallbackString:callbackId];
 		}
         
-        [self performCallbackOnMainThreadforJS:jsResponse];        
+		[self performCallbackOnMainThreadforJS:jsResponse];        
 	}];
     
     [postRequest release];
