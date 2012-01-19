@@ -44,10 +44,14 @@
     NSString *imageAttach = [arguments objectAtIndex:3];
     
     TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init];
-    [tweetViewController setInitialText:tweetText];
     
     BOOL ok = YES;
     NSString *errorMessage;
+    
+    ok = [tweetViewController setInitialText:tweetText];
+    if(!ok){
+    	errorMessage = @"Tweet is too long";
+    }
     
     if(urlAttach != nil){
         ok = [tweetViewController addURL:[NSURL URLWithString:urlAttach]];
