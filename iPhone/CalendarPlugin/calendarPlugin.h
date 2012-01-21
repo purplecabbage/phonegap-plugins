@@ -1,12 +1,11 @@
 //
-//  calendarPlugin.m
-//  Author: Felix Montanez
-//  Date: 01-17-2011
-//  Notes: This is my first attempt at creating a plugin for phonegap using 
-//  the EventUI framework. I know my code is sloppy and may have errors however
-//  it seems to add the my test Dr's appt to my phone calendar.
-//  I'm stuck with passing variables from Javascript to Objective-C in order
-//  to add events dynamically through the app.
+//
+//  Created by Felix Montanez on 01-17-2012
+//  MIT Licensed
+//
+//  Copyright 2012 AMFMMultiMedia. All Rights Reserved.
+//
+
 
 #import <Foundation/Foundation.h>
 #ifdef PHONEGAP_FRAMEWORK
@@ -21,6 +20,10 @@
     
 	EKEventStore *eventStore;
     EKCalendar *defaultCalendar;
+    
+    //future plan to have global type variables
+    EKEvent *myEvent;
+    EKEventStore *store;
     
 }
 
