@@ -1,16 +1,21 @@
 //
-// PhoneGap Calendar Plugin
-// Author: Felix Montanez 
-// Created: 01-17-2012
+//  calendar.js
 //
+//  Created by Felix Montanez on 01-17-2012
+//  MIT Licensed
+//
+//  Copyright 2012 AMFMMultiMedia. All Rights Reserved.
+//
+ 
 
 function calendarPlugin()
 {
 };
 
 
-calendarPlugin.prototype.createEvent = function() {
-    PhoneGap.exec('calendarPlugin.createEvent');
+calendarPlugin.prototype.createEvent = function(title,location,notes,startDate,endDate) {
+    //PhoneGap.exec('calendarPlugin.createEvent');
+    PhoneGap.exec(null, null, "calendarPlugin", "createEvent", [title,location,notes,startDate,endDate]);
 };
 
 
