@@ -1,11 +1,12 @@
 //
 //  calendarPlugin.m
-//
-//  Created by Felix Montanez on 01-17-2012
-//  MIT Licensed
-//
-//  Copyright 2012 AMFMMultiMedia. All Rights Reserved.
-//
+//  Author: Felix Montanez
+//  Date: 01-17-2011
+//  Notes: This is my first attempt at creating a plugin for phonegap using 
+//  the EventUI framework. I know my code is sloppy and may have errors however
+//  it seems to add the Dr's appt to my phone calendar.
+//  I'm stuck with passing variables from Javascript to Objective-C in order
+//  to add events dynamically through the app.
 
 #import "calendarPlugin.h"
 #import <EventKitUI/EventKitUI.h>
@@ -14,39 +15,19 @@
 @implementation calendarPlugin
 @synthesize eventStore;
 @synthesize defaultCalendar;
-
+//@synthesize callbackID;
 
 -(void)createEvent:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options 
 {
     //Get the Event store object
-    store = [[EKEventStore alloc] init];
-    myEvent = [EKEvent eventWithEventStore: store];
+    EKEventStore *store = [[EKEventStore alloc] init];
+    EKEvent *myEvent = [EKEvent eventWithEventStore: store];
     
-    NSString* title      = [arguments objectAtIndex:1];
-    NSString* location   = [arguments objectAtIndex:2];
-    NSString* message    = [arguments objectAtIndex:3];
-    NSString *startDate  = [arguments objectAtIndex:4];
-    NSString *endDate    = [arguments objectAtIndex:5];
-    
-    
-    //creating the dateformatter object
-    NSDateFormatter *sDate = [[[NSDateFormatter alloc] init] autorelease];
-    [sDate setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *myStartDate = [sDate dateFromString:startDate];
-    
-    
-    NSDateFormatter *eDate = [[[NSDateFormatter alloc] init] autorelease];
-    [eDate setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *myEndDate = [eDate dateFromString:endDate];
-    
-    
-    myEvent.title = title;
-    myEvent.location = location;
-    myEvent.notes = message;
-    myEvent.startDate = myStartDate;
-    myEvent.endDate = myEndDate;
+    myEvent.title = @"Doctor's appt";
+    myEvent.location = @"Los Angeles";
+    myEvent.startDate = [NSDate dateWithTimeIntervalSinceNow:60*60*24];
+    myEvent.endDate = [NSDate dateWithTimeIntervalSinceNow:60*60*26];
     myEvent.calendar = store.defaultCalendarForNewEvents;
-    
     
     EKAlarm *reminder = [EKAlarm alarmWithRelativeOffset:-2*60*60];
     
@@ -56,20 +37,17 @@
     BOOL saved = [store saveEvent:myEvent span:EKSpanThisEvent
                             error:&error];
     if (saved) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dr Appt"
                                                         message:@"Saved to Calendar" delegate:self
-                                              cancelButtonTitle:@"Thank you!"
+                                              cancelButtonTitle:@"Sweet!"
                                               otherButtonTitles:nil];
         [alert show];
         [alert release];
-        
-        
     }
 }
 
 //delegate method for EKEventEditViewDelegate
 -(void)eventEditViewController:(EKEventEditViewController *)controller didCompleteWithAction:(EKEventEditViewAction)action {
     [self dismissModalViewControllerAnimated:YES];
-    [self release];
 }
 @end
