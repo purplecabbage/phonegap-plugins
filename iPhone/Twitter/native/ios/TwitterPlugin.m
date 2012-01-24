@@ -36,21 +36,23 @@
     [super writeJavascript:[[PluginResult resultWithStatus:PGCommandStatus_OK messageAsInt:canTweet ? 1 : 0] toSuccessCallbackString:callbackId]];
 }
 
-- (void) sendTweet:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
+- (void) composeTweet:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
     // arguments: callback, tweet text, url attachment, image attachment
     NSString *callbackId = [arguments objectAtIndex:0];
-    NSString *tweetText = [arguments objectAtIndex:1];
-    NSString *urlAttach = [arguments objectAtIndex:2];
-    NSString *imageAttach = [arguments objectAtIndex:3];
+    NSString *tweetText = [options objectForKey:@"text"];
+    NSString *urlAttach = [options objectForKey:@"urlAttach"];
+    NSString *imageAttach = [options objectForKey:@"imageAttach"];
     
     TWTweetComposeViewController *tweetViewController = [[TWTweetComposeViewController alloc] init];
     
     BOOL ok = YES;
     NSString *errorMessage;
     
-    ok = [tweetViewController setInitialText:tweetText];
-    if(!ok){
-    	errorMessage = @"Tweet is too long";
+    if(tweetText != nil){
+        ok = [tweetViewController setInitialText:tweetText];
+        if(!ok){
+            errorMessage = @"Tweet is too long";
+        }
     }
     
     if(urlAttach != nil){
@@ -96,16 +98,6 @@
     }
     
     [tweetViewController release];
-}
-
-- (void) composeTweet:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
-    TWTweetComposeViewController *tweetComposeViewController = [[TWTweetComposeViewController alloc] init];
-    [tweetComposeViewController setCompletionHandler: ^(TWTweetComposeViewControllerResult result) {
-        [[super appViewController] dismissModalViewControllerAnimated:YES];
-    }];
-
-    [[super appViewController] presentModalViewController:tweetComposeViewController animated:YES];
-    [tweetComposeViewController release];
 }
 
 - (void) getPublicTimeline:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
