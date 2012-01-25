@@ -17,7 +17,7 @@ TwitterDemo = {
     },
     
     setup:function(){
-        var tests = ["isAvailable", "isSetup", "tweet1", "tweet2", "tweet3", "tweet4", "tweet5", "compose", "timeline", "mentions"];
+        var tests = ["isAvailable", "isSetup", "tweet1", "tweet2", "tweet3", "tweet4", "tweet5", "tweet6", "timeline", "mentions"];
         for(var i=0, l=tests.length; i<l; i++){
             this.$(tests[i]).onclick = this[tests[i]];
         }
@@ -54,10 +54,21 @@ TwitterDemo = {
         window.plugins.twitter.composeTweet(
             function(s){ TwitterDemo.log("tweet success"); }, 
             function(e){ TwitterDemo.log("tweet failure: " + e); }, 
-            "Text, Image", 
+            "Text, Remote Image", 
             {
                 imageAttach:"http://zomgdinosaurs.com/zomg.jpg"
             });
+    },
+
+    tweet6:function(){
+        TwitterDemo.log("wait..");
+        window.plugins.twitter.composeTweet(
+                                            function(s){ TwitterDemo.log("tweet success"); }, 
+                                            function(e){ TwitterDemo.log("tweet failure: " + e); }, 
+                                            "Text, Local Image", 
+                                            {
+                                            imageAttach:"www/ninja-lolcat.gif"
+                                            });
     },
 
     tweet3:function(){
