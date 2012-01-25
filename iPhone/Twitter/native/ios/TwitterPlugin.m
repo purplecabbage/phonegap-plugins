@@ -64,9 +64,14 @@
     
     if(imageAttach != nil){
         // Note that the image is loaded syncronously
-        UIImage *img = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageAttach]]];
-        ok = [tweetViewController addImage:img];
-        [img release];
+        if([imageAttach hasPrefix:@"http://"]){
+            UIImage *img = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageAttach]]];
+            ok = [tweetViewController addImage:img];
+            [img release];
+        }
+        else{
+            ok = [tweetViewController addImage:[UIImage imageNamed:imageAttach]];
+        }
         if(!ok){
             errorMessage = @"Image could not be added";
         }
