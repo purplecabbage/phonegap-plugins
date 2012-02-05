@@ -92,12 +92,20 @@ public class StatusBarNotification extends Plugin {
         long when = System.currentTimeMillis();
         
         Notification notification = new Notification(icon, contentTitle, when);
-		
-		Intent notificationIntent = new Intent(ctx, ctx.getClass());
+	//notification.flags |= Notification.FLAG_NO_CLEAR; //Notification cannot be clearned by user
+	
+	Intent notificationIntent = new Intent(ctx, ctx.getClass());
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
         
         mNotificationManager.notify(1, notification);
+	}
+	
+	/**
+	 * Removes the Notification from status bar
+	 */
+	public void clearNotification() {
+		mNotificationManager.cancelAll();
 	}
 	
 	private NotificationManager mNotificationManager;
