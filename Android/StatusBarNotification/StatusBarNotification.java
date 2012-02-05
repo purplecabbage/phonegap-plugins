@@ -43,7 +43,8 @@ import com.phonegap.api.PluginResult.Status;
 
 public class StatusBarNotification extends Plugin {
 	//	Action to execute
-	public static final String ACTION="notify";
+	public static final String NOTIFY = "notify";
+	public static final String CLEAR = "clear";
 	
 	/**
 	 * 	Executes the request and returns PluginResult
@@ -61,7 +62,7 @@ public class StatusBarNotification extends Plugin {
         context = ctx.getApplicationContext();
 		
 		PluginResult result = null;
-		if (ACTION.equals(action)) {
+		if (NOTIFY.equals(action)) {
 			try {
 
 				String title = data.getString(0);
@@ -74,6 +75,8 @@ public class StatusBarNotification extends Plugin {
 						+ jsonEx.getMessage());
 				result = new PluginResult(Status.JSON_EXCEPTION);
 			}
+		} else if (CLEAR.equals(action)){
+			clearNotification();
 		} else {
 			result = new PluginResult(Status.INVALID_ACTION);
 			Log.d("NotificationPlugin", "Invalid action : "+action+" passed");
