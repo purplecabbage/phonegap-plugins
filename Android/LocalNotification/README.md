@@ -7,9 +7,9 @@ To use this plugin, you need to perform the following steps:
 4. Fix the import in AlarmReceiver.java around line 67 where R.drawable.ic_launcher is referenced so it matches an icon in your project
 5. Update your res/xml/plugins.xml file with the following line:
 
-   <plugin name="LocalNotification" value="com.phonegap.plugin.localnotification.LocalNotification" />
+        <plugin name="LocalNotification" value="com.phonegap.plugin.localnotification.LocalNotification" />
 
-5. Add the following fragment in the AndroidManifest.xml inside the <application> tag:
+6. Add the following fragment in the AndroidManifest.xml inside the <application> tag:
 
         <receiver android:name="com.phonegap.plugin.localnotification.AlarmReceiver" >
         </receiver>
@@ -23,32 +23,32 @@ To use this plugin, you need to perform the following steps:
     The first part tells Android to launch the AlarmReceiver class when the alarm is be triggered. This will also work when the application is not running.
 	The second part restores all added alarms upon device reboot (because Android 'forgets' all alarms after a restart).
 	
-6. The following piece of code is a minimal example in which you can test the notification:
+7. The following piece of code is a minimal example in which you can test the notification:
 
-		<script type="text/javascript">
-			document.addEventListener("deviceready", appReady, false);
+        	<script type="text/javascript">
+                        document.addEventListener("deviceready", appReady, false);
 			
-			function appReady() {
-				console.log("Device ready");
+                        function appReady() {
+                        	console.log("Device ready");
 				
-				if (typeof plugins !== "undefined") {
-					plugins.localNotification.add({
-						date : new Date(),
-						message : "Phonegap - Local Notification\r\nSubtitle comes after linebreak",
-						ticker : "This is a sample ticker text",
-						repeatDaily : false,
-						id : 4
-					});
-				}
-			}
+                        	if (typeof plugins !== "undefined") {
+                        		plugins.localNotification.add({
+                        			date : new Date(),
+                        			message : "Phonegap - Local Notification\r\nSubtitle comes after linebreak",
+                        			ticker : "This is a sample ticker text",
+                        			repeatDaily : false,
+                        			id : 4
+                			});
+                		}
+        		}
 			
-			document.addEventListener("deviceready", appReady, false);
-		</script>
+                	document.addEventListener("deviceready", appReady, false);
+                </script>
 		
-7. You can use the following commands:
+8. You can use the following commands:
 
 	- plugins.localNotification.add({ date: new Date(), message: 'This is an Android alarm using the statusbar', id: 123 });
 	- plugins.localNotification.cancel(123); 
 	- plugins.localNotification.cancelAll();
 		
-8. Enjoy. Daniel
+9. Enjoy. Daniel
