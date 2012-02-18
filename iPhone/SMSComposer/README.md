@@ -25,19 +25,20 @@ Using this plugin requires [PhoneGap for iPhone](http://github.com/phonegap/phon
 ## EXAMPLE USAGE ##
 
 * All parameters are optional.
-	window.plugins.smsComposer.showSMSComposer();
+	`window.plugins.smsComposer.showSMSComposer();`
 
 
 * Passing phone number and message.
-	window.plugins.smsComposer.showSMSComposer('3424221122', 'hello');
+	`window.plugins.smsComposer.showSMSComposer('3424221122', 'hello');`
 
 * Multiple recipents are separated by comma(s).
-	window.plugins.smsComposer.showSMSComposer('3424221122,2134463330', 'hello');
+	`window.plugins.smsComposer.showSMSComposer('3424221122,2134463330', 'hello');`
 
 
-* showSMSComposerWithCB takes a callback as its first parameter.  
+* `showSMSComposerWithCB` takes a callback as its first parameter.  
 * 0, 1, 2, or 3 will be passed to the callback when the text message has been attempted.
 
+```javascript
 	window.plugins.smsComposer.showSMSComposerWithCB(function(result){
 
 		if(result == 0)
@@ -50,7 +51,7 @@ Using this plugin requires [PhoneGap for iPhone](http://github.com/phonegap/phon
 			alert("Not Sent.");		
 
 	},'3424221122,2134463330', 'hello');
-
+````````
 
 * A fully working example as index.html has been added to this repository. 
 * It is an example of what your www/index.html could look like.
