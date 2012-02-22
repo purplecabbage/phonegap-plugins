@@ -154,6 +154,17 @@
 	{
 		datePickerControl.datePickerMode = UIDatePickerModeTime;
 	}
+	else if ([mode isEqualToString:@"datetime"])
+	{
+		datePickerControl.datePickerMode = UIDatePickerModeDateAndTime;
+
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setTimeZone:[NSTimeZone defaultTimeZone]];
+		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+		NSDate *date = [dateFormatter dateFromString:dateString];		
+		datePickerControl.date = date;
+
+	}
 
 	return [datePickerControl autorelease];
 }
