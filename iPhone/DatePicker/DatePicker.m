@@ -30,8 +30,6 @@
 {
 	self = (DatePicker *)[super initWithWebView:theWebView];
 
-	NSLog(@"DatePicker refs: %i, datePickerSheet refs: %i, dataPicker refs: %i", [self retainCount], [_datePickerSheet retainCount], [_datePicker retainCount]);
-
 	[self initActionSheet:self];
 
 	[self initActionSheetCloseButton:self.datePickerSheet title:@"Close" target:self action:@selector(dismissActionSheet:)];
@@ -148,16 +146,14 @@
 
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 		[dateFormatter setTimeZone:[NSTimeZone defaultTimeZone]];
-		[dateFormatter setDateFormat:@"MM/dd/yyyy"];
-		NSDate *date = [dateFormatter dateFromString:dateString];
-		[dateFormatter release];
+		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+		NSDate *date = [dateFormatter dateFromString:dateString];		
 		datePickerControl.date = date;
 	}
 	else if ([mode isEqualToString:@"time"])
 	{
 		datePickerControl.datePickerMode = UIDatePickerModeTime;
 	}
-
 
 	return [datePickerControl autorelease];
 }
