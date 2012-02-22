@@ -10,9 +10,9 @@
 #endif
 
 
-@interface DatePicker : PGPlugin {
-	UIActionSheet *datePickerSheet;
-	UIDatePicker *datePicker;
+@interface DatePicker : PGPlugin <UIActionSheetDelegate> {
+	UIActionSheet *_datePickerSheet;
+	UIDatePicker *_datePicker;
 	BOOL isVisible;
 
 }
