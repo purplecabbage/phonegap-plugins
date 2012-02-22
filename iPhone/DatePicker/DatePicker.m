@@ -8,14 +8,20 @@
 
 @interface DatePicker (Private)
 
-// Initialize the UIActionSheet with ID <UIActionSheetDelegate> delegate
-- (void)initActionSheet:(id <UIActionSheetDelegate>)delegateOrNil;
+// Initialize the UIActionSheet with ID <UIActionSheetDelegate> delegate UIDatePicker datePicker (UISegmentedControl)closeButton
+- (void)initActionSheet:(id <UIActionSheetDelegate>)delegateOrNil datePicker:(UIDatePicker *)datePicker closeButton:(UISegmentedControl *)closeButton;
 
-// Initialize the UISegmentedControl with UIView parentView, NSString title, ID target and SEL action
-- (void)initActionSheetCloseButton:(UIView *)parentView title:(NSString *)title target:(id)target action:(SEL)action;
+// Creates the NSDateFormatter with NSString format and NSTimeZone timezone
+- (NSDateFormatter *)createISODateFormatter:(NSString *)format timezone:(NSTimeZone *)timezone;
 
-// Initialize the UIDatePicker with NSMutableDictionary options
-- (UIDatePicker *)createDatePicker:(CGRect)pickerFrame options:(NSMutableDictionary *)optionsOrNil;
+// Creates the UIDatePicker with NSMutableDictionary options
+- (UIDatePicker *)createDatePicker:(CGRect)pickerFrame;
+
+// Creates the UISegmentedControl with UIView parentView, NSString title, ID target and SEL action
+- (UISegmentedControl *)createActionSheetCloseButton:(NSString *)title target:(id)target action:(SEL)action;
+
+// Configures the UIDatePicker with the NSMutableDictionary options
+- (void)configureDatePicker:(NSMutableDictionary *)optionsOrNil;
 
 @end
 
@@ -23,6 +29,7 @@
 
 @synthesize datePickerSheet = _datePickerSheet;
 @synthesize datePicker = _datePicker;
+@synthesize isoDateFormatter = _isoDateFormatter; 
 
 #pragma mark - Public Methods
 
@@ -30,9 +37,17 @@
 {
 	self = (DatePicker *)[super initWithWebView:theWebView];
 
-	[self initActionSheet:self];
+	if (self)
+	{
+		UIDatePicker *userDatePicker = [self createDatePicker:CGRectMake(0, 40, 0, 0)];
+		UISegmentedControl *datePickerCloseButton = [self createActionSheetCloseButton:@"Close" target:self action:@selector(dismissActionSheet:)];
+		NSDateFormatter *isoTimeFormatter = [self createISODateFormatter:k_DATEPICKER_DATETIME_FORMAT timezone:[NSTimeZone defaultTimeZone]];
 
-	[self initActionSheetCloseButton:self.datePickerSheet title:@"Close" target:self action:@selector(dismissActionSheet:)];
+		self.datePicker = userDatePicker;
+		self.isoDateFormatter = isoTimeFormatter;
+
+		[self initActionSheet:self datePicker:userDatePicker closeButton:datePickerCloseButton];        
+	}
 
 	return self;
 }
@@ -43,11 +58,7 @@
 		return;        
 	}
 
-	UIDatePicker *datePickerInstance = [[self createDatePicker:CGRectMake(0, 40, 0, 0) options:options] retain];
-	self.datePicker = datePickerInstance;
-	[self.datePickerSheet addSubview:datePickerInstance];
-	[datePickerInstance release];
-
+	[self configureDatePicker:options];
 	[self.datePickerSheet showInView:[[super webView] superview]];	
 	[self.datePickerSheet setBounds:CGRectMake(0, 0, 320, 485)];
 
@@ -58,7 +69,7 @@
 	[self.datePickerSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
-- (void) onMemoryWarning
+- (void)onMemoryWarning
 {
 	// It could be better to close the datepicker before the system
 	// clears memory. But in reality, other non-visible plugins should
@@ -75,6 +86,7 @@
 {
 	[_datePicker release];
 	[_datePickerSheet release];
+	[_isoDateFormatter release];
 
 	[super dealloc];
 }
@@ -84,8 +96,6 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.datePicker._dateSelected(\"%i\");", (int)[self.datePicker.date timeIntervalSince1970]];
-	NSLog(@"Date: %@", self.datePicker);
-	NSLog(@"%f", [self.datePicker.date timeIntervalSince1970]);
 	[super writeJavascript:jsCallback];
 }
 
@@ -96,7 +106,40 @@
 
 #pragma mark - Private Methods
 
-- (void)initActionSheetCloseButton:(UIView *)parentView title:(NSString *)title target:(id)target action:(SEL)action
+- (void)initActionSheet:(id <UIActionSheetDelegate>)delegateOrNil datePicker:(UIDatePicker *)datePicker closeButton:(UISegmentedControl *)closeButton
+{
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+															 delegate:delegateOrNil 
+													cancelButtonTitle:nil 
+											   destructiveButtonTitle:nil 
+													otherButtonTitles:nil];
+
+	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+
+	[actionSheet addSubview:datePicker];
+	[actionSheet addSubview:closeButton];
+
+	self.datePickerSheet = actionSheet;
+
+	[actionSheet release];
+}
+
+- (UIDatePicker *)createDatePicker:(CGRect)pickerFrame
+{
+	UIDatePicker *datePickerControl = [[UIDatePicker alloc] initWithFrame:pickerFrame];
+	return [datePickerControl autorelease];
+}
+
+- (NSDateFormatter *)createISODateFormatter:(NSString *)format timezone:(NSTimeZone *)timezone;
+{
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setTimeZone:timezone];
+	[dateFormatter setDateFormat:format];
+
+	return [dateFormatter autorelease];
+}
+
+- (UISegmentedControl *)createActionSheetCloseButton:(NSString *)title target:(id)target action:(SEL)action
 {
 	UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:title]];
 
@@ -106,31 +149,14 @@
 	closeButton.tintColor = [UIColor blackColor];
 
 	[closeButton addTarget:target action:action forControlEvents:UIControlEventValueChanged];
-	[parentView addSubview:closeButton];
 
-	[closeButton release];
+	return [closeButton autorelease];
 }
 
-- (void)initActionSheet:(id <UIActionSheetDelegate>)delegateOrNil
+- (void)configureDatePicker:(NSMutableDictionary *)optionsOrNil;
 {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-															 delegate:delegateOrNil 
-													cancelButtonTitle:nil 
-											   destructiveButtonTitle:nil 
-													otherButtonTitles:nil];
-
-	[actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-	self.datePickerSheet = actionSheet;
-
-	[actionSheet release];
-}
-
-- (UIDatePicker *)createDatePicker:(CGRect)pickerFrame options:(NSMutableDictionary *)optionsOrNil
-{
-	NSString *mode = [optionsOrNil objectForKey:@"mode"];
+ 	NSString *mode = [optionsOrNil objectForKey:@"mode"];
 	NSString *dateString = [optionsOrNil objectForKey:@"date"];
-	UIDatePicker *datePickerControl = [[UIDatePicker alloc] initWithFrame:pickerFrame];
-
 	BOOL allowOldDates = NO;
 
 	if ([[optionsOrNil objectForKey:@"allowOldDates"] intValue] == 1) {
@@ -138,35 +164,22 @@
 	}
 
 	if ( ! allowOldDates) {
-		datePickerControl.minimumDate = [NSDate date];
+		self.datePicker.minimumDate = [NSDate date];
 	}
 
-	if ([mode isEqualToString:@"date"]) {
-		datePickerControl.datePickerMode = UIDatePickerModeDate;
+	self.datePicker.date = [self.isoDateFormatter dateFromString:dateString];
 
-		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setTimeZone:[NSTimeZone defaultTimeZone]];
-		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-		NSDate *date = [dateFormatter dateFromString:dateString];		
-		datePickerControl.date = date;
+	if ([mode isEqualToString:@"date"]) {
+		self.datePicker.datePickerMode = UIDatePickerModeDate;
 	}
 	else if ([mode isEqualToString:@"time"])
 	{
-		datePickerControl.datePickerMode = UIDatePickerModeTime;
+		self.datePicker.datePickerMode = UIDatePickerModeTime;
 	}
-	else if ([mode isEqualToString:@"datetime"])
+	else
 	{
-		datePickerControl.datePickerMode = UIDatePickerModeDateAndTime;
-
-		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setTimeZone:[NSTimeZone defaultTimeZone]];
-		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-		NSDate *date = [dateFormatter dateFromString:dateString];		
-		datePickerControl.date = date;
-
+		self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 	}
-
-	return [datePickerControl autorelease];
 }
 
 @end
