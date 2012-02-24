@@ -3,18 +3,7 @@
 //  MultiScreenPlugin
 //
 //  Created by Andrew Trice on 1/9/12.
-//
-//
-// THIS SOFTWARE IS PROVIDED BY THE ANDREW TRICE "AS IS" AND ANY EXPRESS OR
-// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-// EVENT SHALL ANDREW TRICE OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//  Copyright 2012 Adobe Systems. All rights reserved.
 //
 
 #import "PGExternalScreen.h"
@@ -38,28 +27,32 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
     {
         NSString *stringObtainedFromJavascript = [arguments objectAtIndex:0];  
         [stringObtainedFromJavascript retain];
-    
+        
         NSRange textRange;
         textRange =[[stringObtainedFromJavascript lowercaseString] rangeOfString:@"http://"];
         NSError *error = nil;
+        NSURL *url;
         
         //found "http://", so load remote resource
         if(textRange.location != NSNotFound)
         {
-            NSURL *remoteURL = [NSURL URLWithString:stringObtainedFromJavascript];
-            NSURLRequest *request = [NSURLRequest requestWithURL:remoteURL];
-            [webView loadRequest:request];
+            url = [NSURL URLWithString:stringObtainedFromJavascript];       
+            [url retain];
         }
         //load local resource
         else
         {
             
             NSString* path = [NSString stringWithFormat:@"%@/%@", baseURLAddress, stringObtainedFromJavascript];
-            NSString* content = [NSString stringWithContentsOfFile:path
-                                                          encoding:NSUTF8StringEncoding
-                                                             error:&error];
-            [webView loadHTMLString:content baseURL:baseURL];
+            [path retain];
+            url = [NSURL fileURLWithPath:path isDirectory:NO];
+            [url retain];
+            [path release];
         }
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [webView loadRequest:request];
+        
+        [url release];
         [stringObtainedFromJavascript release];
         
         if(error) {
@@ -101,10 +94,10 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         pluginResult = [PluginResult resultWithStatus:PGCommandStatus_ERROR messageAsString: WEBVIEW_UNAVAILABLE];        
         [self writeJavascript: [pluginResult toErrorCallbackString:self.callbackID]];    
     }
-
+    
 }
 
- 
+
 //used to invoke javascript in external screen web view
 - (void) invokeJavaScript:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
@@ -127,7 +120,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         pluginResult = [PluginResult resultWithStatus:PGCommandStatus_ERROR messageAsString: WEBVIEW_UNAVAILABLE];        
         [self writeJavascript: [pluginResult toErrorCallbackString:self.callbackID]];    
     }
-
+    
 }
 
 //used to initialize monitoring of external screen
@@ -211,7 +204,7 @@ NSString* SCREEN_NOTIFICATION_HANDLERS_OK =@"External screen notification handle
         
         externalWindow.frame = screenBounds;
         externalWindow.clipsToBounds = YES;
-                
+        
         webView = [[UIWebView alloc] initWithFrame:screenBounds];
         [webView retain];
         
