@@ -4,24 +4,21 @@ Once the user has selected time or date, they will be sent back into the PhoneGa
 
 How to use:
 
-Usage:
+plugins.DatePicker.exec(options, callback);
 
-window.plugins.datePickerPlugin.showDateOrTime(dataType,successCallback,errorCallback);
-
-dataType argument takes two value: 
-	'date' : if you need the datePicker
-	'time' : if you need the timePicker
-
-For the date picker : Success returns an object with the parameters {day,month,year} filled with selected values.
-For the time picker : Success returns an object with the parameters {hour,min} filled with selected values.
+Options is an object with the following fields: 
+  date: A javascript Date used to set the initial date and time. Defaults to now. 
+  mode: Can be 'time', 'date', or 'datetime'. If 'time', a timepicker is displayed, if 'date', a datepicker is displayed, if 'datetime', displays a datepicker first, then a timepicker. Defaults (including arbitrary strings not 'date' or 'time' will use 'datetime').
+  
+The callback should expect a javascript time object. 
 
 Example:
 
 	document.querySelector("#mypickdatebutton").addEventListener("tap", function() {
 	    window.plugins.datePickerPlugin.showDateOrTime(
 			'date',
-			function(r){
-				document.getElementById("mydatetargetfield").value = r.day + "/" + r.month + "/" + r.year;
+			function(time){
+				document.getElementById("mydatetargetfield").value = time.getDay() + "/" + time.getMonth() + "/" + time.getYear();
 			},
 			function(e){console.log(e);}
 		);
@@ -30,8 +27,8 @@ Example:
 	document.querySelector("#mypickdatebutton").addEventListener("tap", function() {
 	    window.plugins.datePickerPlugin.showDateOrTime(
 			'time',
-			function(r){
-				document.getElementById("mytimetargetfield").value = r.hour + "h" + r.min;
+			function(time){
+				document.getElementById("mytimetargetfield").value = time.getHour() + "h" + time.getMinute();
 			},
 			function(e){
 				console.log(e);
@@ -45,6 +42,3 @@ For the current files to work, you'll need to create a package (folders) called 
 You can change this to whatever you like, just update the datePickerPlugin.js and datePickerPlugin.java.
 
 datePickerPlugin.js should go in the asset folder and should be referenced in your index.html file.
-
-
-Limitations:
