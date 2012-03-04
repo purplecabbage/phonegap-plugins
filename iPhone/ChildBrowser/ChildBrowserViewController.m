@@ -215,5 +215,22 @@
 
 }
 
+- (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
+    NSLog (@"webView:didFailLoadWithError");
+    [spinner stopAnimating];
+    addressLabel.text = @"Failed";
+    if (error != NULL) {
+        UIAlertView *errorAlert = [[UIAlertView alloc]
+                                   initWithTitle: [error localizedDescription]
+                                   message: [error localizedFailureReason]
+                                   delegate:nil
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil];
+        [errorAlert show];
+        [errorAlert release];
+    }
+}
+
+
 
 @end
