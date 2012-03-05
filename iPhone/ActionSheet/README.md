@@ -1,3 +1,14 @@
+Added Cordova 1.5 support - @RandyMcMillan 2012
+Minor edits required for backwards support
+In ActionSheet.js replace instances of Cordova with PhoneGap
+
+Example:
+
+	//PhoneGap.exec(callback, callback, service, action, [config]);
+	  Cordova.exec(callback, callback, service, action, [config]);
+	
+Thanks to Olivier Louvignes for sharing this plugin with the PhoneGap/Cordova community!
+
 # PhoneGap ActionSheet Plugin #
 by `Olivier Louvignes`
 
