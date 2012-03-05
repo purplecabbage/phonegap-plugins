@@ -120,7 +120,11 @@ public class ChildBrowser extends Plugin {
         try {
             Intent intent = null;
             if (usePhoneGap) {
+<<<<<<< HEAD
                 intent = new Intent().setClass((Context) this.ctx, org.apache.cordova.DroidGap.class);
+=======
+                intent = new Intent().setClass(this.ctx.getContext(), org.apache.cordova.DroidGap.class);
+>>>>>>> Updating ChildBrowser for 1.5.0
                 intent.setData(Uri.parse(url)); // This line will be removed in future.
                 intent.putExtra("url", url);
 
@@ -148,7 +152,6 @@ public class ChildBrowser extends Plugin {
      */
     private void closeDialog() {
         if (dialog != null) {
-            this.webview.stopLoading();
             dialog.dismiss();
         }
     }
@@ -212,7 +215,11 @@ public class ChildBrowser extends Plugin {
         // Create dialog in new thread 
         Runnable runnable = new Runnable() {
             public void run() {
+<<<<<<< HEAD
                 dialog = new Dialog((Context) ctx);
+=======
+                dialog = new Dialog(ctx.getContext());
+>>>>>>> Updating ChildBrowser for 1.5.0
 
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
@@ -235,6 +242,7 @@ public class ChildBrowser extends Plugin {
                 LinearLayout.LayoutParams closeParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
                 LinearLayout.LayoutParams wvParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
                 
+<<<<<<< HEAD
                 LinearLayout main = new LinearLayout((Context) ctx);
                 main.setOrientation(LinearLayout.VERTICAL);
                 
@@ -242,6 +250,15 @@ public class ChildBrowser extends Plugin {
                 toolbar.setOrientation(LinearLayout.HORIZONTAL);
                 
                 ImageButton back = new ImageButton((Context) ctx);
+=======
+                LinearLayout main = new LinearLayout(ctx.getContext());
+                main.setOrientation(LinearLayout.VERTICAL);
+                
+                LinearLayout toolbar = new LinearLayout(ctx.getContext());
+                toolbar.setOrientation(LinearLayout.HORIZONTAL);
+                
+                ImageButton back = new ImageButton(ctx.getContext());
+>>>>>>> Updating ChildBrowser for 1.5.0
                 back.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         goBack();
@@ -255,7 +272,11 @@ public class ChildBrowser extends Plugin {
                 }
                 back.setLayoutParams(backParams);
 
+<<<<<<< HEAD
                 ImageButton forward = new ImageButton((Context) ctx);
+=======
+                ImageButton forward = new ImageButton(ctx.getContext());
+>>>>>>> Updating ChildBrowser for 1.5.0
                 forward.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         goForward();
@@ -269,7 +290,11 @@ public class ChildBrowser extends Plugin {
                 }               
                 forward.setLayoutParams(forwardParams);
                 
+<<<<<<< HEAD
                 edittext = new EditText((Context) ctx);
+=======
+                edittext = new EditText(ctx.getContext());
+>>>>>>> Updating ChildBrowser for 1.5.0
                 edittext.setOnKeyListener(new View.OnKeyListener() {
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
                         // If the event is a key-down event on the "enter" button
@@ -285,7 +310,11 @@ public class ChildBrowser extends Plugin {
                 edittext.setText(url);
                 edittext.setLayoutParams(editParams);
                 
+<<<<<<< HEAD
                 ImageButton close = new ImageButton((Context) ctx);                
+=======
+                ImageButton close = new ImageButton(ctx.getContext());                
+>>>>>>> Updating ChildBrowser for 1.5.0
                 close.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         closeDialog();
@@ -299,10 +328,14 @@ public class ChildBrowser extends Plugin {
                 }
                 close.setLayoutParams(closeParams);
                                 
+<<<<<<< HEAD
                 webview = new WebView((Context) ctx);
+=======
+                webview = new WebView(ctx.getContext());
+>>>>>>> Updating ChildBrowser for 1.5.0
                 webview.getSettings().setJavaScriptEnabled(true);
                 webview.getSettings().setBuiltInZoomControls(true);
-                WebViewClient client = new ChildBrowserClient(ctx, edittext);
+                WebViewClient client = new ChildBrowserClient(edittext);
                 webview.setWebViewClient(client);                
                 webview.loadUrl(url);
                 webview.setId(5);
@@ -358,7 +391,6 @@ public class ChildBrowser extends Plugin {
      * The webview client receives notifications about appView
      */
     public class ChildBrowserClient extends WebViewClient {
-        CordovaInterface ctx;
         EditText edittext;
 
         /**
@@ -367,8 +399,7 @@ public class ChildBrowser extends Plugin {
          * @param mContext
          * @param edittext 
          */
-        public ChildBrowserClient(CordovaInterface mContext, EditText mEditText) {
-            this.ctx = mContext;
+        public ChildBrowserClient(EditText mEditText) {
             this.edittext = mEditText;
         }       
 
