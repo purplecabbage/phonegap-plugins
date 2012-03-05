@@ -1,3 +1,10 @@
+/*     
+
+Cordova v1.5.0 Support added 2012 @RandyMcMillan
+README.md for install notes
+
+*/
+
 /**
  * Constructor
  */
@@ -6,11 +13,12 @@ function SAiOSAdPlugin()
 }
 
 /**
-* show - true to show the ad, false to hide the ad
-*/
+ * show - true to show the ad, false to hide the ad
+ */
 SAiOSAdPlugin.prototype.orientationChanged = function()
 {
-    PhoneGap.exec("SAiOSAdPlugin.orientationChanged", window.orientation);
+    //PhoneGap.exec("SAiOSAdPlugin.orientationChanged", window.orientation);
+    Cordova.exec("SAiOSAdPlugin.orientationChanged", window.orientation);
 }
 
 /**
@@ -18,7 +26,8 @@ SAiOSAdPlugin.prototype.orientationChanged = function()
  */
 SAiOSAdPlugin.prototype.showAd = function(show)
 {
-	PhoneGap.exec("SAiOSAdPlugin.showAd", show);
+    //PhoneGap.exec("SAiOSAdPlugin.showAd", show);
+    Cordova.exec("SAiOSAdPlugin.showAd", show);
 }
 
 /**
@@ -29,7 +38,10 @@ SAiOSAdPlugin.prototype.prepare = function(atBottom)
 	if (!atBottom) {
 		atBottom = false;
 	}
-	PhoneGap.exec("SAiOSAdPlugin.prepare", atBottom);
+    
+	//PhoneGap.exec("SAiOSAdPlugin.prepare", atBottom);
+	Cordova.exec("SAiOSAdPlugin.prepare", atBottom);
+    
 }
 
 /**
@@ -45,7 +57,9 @@ SAiOSAdPlugin.install = function()
 	
 }
 
+
 /**
- * Add to PhoneGap constructor
+ * Add to PhoneGap/Cordova constructor
  */
-PhoneGap.addConstructor(SAiOSAdPlugin.install);
+//PhoneGap.addConstructor(SAiOSAdPlugin.install);
+Cordova.addConstructor(SAiOSAdPlugin.install);

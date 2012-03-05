@@ -1,3 +1,14 @@
+Updated for Cordova 1.5 support 2012 - @RandyMcMillan
+Add SAiOSAdPlugin SAiOSAdPlugin to the PhoneGap.plist/Cordova.plist under Plugins
+Make appropriate edits to SAiOSAdPlugin.js for PhoneGap 1.4.1 support and before
+
+//PhoneGap.exec("SAiOSAdPlugin.orientationChanged", window.orientation);
+   Cordova.exec("SAiOSAdPlugin.orientationChanged", window.orientation);
+
+Include SAiOSAdPlugin.js in your www folder (blue color)
+Add iAd.framework to Frameworks weaklink/optional
+Your App must be added to https://iad.apple.com/itcportal/ to make $
+
 # PhoneGap AdPlugin #
 by Shazron Abdullah
 
