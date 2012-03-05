@@ -2,7 +2,7 @@
 //  ActionSheet.m
 //  
 // Created by Olivier Louvignes on 11/27/2011.
-//
+// Added Cordova 1.5 support - @RandyMcMillan 2012
 // Copyright 2011 Olivier Louvignes. All rights reserved.
 // MIT Licensed
 
@@ -75,8 +75,13 @@
 	[result setObject:[NSNumber numberWithInteger:buttonIndex] forKey:@"buttonIndex"];
 	
 	// Create Plugin Result
+#ifdef PHONEGAP_FRAMEWORK
 	PluginResult* pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsDictionary:result];
-	
+#endif
+#ifdef CORDOVA_FRAMEWORK
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+#endif
+    
 	// Checking if cancel was clicked
 	if (buttonIndex != actionSheet.cancelButtonIndex) {
 		//Call  the Failure Javascript function
