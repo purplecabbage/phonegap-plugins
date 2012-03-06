@@ -26,6 +26,7 @@
 	// Compiling options with defaults
 	NSString *title = [options objectForKey:@"title"] ?: @"";
 	NSString *style = [options objectForKey:@"style"] ?: @"black-translucent";
+	//NSString *style = [options objectForKey:@"style"] ?: @"default";
 	NSArray *items = [options objectForKey:@"items"];
 	NSInteger cancelButtonIndex = [[options objectForKey:@"cancelButtonIndex"] intValue] ?: false;
 	NSInteger destructiveButtonIndex = [[options objectForKey:@"destructiveButtonIndex"] intValue] ?: false;
@@ -37,9 +38,10 @@
 									 destructiveButtonTitle:nil
 										  otherButtonTitles:nil];
 	
-	// Style actionSheet, defaults to BlackTranslucent
+	// Style actionSheet, defaults to UIActionSheetStyleDefault
 	if([style isEqualToString:@"black-opaque"]) actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-	else actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+	else if([style isEqualToString:@"black-translucent"]) actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+	else actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
 	
 	// Fill with elements
 	for(int i = 0; i < [items count]; i++) {
