@@ -32,7 +32,7 @@ function displayNextTestInner() {
     TestCurrent += 1
 
     if (TestCurrent >= TestsTotal - 1) {
-        $("content").innerHTML = "press cancel<p><a href=''>re-run</a>"
+        $("content").innerHTML = "press cancel test<p><a href=''>re-run</a>"
         return
     }
 

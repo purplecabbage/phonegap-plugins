@@ -9,7 +9,7 @@
 <html>
 
 <head>
-<title>PhoneGap BarcodeScanner desktop test app</title>
+<title>Cordova BarcodeScanner desktop test app</title>
 <script src="image-data.json.js"></script>
 <script src="desktop-app.js"></script>
 <style>
@@ -37,9 +37,9 @@ div.xtest-case {
 <div id="template">
     <p><b>({{current}}/{{total}}): {{image}} </b>
 
-    <p>click on image to proceed
-
-    <p><img onclick="displayNextTest()" src="images/{{image}}">
+    <p><button onclick="displayNextTest()">next image</button>
+    
+    <p><img src="images/{{image}}">
 
     <p>result should be:
     <br><tt>{{format}} - "{{text}}"</tt>
