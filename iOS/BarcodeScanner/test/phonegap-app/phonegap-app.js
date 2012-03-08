@@ -6,14 +6,14 @@
 //------------------------------------------------------------------------------
 
 var thisImage = -1
-var total     = ImageData.length
+var total     = ImageData.length + 1
 
 var successes = []
 var failures  = []
 
 var resultsList
 
-for (var i=0; i<total; i++) {
+for (var i=0; i<total - 1; i++) {
     ImageData[i].type = ImageData[i].format
 }
 
@@ -33,10 +33,12 @@ function scannerFake(success, failure) {
 
 //------------------------------------------------------------------------------
 function onLoad() {
-    if (window.PhoneGap) {
+    if (typeof Cordova == "object") {
+        console.log("Cordova found!")
         document.addEventListener("deviceready",onDeviceReady,false);
     }
     else {
+        console.log("Cordova not found!")
         if (!window.plugins)                window.plugins = {}
         if (!window.plugins.barcodeScanner) window.plugins.barcodeScanner = {
             scan: scannerFake
@@ -47,7 +49,7 @@ function onLoad() {
     $("scan-button").onclick = scanNext
     $("start-over").onclick = rerun
 
-    updateText("test-count-total", total+1)
+    updateText("test-count-total", total)
 
     resultsList = $("results-list")
 }
@@ -59,11 +61,7 @@ function onDeviceReady() {
 
 //------------------------------------------------------------------------------
 function rerun() {
-    thisImage = -1
-    resultsList.innerHTML = ""
-    updateText("test-done", "")
-    $("running-bits").style.display = "block"
-    next()
+    location.href = location.href
 }
 
 //------------------------------------------------------------------------------
@@ -140,12 +138,12 @@ function next() {
 
     thisImage++
 
-    if (thisImage == total) {
+    if (thisImage == total - 1) {
         thisImage = null
-        updateImage("")
+        updateImage()
         updateText("scan-button", "scan: {press cancel}")
         updateText("test-text", "{press cancel}")
-        updateText("test-count-current", total+1)
+        updateText("test-count-current", total)
         return
     }
 

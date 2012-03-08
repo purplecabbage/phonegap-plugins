@@ -97,10 +97,10 @@ at the bare minumum a transparent view that is connected to the PGbcsViewControl
 * Copy the .h, .cpp and .mm files to the Plugins directory in your project.
 * Copy the .js file to your www directory and reference it from your html file(s).
 * In the `Supporting Files` directory of your project, add a new plugin
-by editing the file `PhoneGap.plist` and in the `Plugins` dictionary adding
+by editing the file `Cordova.plist` and in the `Plugins` dictionary adding
 the following key/value pair:
- * key: `com.phonegap.barcodeScanner`
- * value: `PGBarcodeScanner`
+ * key: `org.apache.cordova.barcodeScanner`
+ * value: `CDVBarcodeScanner`
 * Add the following libraries to your Xcode project, if not already there:
  * AVFoundation.framework
  * AssetsLibrary.framework
