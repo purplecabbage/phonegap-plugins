@@ -1,11 +1,11 @@
-New iOS plugins should be submitted here. As existing iPhone/iOS plugins are patched and COMPLETELY abandon the PhoneGap naming convention they will be placed here. The present https://github.com/phonegap/phonegap-plugins/tree/master/iPhone should be preserved as to NOT break dependent forks.
+New iOS plugins should be submitted here. As existing iPhone/iOS plugins are patched and COMPLETELY abandon the PhoneGap naming convention they will be placed here. The present https://github.com/phonegap/phonegap-plugins/tree/master/iPhone should be preserved.
 
-• Added a ActionSheet (iOS) plugin with Cordova support. 
-• Added a AdPlugin (iOS) plugin with Cordova support. 
-• Added a BarCodeScanner (iOS) plugin with Cordova support. 
-• Added a ChildBrowser (iOS) plugin with Cordova support. 
-• Added a EmailComposer (iOS) plugin with Cordova support. 
-• Added a VolumeSlider (iOS) plugin with Cordova support. 
+* Added a ActionSheet (iOS) plugin with Cordova support.
+* Added a AdPlugin (iOS) plugin with Cordova support.
+* Added a BarCodeScanner (iOS) plugin with Cordova support.
+* Added a ChildBrowser (iOS) plugin with Cordova support.
+* Added a EmailComposer (iOS) plugin with Cordova support.
+* Added a VolumeSlider (iOS) plugin with Cordova support.
 
 Please refer to distributed Plugin Upgrade Guides for the most current version. 
 
