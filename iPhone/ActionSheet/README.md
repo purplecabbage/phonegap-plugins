@@ -1,3 +1,14 @@
+Added Cordova 1.5 support - @RandyMcMillan 2012
+Minor edits required for backwards support
+In ActionSheet.js replace instances of Cordova with PhoneGap
+
+Example:
+
+	//PhoneGap.exec(callback, callback, service, action, [config]);
+	  Cordova.exec(callback, callback, service, action, [config]);
+	
+Thanks to Olivier Louvignes for sharing this plugin with the PhoneGap/Cordova community!
+
 # PhoneGap ActionSheet Plugin #
 by `Olivier Louvignes`
 
@@ -16,7 +27,7 @@ Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap
 1. Make sure your PhoneGap Xcode project has been [updated for the iOS 4 SDK](http://wiki.phonegap.com/Upgrade-your-PhoneGap-Xcode-Template-for-iOS-4)
 2. Drag and drop the `ActionSheet` folder from Finder to your Plugins folder in XCode, using "Create groups for any added folders"
 3. Add the .js files to your `www` folder on disk, and add reference(s) to the .js files as <link> tags in your html file(s)
-4. Add new entry with key `ActionSheet` and value `ActionSheet` to `Plugins` in `PhoneGap.plist`
+4. Add new entry with key `ActionSheet` and value `ActionSheet` to `Plugins` in `PhoneGap.plist/Cordova.plist`
 
 ## JAVASCRIPT INTERFACE ##
 

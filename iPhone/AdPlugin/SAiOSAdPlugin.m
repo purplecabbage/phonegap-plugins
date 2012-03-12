@@ -4,16 +4,18 @@
 //
 //  Created by shazron on 10-07-12.
 //  Copyright 2010 Shazron Abdullah. All rights reserved.
+//  Cordova v1.5.0 Support added 2012 @RandyMcMillan
 //
 
 #import "SAiOSAdPlugin.h"
 
 #ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/PGDebug.h>
-#else
-    #import "PGDebug.h"
+#import <PhoneGap/PGDebug.h>
 #endif
-
+//#else
+#ifdef CORODOVA_FRAMEWORK
+#import <Cordova/CDVDebug.h>
+#endif
 
 @interface SAiOSAdPlugin(PrivateMethods)
 
@@ -137,7 +139,7 @@
 
 - (void) __prepare:(BOOL)atBottom
 {
-	DLog(@"SAiOSAdPlugin Prepare Ad At Bottom: %d", atBottom);
+	NSLog(@"SAiOSAdPlugin Prepare Ad At Bottom: %d", atBottom);
 	
 	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
 	if (adBannerViewClass && !self.adView)
@@ -168,7 +170,7 @@
 
 - (void) __showAd:(BOOL)show
 {
-	DLog(@"SAiOSAdPlugin Show Ad: %d", show);
+	NSLog(@"SAiOSAdPlugin Show Ad: %d", show);
 	
 	if (!self.bannerIsInitialized){
 		[self __prepare:NO];
@@ -218,7 +220,12 @@
 	Class adBannerViewClass = NSClassFromString(@"ADBannerView");
     if (adBannerViewClass)
     {
+#ifdef PHONEGAP_FRAMEWORK
 		[super writeJavascript:@"PhoneGap.fireEvent('iAdBannerViewDidLoadAdEvent');"];
+#endif
+#ifdef CORDOVA_FRAMEWORK
+		[super writeJavascript:@"Cordova.fireEvent('iAdBannerViewDidLoadAdEvent');"];
+#endif
     }
 }
 
