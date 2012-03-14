@@ -364,11 +364,11 @@ public class ChildBrowser extends Plugin {
         /**
          * Constructor.
          * 
-         * @param ctx2
+         * @param mContext
          * @param edittext 
          */
-        public ChildBrowserClient(CordovaInterface ctx2, EditText mEditText) {
-            this.ctx = ctx2;
+        public ChildBrowserClient(CordovaInterface mContext, EditText mEditText) {
+            this.ctx = mContext;
             this.edittext = mEditText;
         }       
 
