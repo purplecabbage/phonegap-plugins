@@ -213,7 +213,7 @@
 
 }
 
-- (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
+/*- (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
     NSLog (@"webView:didFailLoadWithError");
     [spinner stopAnimating];
     addressLabel.text = @"Failed";
@@ -228,6 +228,7 @@
         [errorAlert release];
     }
 }
+*/
 
 
 
