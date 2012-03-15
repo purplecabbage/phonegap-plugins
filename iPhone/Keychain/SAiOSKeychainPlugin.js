@@ -1,5 +1,5 @@
 // //////////////////////////////////////
-// Keychain PhoneGap Plugin
+// Keychain Cordova Plugin
 // by Shazron Abdullah
 // Nov 5th 2010
 // 
@@ -38,7 +38,7 @@ SAiOSKeychainPlugin.prototype.getForKey = function(key, servicename, onSuccess, 
 {
 	this._getCallbacks[key] = { onSuccess:onSuccess, onFail:onFail };
 	
-	PhoneGap.exec("SAiOSKeychainPlugin.getForKey", key, servicename);
+	Cordova.exec("SAiOSKeychainPlugin.getForKey", key, servicename);
 }
 
 //MARK: Set
@@ -63,7 +63,7 @@ SAiOSKeychainPlugin.prototype.setForKey = function(key, value, servicename, onSu
 {
 	this._setCallbacks[key] = { onSuccess:onSuccess, onFail:onFail };
 	
-	PhoneGap.exec("SAiOSKeychainPlugin.setForKey", key, value, servicename);
+	Cordova.exec("SAiOSKeychainPlugin.setForKey", key, value, servicename);
 }
 
 //MARK: Remove
@@ -88,7 +88,7 @@ SAiOSKeychainPlugin.prototype.removeForKey = function(key, servicename, onSucces
 {
 	this._removeCallbacks[key] = { onSuccess:onSuccess, onFail:onFail };
 	
-	PhoneGap.exec("SAiOSKeychainPlugin.removeForKey", key, servicename);
+	Cordova.exec("SAiOSKeychainPlugin.removeForKey", key, servicename);
 }
 
 //MARK: Install
@@ -104,6 +104,6 @@ SAiOSKeychainPlugin.install = function()
 }
 
 /**
- * Add to PhoneGap constructor
+ * Add to Cordova constructor
  */
-PhoneGap.addConstructor(SAiOSKeychainPlugin.install);
+Cordova.addConstructor(SAiOSKeychainPlugin.install);
