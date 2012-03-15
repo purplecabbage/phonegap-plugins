@@ -264,6 +264,7 @@
 
 }
 
+/*
 - (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
     NSLog (@"webView:didFailLoadWithError");
     [spinner stopAnimating];
@@ -279,6 +280,8 @@
         [errorAlert release];
     }
 }
+
+*/
 
 
 @end
