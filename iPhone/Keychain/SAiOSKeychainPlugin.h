@@ -1,5 +1,5 @@
 //
-//  SAiOSPaypalPlugin.h
+//  SAiOSKeychainPlugin.h
 //  Keychain Plugin for PhoneGap
 //
 //  Created by shazron on 10-11-05.
@@ -9,13 +9,19 @@
 #import <Foundation/Foundation.h>
 #ifdef PHONEGAP_FRAMEWORK
 #import <PhoneGap/PGPlugin.h>
-#else
-#import "PGPlugin.h"
+#endif
+//#else
+#ifdef CORDOVA_FRAMEWORK
+#import <CORDOVA/CDVPlugin.h>
 #endif
 
-@interface SAiOSKeychainPlugin : PGPlugin {
-}
 
+#ifdef PHONEGAP_FRAMEWORK
+    @interface SAiOSKeychainPlugin : PGPlugin  {}
+#endif
+#ifdef CORDOVA_FRAMEWORK
+    @interface SAiOSKeychainPlugin : CDVPlugin  {}
+#endif
 - (void) getForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) setForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void) removeForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
