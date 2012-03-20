@@ -53,11 +53,12 @@
     @property (nonatomic, retain) PGbcsViewController*        viewController;
     @property (nonatomic, retain) AVCaptureSession*           captureSession;
     @property (nonatomic, retain) AVCaptureVideoPreviewLayer* previewLayer;
+    @property (nonatomic, retain) NSString*                   alternateXib;
     @property (nonatomic)         BOOL                        is1D;
     @property (nonatomic)         BOOL                        is2D;
     @property (nonatomic)         BOOL                        capturing;
 
-    - (id)initWithPlugin:(PGBarcodeScanner*)plugin callback:(NSString*)callback parentViewController:(UIViewController*)parentViewController;
+    - (id)initWithPlugin:(PGBarcodeScanner*)plugin callback:(NSString*)callback parentViewController:(UIViewController*)parentViewController alterateOverlayXib:(NSString *)alternateXib;
     - (void)scanBarcode;
     - (void)barcodeScanSucceeded:(NSString*)text format:(NSString*)format;
     - (void)barcodeScanFailed:(NSString*)message;
@@ -76,15 +77,17 @@
 // view controller for the ui
 //------------------------------------------------------------------------------
 @interface PGbcsViewController : UIViewController {}
-    @property (nonatomic, retain) PGbcsProcessor* processor;
-    @property (nonatomic)         BOOL            shutterPressed;
+    @property (nonatomic, retain) PGbcsProcessor*  processor;
+    @property (nonatomic, retain) NSString*        alternateXib;
+    @property (nonatomic)         BOOL             shutterPressed;
+    @property (nonatomic, retain) IBOutlet UIView* overlayView;
 
-    - (id)initWithProcessor:(PGbcsProcessor*)processor;
+    - (id)initWithProcessor:(PGbcsProcessor*)processor alternateOverlay:(NSString *)alternateXib;
     - (void)startCapturing;
     - (UIView*)buildOverlayView;
     - (UIImage*)buildReticleImage;
     - (void)shutterButtonPressed;
-    - (void)cancelButtonPressed;
+    - (IBAction)cancelButtonPressed:(id)sender;
 
 @end
 
@@ -113,16 +116,24 @@
 
         callback = [arguments objectAtIndex:0];
 
+        // We allow the user to define an alternate xib file for loading the overlay. 
+        NSString *overlayXib = nil;
+        if ( [arguments count] == 2 )
+        {
+          overlayXib = [arguments objectAtIndex:1];
+        }
+      
         capabilityError = [self isScanNotPossible];
         if (capabilityError) {
             [self returnError:capabilityError callback:callback];
             return;
         }
-
+      
         processor = [[PGbcsProcessor alloc]
             initWithPlugin:self
             callback:callback
             parentViewController:[self appViewController]
+            alterateOverlayXib:overlayXib
         ];
 
         // queue [processor scanBarcode] to run on the event loop
@@ -178,6 +189,7 @@
     @synthesize viewController       = _viewController;
     @synthesize captureSession       = _captureSession;
     @synthesize previewLayer         = _previewLayer;
+    @synthesize alternateXib         = _alternateXib;
     @synthesize is1D                 = _is1D;
     @synthesize is2D                 = _is2D;
     @synthesize capturing            = _capturing;
@@ -185,14 +197,16 @@
     //--------------------------------------------------------------------------
     - (id)initWithPlugin:(PGBarcodeScanner*)plugin
           callback:(NSString*)callback
-          parentViewController:(UIViewController*)parentViewController {
+          parentViewController:(UIViewController*)parentViewController
+          alterateOverlayXib:(NSString *)alternateXib {
         self = [super init];
         if (!self) return self;
 
         self.plugin               = plugin;
         self.callback             = callback;
         self.parentViewController = parentViewController;
-
+        self.alternateXib         = alternateXib;
+      
         self.is1D      = YES;
         self.is2D      = YES;
         self.capturing = NO;
@@ -208,6 +222,7 @@
         self.viewController = nil;
         self.captureSession = nil;
         self.previewLayer = nil;
+        self.alternateXib = nil;
 
         self.capturing = NO;
 
@@ -222,7 +237,7 @@
             return;
         }
 
-        self.viewController = [[[PGbcsViewController alloc] initWithProcessor: self] autorelease];
+        self.viewController = [[[PGbcsViewController alloc] initWithProcessor: self alternateOverlay:self.alternateXib] autorelease];
 
         // delayed [self openDialog];
         [self performSelector:@selector(openDialog) withObject:nil afterDelay:1];
@@ -272,7 +287,7 @@
     - (NSString*)setUpCaptureSession {
         NSError* error = nil;
 
-        AVCaptureSession* captureSession = [[[AVCaptureSession alloc] init] autorelease];
+        AVCaptureSession* captureSession = [[AVCaptureSession alloc] init];
         self.captureSession = captureSession;
 
         AVCaptureDevice* device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -575,14 +590,18 @@
 @implementation PGbcsViewController
     @synthesize processor      = _processor;
     @synthesize shutterPressed = _shutterPressed;
+    @synthesize alternateXib   = _alternateXib;
+    @synthesize overlayView    = _overlayView;
 
     //--------------------------------------------------------------------------
-    - (id)initWithProcessor:(PGbcsProcessor*)processor {
+    - (id)initWithProcessor:(PGbcsProcessor*)processor alternateOverlay:(NSString *)alternateXib {
         self = [super init];
         if (!self) return self;
 
         self.processor = processor;
         self.shutterPressed = NO;
+        self.alternateXib = alternateXib;
+        self.overlayView = nil;
         return self;
     }
 
@@ -591,7 +610,8 @@
         self.view = nil;
         self.processor = nil;
         self.shutterPressed = NO;
-
+        self.alternateXib = nil;
+        self.overlayView = nil;      
         [super dealloc];
     }
 
@@ -638,12 +658,31 @@
     }
 
     //--------------------------------------------------------------------------
-    - (void)cancelButtonPressed {
+    - (IBAction)cancelButtonPressed:(id)sender {
         [self.processor performSelector:@selector(barcodeScanCancelled) withObject:nil afterDelay:0];
     }
 
     //--------------------------------------------------------------------------
+    - (UIView *)buildOverlayViewFromXib 
+    {
+      [[NSBundle mainBundle] loadNibNamed:self.alternateXib owner:self options:NULL];
+      
+      if ( self.overlayView == nil )
+      {
+        NSLog(@"%@", @"An error occurred loading the overlay xib.  It appears that the overlayView outlet is not set.");
+        return nil;
+      }
+      
+      return self.overlayView;        
+    }
+
+    //--------------------------------------------------------------------------
     - (UIView*)buildOverlayView {
+        
+        if ( nil != self.alternateXib )
+        {
+          return [self buildOverlayViewFromXib];
+        }
         CGRect bounds = self.view.bounds;
         bounds = CGRectMake(0, 0, bounds.size.width, bounds.size.height);
 
@@ -658,7 +697,7 @@
         id cancelButton = [[[UIBarButtonItem alloc] autorelease]
             initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
             target:(id)self
-            action:@selector(cancelButtonPressed)
+            action:@selector(cancelButtonPressed:)
         ];
 
         id flexSpace = [[[UIBarButtonItem alloc] autorelease]

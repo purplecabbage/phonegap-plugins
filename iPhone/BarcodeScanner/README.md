@@ -65,6 +65,33 @@ Barcode formats constants in the zxing code.
 * CODE_128
 * CODE_39
 
+## Creating and using custom UI overlay XIB
+
+You can customize the scanning UI by creating a new overlay in XCode4. The basic gist of this is that you need to create a interface file that contains
+at the bare minumum a transparent view that is connected to the PGbcsViewController's overlayView outlet.  For more detailed instructions, see below.
+
+* File -> New File
+* Select "User Interface" > "View" and click "Next"
+* Select "iPhone" for device family and click "Next"
+* Enter a file name and click "Create", for example "BarcodeOverlay"
+   * I normally place xib files within the application's resource folder, though it shouldn't matter much where it is within the project.
+* Set the main view to be transparent so that you can see the camera layer.
+* Select the "File's Owner" and click on the "Identity Inspector" icon, or on your keyboard press OPTION-CMD-3
+* Change the "Class' from NSObject to PGbcsViewController
+* Add any UI elements to the view that you want in your overlay.
+* Ensure the main view object is selected.
+* Click the "Connections Inspector" or on your keyboard press OPTION-CMD-6
+* Drag form the circle beside "New Referencing Outlet" to the "File's Owner" object
+* Select "overlayView" from the popup.
+* Add a Button to your view and ensure it's selected.
+* Click the "Connections Inspector" or on your keyboard press OPTION-CMD-6
+* Drag from the circle beside "Touch Up Inside" to the "File's Owner" object.
+  * Note, if no "Touch Up Inside" option is available, drag from the circle next to "Selector" to the "File Owner" object.
+* Select "cancelButtonPressed:" from the popup.
+* Save the interface file and use it by passing the overlay file name (minus the xib extension) in as an argument to the `scan` function:
+
+    window.plugins.barcodeScanner.scan(success, fail, ["BarcodeOverlay"])
+
 ## Adding the plugin to your project ##
 
 * Copy the .h, .cpp and .mm files to the Plugins directory in your project.

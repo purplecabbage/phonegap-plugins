@@ -82,7 +82,6 @@ Of course this plugin requires [Android PhoneGap](http://github.com/phonegap/pho
        <h2>Edit assets/www/index.html</h2>
   </body>
 </html>
-
 ```
 
 ## RELEASE NOTES ##
