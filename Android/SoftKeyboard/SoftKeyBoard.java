@@ -41,7 +41,7 @@ public class SoftKeyBoard extends Plugin {
             return new PluginResult(PluginResult.Status.OK);
         }
         else if (action.equals("isShowing")) {
-        	
+			
             return new PluginResult(PluginResult.Status.OK, this.isKeyBoardShowing());
         }
 		else {
