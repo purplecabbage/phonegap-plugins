@@ -1,11 +1,7 @@
-//
-//  ChildBrowserViewController.m
-//
-//  Created by Jesse MacFadyen on 21/07/09.
-//  Copyright 2009 Nitobi. All rights reserved.
-//  Copyright (c) 2011, IBM Corporation
-//  Copyright 2011, Randy McMillan
-//
+///  Created by Jesse MacFadyen on 10-05-29.
+//  Copyright 2010 Nitobi. All rights reserved.
+//  Copyright 2012, Randy McMillan
+// Continued maintainance @RandyMcMillan 2010/2011/2012
 
 #import "ChildBrowserViewController.h"
 
@@ -135,7 +131,7 @@
 	
 	if(isImage)
 	{
-		NSURL* pURL = [[ [NSURL alloc] initWithString:imageURL ] autorelease];
+		NSURL* pURL = [ [NSURL alloc] initWithString:imageURL ];
 		[ [ UIApplication sharedApplication ] openURL:pURL  ];
 	}
 	else
@@ -219,6 +215,7 @@
 
 }
 
+/*
 - (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
     NSLog (@"webView:didFailLoadWithError");
     [spinner stopAnimating];
@@ -234,6 +231,9 @@
         [errorAlert release];
     }
 }
+
+*/
+
 
 
 @end

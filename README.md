@@ -1,4 +1,4 @@
-This code is completely dependent on the Apache Callback (formerly PhoneGap) project, hosted on GitHub ( github.com/callback )
+This code is completely dependent on the Apache Cordova (formerly PhoneGap) project, hosted on GitHub ( github.com/callback )
 
 Plugins will (for the time being) reside in this repository as pulling them into the Callback project would require all plugin contributors to meet stricter code licensing requirements pursuant to Apache's guidelines.
 
