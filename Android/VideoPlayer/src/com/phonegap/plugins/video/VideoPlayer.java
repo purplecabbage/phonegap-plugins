@@ -8,6 +8,7 @@
 
 package com.phonegap.plugins.video;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +47,7 @@ public class VideoPlayer extends Plugin {
         }
     }
 
-    private void playVideo(String url) {
+    private void playVideo(String url) throws IOException {
         // Create URI
         Uri uri = Uri.parse(url);
 
@@ -61,12 +62,15 @@ public class VideoPlayer extends Plugin {
             String filepath = url.replace(ASSETS, "");
             // get actual filename from path as command to write to internal storage doesn't like folders
             String filename = filepath.substring(filepath.lastIndexOf("/")+1, filepath.length());
-            
-            // copy file to internal storage
-            this.copy(filepath, filename);
+
+            // Don't copy the file if it already exists 
+            File fp = new File(this.ctx.getContext().getFilesDir() + "/" + filename);
+            if (!fp.exists()) {
+                this.copy(filepath, filename);
+            }
 
             // change uri to be to the new file in internal storage
-            uri = Uri.parse("file://" + this.ctx.getFilesDir() + "/" + filename);
+            uri = Uri.parse("file://" + this.ctx.getContext().getFilesDir() + "/" + filename);
             
             // Display video player
             intent = new Intent(Intent.ACTION_VIEW);
@@ -85,7 +89,7 @@ public class VideoPlayer extends Plugin {
         InputStream in = this.ctx.getAssets().open(fileFrom);
         // get file where copied too, in internal storage. 
         // must be MODE_WORLD_READABLE or Android can't play it
-        FileOutputStream out = this.ctx.openFileOutput(fileTo, Context.MODE_WORLD_READABLE);
+        FileOutputStream out = this.ctx.getContext().openFileOutput(fileTo, Context.MODE_WORLD_READABLE);
 
         // Transfer bytes from in to out
         byte[] buf = new byte[1024];
