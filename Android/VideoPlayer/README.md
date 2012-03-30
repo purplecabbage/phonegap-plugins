@@ -36,7 +36,7 @@ Sample use:
 
     window.plugins.videoPlayer.play("http://path.to.my/video.mp4");
     window.plugins.videoPlayer.play("file:///path/to/my/video.mp4");
-    window.plugins.videoPlayer.play("file:///android_assets/www/path/to/my/video.mp4");
+    window.plugins.videoPlayer.play("file:///android_asset/www/path/to/my/video.mp4");
 
 Note: When playing video from the assets folder, the video is first copied to internal storage with MODE_WORLD_READABLE.
 
