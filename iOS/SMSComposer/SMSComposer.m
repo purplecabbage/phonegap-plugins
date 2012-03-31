@@ -44,6 +44,7 @@
 	
     MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
     picker.messageComposeDelegate = self;
+	picker.view.bounds = self.viewController.view.bounds; ///TODO Detect "UIStatusBarHidden = YES/NO" in app plist and compensate -@RandyMcMillan
 	
 	if(body != nil)
 		picker.body = [options valueForKey:@"body"];
