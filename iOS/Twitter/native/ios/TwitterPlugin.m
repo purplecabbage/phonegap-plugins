@@ -95,11 +95,11 @@
                     break;
             }
             
-            [super.appViewController dismissModalViewControllerAnimated:YES];
+            [super.viewController dismissModalViewControllerAnimated:YES];
             
         }];
         
-        [super.appViewController presentModalViewController:tweetViewController animated:YES];
+        [super.viewController presentModalViewController:tweetViewController animated:YES];
     }
     
     [tweetViewController release];
