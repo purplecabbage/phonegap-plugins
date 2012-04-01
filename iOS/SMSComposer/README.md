@@ -1,5 +1,12 @@
 Cordova 1.5.0 support added March 29 2012 - @RandyMcMillan
 
+StatusBarHidden issue addressed
+
+Comment/Uncomment line 56 in SMSComposer.m if your app shows/hides the statusbar when it is launched
+
+SMSComposer.m LINE 56: [[UIApplication sharedApplication] setStatusBarHidden:YES];///This hides the statusbar when the picker is presented -@RandyMcMillan
+
+
 # PhoneGap SMSComposer #
 by Grant Sanders
 
