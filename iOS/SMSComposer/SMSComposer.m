@@ -43,8 +43,8 @@
 	NSString* toRecipientsString = [options valueForKey:@"toRecipients"];
 	
     MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+	
     picker.messageComposeDelegate = self;
-	picker.view.bounds = self.viewController.view.bounds; ///TODO Detect "UIStatusBarHidden = YES/NO" in app plist and compensate -@RandyMcMillan
 	
 	if(body != nil)
 		picker.body = [options valueForKey:@"body"];
@@ -52,8 +52,9 @@
 	if(toRecipientsString != nil)
 		[picker setRecipients:[ toRecipientsString componentsSeparatedByString:@","]];
 
-    [self.viewController presentModalViewController:picker animated:YES];
-    [picker release];
+	[self.viewController presentModalViewController:picker animated:YES];
+	[[UIApplication sharedApplication] setStatusBarHidden:YES];///This hides the statusbar when the picker is presented -@RandyMcMillan
+	[picker release];
 	
 }
 
