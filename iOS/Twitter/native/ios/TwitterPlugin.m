@@ -55,12 +55,7 @@
         }
     }
     
-    if(urlAttach != nil){
-        ok = [tweetViewController addURL:[NSURL URLWithString:urlAttach]];
-        if(!ok){
-            errorMessage = @"URL too long";
-        }
-    }
+
     
     if(imageAttach != nil){
         // Note that the image is loaded syncronously
@@ -76,6 +71,14 @@
             errorMessage = @"Image could not be added";
         }
     }
+	
+	if(urlAttach != nil){
+        ok = [tweetViewController addURL:[NSURL URLWithString:urlAttach]];
+        if(!ok){
+            errorMessage = @"URL too long";
+        }
+    }
+
     
     
     if(!ok){        
