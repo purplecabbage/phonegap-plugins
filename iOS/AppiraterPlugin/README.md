@@ -1,7 +1,7 @@
 # AppiraterPlugin #
 by James Stuckey Weber
 
-This plugin allows you to call Appirater userDidSignificantEvent: from javascript.
+This plugin allows you to call Appirater userDidSignificantEvent: from javascript. The other Appirater functions should be called in the AppDelegate class as specified by the Appirater install log.
 
 ## Adding the Plugin to your Project ##
 
