@@ -12,7 +12,7 @@
 #import "CDVPlugin.h"
 #endif
 
-@interface AppiraterPlugin : PGPlugin {
+@interface AppiraterPlugin : CDVPlugin {
 	NSString* callbackID;  
 }
 @property (nonatomic, copy) NSString* callbackID;
