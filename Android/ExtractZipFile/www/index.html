@@ -19,7 +19,6 @@ function onDeviceReady()
 
 function extractFile(fileName)
 {
-	alert(fileName);
 	var ZipClient = new ExtractZipFilePlugin();
 	ZipClient.extractFile('sdcard/'+fileName,win,fail,'ExtractZipFilePlugin');
 }
