@@ -36,7 +36,22 @@ TwitterDemo = {
             TwitterDemo.log("twitter configured? " + r);
         });
     },
-    
+  
+	tweet1:function(){
+		TwitterDemo.log("wait..");
+		window.plugins.twitter.composeTweet(
+			function(s){ TwitterDemo.log("tweet success"); }, 
+			function(e){ TwitterDemo.log("tweet failure: " + e); }, 
+			"Text, Image, URL", 
+			{
+				urlAttach:"http://m.youtube.com/#/watch?v=obx2VOtx0qU", 
+				imageAttach:"http://i.ytimg.com/vi/obx2VOtx0qU/hqdefault.jpg?w=320&h=192&sigh=QD3HYoJj9dtiytpCSXhkaq1oG8M"
+			});
+	},
+
+	
+	/*
+	 //Original tweet1 example
     tweet1:function(){
         TwitterDemo.log("wait..");
         window.plugins.twitter.composeTweet(
@@ -48,6 +63,8 @@ TwitterDemo = {
                 imageAttach:"http://zomgdinosaurs.com/zomg.jpg"
             });
     },
+	 
+	 */
 
     tweet2:function(){
         TwitterDemo.log("wait..");
