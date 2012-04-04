@@ -1,13 +1,15 @@
 /*
  	Author: Vishal Rajpal
  	Filename: ExtractZipFilePlugin.java
- 	Date: 21-02-2012
+ 	Created Date: 21-02-2012
+ 	Modified Date: 04-04-2012
 */
 
 package com.phonegap.plugin.ExtractZipFile;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,11 +33,11 @@ public class ExtractZipFilePlugin extends Plugin {
         try {
 			String filename = args.getString(0);
 			File file = new File(filename);
-			String[] dirToSplit=filename.split("/");
+			String[] dirToSplit=filename.split(File.separator);
 			String dirToInsert="";
 			for(int i=0;i<dirToSplit.length-1;i++)
 			{
-				dirToInsert+=dirToSplit[i]+"/";
+				dirToInsert+=dirToSplit[i]+File.separator;
 			}
 			BufferedOutputStream dest = null;
 			BufferedInputStream is = null;
