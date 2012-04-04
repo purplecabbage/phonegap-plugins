@@ -56,18 +56,18 @@
  */
 - (void)createTabBar:(NSArray*)arguments withDict:(NSDictionary*)options
 {
-    tabBar = [UITabBar new];
-    [tabBar sizeToFit];
-    tabBar.delegate = self;
-    tabBar.multipleTouchEnabled   = NO;
-    tabBar.autoresizesSubviews    = YES;
-    tabBar.hidden                 = YES;
-    tabBar.userInteractionEnabled = YES;
+	tabBar = [UITabBar new];
+	tabBar.autoresizingMask =  UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+	[tabBar sizeToFit];
+	tabBar.delegate = self;
+	tabBar.multipleTouchEnabled   = NO;
+	tabBar.autoresizesSubviews    = YES;
+	tabBar.hidden                 = YES;
+	tabBar.userInteractionEnabled = YES;
 	tabBar.opaque = YES;
-	
 	self.webView.superview.autoresizesSubviews = YES;
 	
-	[ self.webView.superview addSubview:tabBar];    
+	[self.webView.superview addSubview:tabBar];
 }
 
 /**
@@ -158,8 +158,8 @@
 {
     if (!tabBar)
         [self createTabBar:nil withDict:nil];
-    tabBar.hidden = YES;
-	
+	tabBar.hidden = YES;
+
 	NSNotification* notif = [NSNotification notificationWithName:@"CDVLayoutSubviewRemoved" object:tabBar];
 	[[NSNotificationQueue defaultQueue] enqueueNotification:notif postingStyle: NSPostASAP];
 	
@@ -357,12 +357,14 @@
                                webViewBounds.size.height - height
                                );
     toolBar = [[UIToolbar alloc] initWithFrame:toolBarBounds];
-    [toolBar sizeToFit];
-    toolBar.hidden                 = NO;
-    toolBar.multipleTouchEnabled   = NO;
-    toolBar.autoresizesSubviews    = YES;
-    toolBar.userInteractionEnabled = YES;
-    toolBar.barStyle               = style;
+    
+	[toolBar sizeToFit];
+    	toolBar.autoresizingMask =  UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+	toolBar.hidden                 = NO;
+	toolBar.multipleTouchEnabled   = NO;
+	toolBar.autoresizesSubviews    = YES;
+	toolBar.userInteractionEnabled = YES;
+	toolBar.barStyle               = style;
 	
     
     [toolBar setFrame:toolBarBounds];
