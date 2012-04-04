@@ -8,6 +8,7 @@ The present https://github.com/phonegap/phonegap-plugins/tree/master/iPhone shou
 * Added a AdPlugin (iOS) plugin with Cordova support.
 * Added a Badge (iOS) plugin with Cordova support.
 * Added a BarCodeScanner (iOS) plugin with Cordova support.
+* Added a card.io (iOS) plugin with Cordova support.
 * Added a ChildBrowser (iOS) plugin with Cordova support.
 * Added a DatePicker (iOS) plugin with Cordova support.
 * Added a EmailComposer (iOS) plugin with Cordova support.
