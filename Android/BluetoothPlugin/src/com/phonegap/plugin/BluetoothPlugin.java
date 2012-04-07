@@ -41,7 +41,8 @@ import com.phonegap.api.Plugin;
 import com.phonegap.api.PluginResult;
 
 public class BluetoothPlugin extends Plugin {
-
+	private static final String ACTION_ENABLE = "enable";
+	private static final String ACTION_DISABLE = "disable";
 	private static final String ACTION_DISCOVERDEVICES = "discoverDevices";
 	private static final String ACTION_GETUUIDS = "getUUIDs";
 	private static final String ACTION_CONNECT = "connect";
@@ -54,9 +55,11 @@ public class BluetoothPlugin extends Plugin {
 	private BPBroadcastReceiver m_bpBroadcastReceiver = null;
 	private boolean m_discovering = false;
 	private boolean m_gettingUuids = false;
+	private boolean m_stateChanging = false;
 
 	private JSONArray m_discoveredDevices = null;
 	private JSONArray m_gotUUIDs = null;
+	private boolean m_enabled = false;
 	
 	private ArrayList<BluetoothSocket> m_bluetoothSockets = new ArrayList<BluetoothSocket>();
 
@@ -89,6 +92,7 @@ public class BluetoothPlugin extends Plugin {
 		ctx.registerReceiver(m_bpBroadcastReceiver, new IntentFilter(
 				BluetoothDevice.ACTION_FOUND));
 		ctx.registerReceiver(m_bpBroadcastReceiver, new IntentFilter(BluetoothPlugin.ACTION_UUID));
+		ctx.registerReceiver(m_bpBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 		
 	}
 
@@ -98,8 +102,40 @@ public class BluetoothPlugin extends Plugin {
 		
 		Log.d("BluetoothPlugin", "Action: " + action);
 
-		// Want to discover devices?
-		if (ACTION_DISCOVERDEVICES.equals(action)) {
+		// Want to enable bluetooth?
+		if (ACTION_ENABLE.equals(action)) {
+			m_stateChanging = true;
+			ctx.startActivity(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
+			while(m_stateChanging) {};
+			
+			// Check if bluetooth is enabled now
+			if(m_enabled) {
+				pluginResult = new PluginResult(PluginResult.Status.OK);
+			}
+			else {
+				pluginResult = new PluginResult(PluginResult.Status.ERROR);
+			}
+		}
+		// Want to disable bluetooth?
+		else if (ACTION_DISABLE.equals(action)) {
+			m_stateChanging = true;
+			if( !m_bluetoothAdapter.disable() && m_bluetoothAdapter.isEnabled() ) {
+				pluginResult = new PluginResult(PluginResult.Status.ERROR);
+			}
+			else {
+				while(m_stateChanging) {};
+
+				// Check if bluetooth is disabled now
+				if(!m_enabled) {
+					pluginResult = new PluginResult(PluginResult.Status.OK);
+				}
+				else {
+					pluginResult = new PluginResult(PluginResult.Status.ERROR);
+				}
+			}
+			
+		}
+		else if (ACTION_DISCOVERDEVICES.equals(action)) {
 			m_discoveredDevices = new JSONArray();
 
 			if (!m_bluetoothAdapter.startDiscovery()) {
@@ -171,7 +207,7 @@ public class BluetoothPlugin extends Plugin {
 				BluetoothSocket bluetoothSocket = m_bluetoothSockets.get(socketId);
 				InputStream inputStream = bluetoothSocket.getInputStream();
 				
-				char[] buffer = new char[1024];
+				char[] buffer = new char[128];
 				for( int i = 0; i < buffer.length; i++ ) {
 					buffer[i] = (char) inputStream.read();
 				}
@@ -219,14 +255,29 @@ public class BluetoothPlugin extends Plugin {
 				m_gotUUIDs = new JSONArray();
 				
 				Parcelable[] parcelUuids = intent.getParcelableArrayExtra(BluetoothPlugin.EXTRA_UUID);
-				Log.d("BluetoothPlugin", "Found UUIDs: " + parcelUuids.length);
-
-				// Sort UUIDs into JSON array and return it
-				for( int i = 0; i < parcelUuids.length; i++ ) {
-					m_gotUUIDs.put( parcelUuids[i].toString() );
+				if( parcelUuids != null ) {
+					Log.d("BluetoothPlugin", "Found UUIDs: " + parcelUuids.length);
+	
+					// Sort UUIDs into JSON array and return it
+					for( int i = 0; i < parcelUuids.length; i++ ) {
+						m_gotUUIDs.put( parcelUuids[i].toString() );
+					}
+	
+					m_gettingUuids = false;
 				}
-
-				m_gettingUuids = false;
+			}
+			else if(BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
+				int adapterState = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+				Log.d("BluetoothPlugin", "State changed: " + adapterState);
+				
+				if(adapterState == BluetoothAdapter.STATE_ON) {
+					m_enabled = true;
+					m_stateChanging = false;
+				}
+				else if(adapterState == BluetoothAdapter.STATE_OFF) {
+					m_enabled = false;
+					m_stateChanging = false;
+				}
 			}
 		}
 	};

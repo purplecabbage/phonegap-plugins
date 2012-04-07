@@ -24,6 +24,26 @@ if( !PhoneGap.hasResource("BluetoothPlugin") ) {
 	}
 	
 	/**
+	 * Enable bluetooth
+	 * 
+	 * @param successCallback function to be called when enabling of bluetooth was successfull
+	 * @param errorCallback function to be called when enabling was not possible / did fail
+	 */
+	Bluetooth.prototype.enable = function(successCallback,failureCallback) {
+	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'enable', []);
+	}
+	
+	/**
+	 * Disable bluetooth
+	 * 
+	 * @param successCallback function to be called when disabling of bluetooth was successfull
+	 * @param errorCallback function to be called when disabling was not possible / did fail
+	 */
+	Bluetooth.prototype.disable = function(successCallback,failureCallback) {
+	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'disable', []);
+	}
+	
+	/**
 	 * Search for devices  and list them
 	 * 
 	 * @param successCallback function to be called when discovery of other devices has finished. Passed parameter is a JSONArray containing JSONObjects with 'name' and 'address' property.
