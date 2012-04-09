@@ -7,24 +7,26 @@
 //      MIT Licensed
 //
 
-#ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PGPlugin.h>
+#ifdef CORDOVA_FRAMEWORK
+#import <CORDOVA/CDVPlugin.h>
 #else
-#import "PGPlugin.h"
+#import "CORDOVA/CDVPlugin.h"
 #endif
 #import <MediaPlayer/MediaPlayer.h>
 
 
-@interface VolumeSlider : PGPlugin <UITabBarDelegate> {
+@interface VolumeSlider : CDVPlugin <UITabBarDelegate> {
+	NSString* callbackId;
 	UIView* mpVolumeViewParentView;
 	MPVolumeView* myVolumeView;
 }
 
+@property (nonatomic, copy) NSString* callbackId;
 @property (nonatomic, retain) UIView* mpVolumeViewParentView;
 @property (nonatomic, retain) MPVolumeView* myVolumeView;
 
-- (void)createVolumeSlider:(NSArray*)arguments withDict:(NSDictionary*)options;
-- (void)showVolumeSlider:(NSArray*)arguments withDict:(NSDictionary*)options;
-- (void)hideVolumeSlider:(NSArray*)arguments withDict:(NSDictionary*)options;
+- (void)createVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)showVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)hideVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 
 @end
