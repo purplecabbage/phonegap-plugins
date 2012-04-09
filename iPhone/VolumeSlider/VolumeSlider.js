@@ -1,38 +1,38 @@
 //
 //  	VolumeSlider.js
-//  	Volume Slider PhoneGap Plugin
+//  	Volume Slider Cordova Plugin
 //
 //  	Created by Tommy-Carlos Williams on 20/07/25.
-//  	Copyright 2011 Devgeeks. All rights reserved.
+//  	Copyright 2011 Tommy-Carlos Williams. All rights reserved.
 //      MIT Licensed
 //
 
-var VolumeSlider = function(){ 
-    
+var VolumeSlider = function(){
+
 }
 
 /**
  * Create a volume slider.
  */
 VolumeSlider.prototype.createVolumeSlider = function(originx,originy,width,height) {
-    PhoneGap.exec("VolumeSlider.createVolumeSlider", originx, originy, width, height);
+    Cordova.exec(null, null, "VolumeSlider","createVolumeSlider", [originx, originy, width, height]);
 };
 
 /**
  * Show the volume slider
  */
 VolumeSlider.prototype.showVolumeSlider = function() {
-    PhoneGap.exec("VolumeSlider.showVolumeSlider");
+    Cordova.exec(null, null, "VolumeSlider","showVolumeSlider", []);
 };
 /**
  * Hide the volume slider
  */
 VolumeSlider.prototype.hideVolumeSlider = function() {
-    PhoneGap.exec("VolumeSlider.hideVolumeSlider");
+    Cordova.exec(null, null, "VolumeSlider","hideVolumeSlider", []);
 };
 
 
-PhoneGap.addConstructor(function(){
+Cordova.addConstructor(function(){
 	if(!window.plugins)
 	{
 		window.plugins = {};
