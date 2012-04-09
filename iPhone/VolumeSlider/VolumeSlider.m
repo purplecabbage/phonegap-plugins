@@ -12,13 +12,13 @@
 
 @implementation VolumeSlider
 
-@synthesize mpVolumeViewParentView, myVolumeView;
+@synthesize mpVolumeViewParentView, myVolumeView, callbackId;
 
 #ifndef __IPHONE_3_0
 @synthesize webView;
 #endif
 
--(PGPlugin*) initWithWebView:(UIWebView*)theWebView
+-(CDVPlugin*) initWithWebView:(UIWebView*)theWebView
 {
     self = (VolumeSlider*)[super initWithWebView:theWebView];
     return self;
@@ -35,8 +35,10 @@
 #pragma mark -
 #pragma mark VolumeSlider
 
-- (void) createVolumeSlider:(NSArray*)arguments withDict:(NSDictionary*)options
+- (void) createVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {	
+	self.callbackId = arguments.pop;
+    NSLog(@"creatVolumeSlider()");
 	NSUInteger argc = [arguments count];
 	
 	if (argc < 3) { // at a minimum we need x origin, y origin and width...
@@ -69,13 +71,14 @@
 	self.myVolumeView.showsVolumeSlider = NO;
 }
 
-- (void)showVolumeSlider:(NSArray*)arguments withDict:(NSDictionary*)options
+- (void)showVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
+    NSLog(@"showVolumeSlider");
 	self.myVolumeView.showsVolumeSlider = YES;
 	self.mpVolumeViewParentView.hidden = NO;
 }
 
-- (void)hideVolumeSlider:(NSArray*)arguments withDict:(NSDictionary*)options
+- (void)hideVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
 	self.mpVolumeViewParentView.hidden = YES;
 	self.myVolumeView.showsVolumeSlider = NO;
