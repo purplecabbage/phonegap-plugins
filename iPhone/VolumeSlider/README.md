@@ -21,6 +21,12 @@ function onDeviceReady()
 	var volumeSlider = window.plugins.volumeSlider;
 	volumeSlider.createVolumeSlider(10,350,300,30); // origin x, origin y, width, height
 	volumeSlider.showVolumeSlider();
+	
+	// if not calling showVolumeSlider() right after creating the slider,
+	// make sure to call hideVolumeSlider(), so that the "ghost" slider won't block user 
+	// from interacting with the component below
+	//
+	// volumeSlider.hideVolumeSlider();
 }
 ```
 
