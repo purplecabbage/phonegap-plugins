@@ -1,6 +1,6 @@
 # Unique Identifier support for iOS applications
 
-_by Created by `Andrew Thorp`_
+_Created by `Andrew Thorp`_
 
 Usage:
 
