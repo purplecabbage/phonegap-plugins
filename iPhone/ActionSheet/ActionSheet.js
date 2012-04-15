@@ -1,8 +1,8 @@
-//
+// 
 //  ActionSheet.js
 //
 // Created by Olivier Louvignes on 11/27/2011.
-//
+// Added Cordova 1.5 support - @RandyMcMillan 2012
 // Copyright 2011 Olivier Louvignes. All rights reserved.
 // MIT Licensed
 
@@ -13,8 +13,8 @@ ActionSheet.prototype.create = function(title, items, fn, options) {
 
 	var service = 'ActionSheet',
 		action = 'create',
-		callbackId = service + (PhoneGap.callbackId + 1);
-
+		//callbackId = service + (PhoneGap.callbackId + 1);
+         callbackId = service + (Cordova.callbackId + 1);
 	var config = {
 		title : title+'' || '',
 		items : items || ['Cancel'],
@@ -36,10 +36,15 @@ ActionSheet.prototype.create = function(title, items, fn, options) {
 		config.callback.call(config.scope || null, buttonValue, buttonIndex);
 	};
 
-	PhoneGap.exec(callback, callback, service, action, [config]);
+    
+
+		//PhoneGap.exec(callback, callback, service, action, [config]);
+    	  Cordova.exec(callback, callback, service, action, [config]);
+
 };
 
-PhoneGap.addConstructor(function() {
-	if(!window.plugins) window.plugins = {};
+//PhoneGap.addConstructor(function() {
+Cordova.addConstructor(function() {
+if(!window.plugins) window.plugins = {};
 	window.plugins.actionSheet = new ActionSheet();
 });
