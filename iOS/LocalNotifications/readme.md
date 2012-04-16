@@ -56,10 +56,6 @@ After you've added LocalNotifications to your plugins you need to make a minor a
 </pre>
 Add this code to the end of your AppDelegate.m file in order for the callback functions to work properly!
 
-<b>UPDATES</b>:<br>
-3.31.12 - <br>
-Added support for Cordova Please check LocalNotification.h to comment and uncomment the correct code.
-
 <b>EXAMPLE</b><br>
 <pre>
 window.plugins.localNotification.add({
