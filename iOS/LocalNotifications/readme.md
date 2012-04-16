@@ -19,6 +19,42 @@ A breakdown of options - <br>
 - background ( a javascript function to be called if the app is in the background )<br>
 - sound ( a sound to be played, the sound must be located in your project's resources and must be a caf file )<br>
 
+<b>ADJUSTING AppDelegate</b><br>
+After you've added LocalNotifications to your plugins you need to make a minor addition to AppDelegate.m
+<pre>
+	// ADD OUR NOTIFICATION CODE
+	- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification 
+	{
+
+	    UIApplicationState state = [application applicationState];
+	    if (state == UIApplicationStateInactive) {
+	        // WAS IN BG
+	        NSLog(@"I was in the background");
+
+	        NSString *notCB = [notification.userInfo objectForKey:@"background"];
+	        NSString * jsCallBack = [NSString 
+	                                 stringWithFormat:@"%@", notCB]; 
+	        [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsCallBack];         
+
+	        application.applicationIconBadgeNumber = 0;
+
+	    }
+	    else {
+	        // WAS RUNNING
+	        NSLog(@"I was currently active");
+
+	        NSString *notCB = [notification.userInfo objectForKey:@"forground"];
+	        NSString * jsCallBack = [NSString 
+	                                 stringWithFormat:@"%@", notCB]; 
+
+
+	        [self.viewController.webView  stringByEvaluatingJavaScriptFromString:jsCallBack];
+
+	        application.applicationIconBadgeNumber = 0;
+	    }                 
+	}
+</pre>
+Add this code to the end of your AppDelegate.m file in order for the callback functions to work properly!
 
 <b>UPDATES</b>:<br>
 3.31.12 - <br>
@@ -37,5 +73,4 @@ window.plugins.localNotification.add({
 });
 </pre>
 <br>
-enjoy!
 
