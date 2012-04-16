@@ -35,11 +35,7 @@
 		3A9A4F9414D2100D00D60E11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9A4F9314D2100D00D60E11 /* AppDelegate.m */; };
 		3A9A4FA214D2181000D60E11 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 3A9A4FA114D2181000D60E11 /* www */; };
 		3A9A4FA514D21DB900D60E11 /* LocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9A4FA414D21DB900D60E11 /* LocalNotification.m */; };
-		3ACDF95F14D323340043991E /* sub.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3ACDF95E14D323340043991E /* sub.caf */; };
 		3ACDF96414D32CE30043991E /* horn.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3ACDF96014D32CE30043991E /* horn.caf */; };
-		3ACDF96514D32CE30043991E /* steam.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3ACDF96114D32CE30043991E /* steam.caf */; };
-		3ACDF96614D32CE30043991E /* triangle.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3ACDF96214D32CE30043991E /* triangle.caf */; };
-		3ACDF96714D32CE30043991E /* whistle.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3ACDF96314D32CE30043991E /* whistle.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,11 +73,7 @@
 		3A9A4FA114D2181000D60E11 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		3A9A4FA314D21DB900D60E11 /* LocalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotification.h; sourceTree = "<group>"; };
 		3A9A4FA414D21DB900D60E11 /* LocalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotification.m; sourceTree = "<group>"; };
-		3ACDF95E14D323340043991E /* sub.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sub.caf; path = Resources/Capture.bundle/sub.caf; sourceTree = "<group>"; };
 		3ACDF96014D32CE30043991E /* horn.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = horn.caf; sourceTree = "<group>"; };
-		3ACDF96114D32CE30043991E /* steam.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = steam.caf; sourceTree = "<group>"; };
-		3ACDF96214D32CE30043991E /* triangle.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = triangle.caf; sourceTree = "<group>"; };
-		3ACDF96314D32CE30043991E /* whistle.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whistle.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,10 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				3ACDF96014D32CE30043991E /* horn.caf */,
-				3ACDF96114D32CE30043991E /* steam.caf */,
-				3ACDF96214D32CE30043991E /* triangle.caf */,
-				3ACDF96314D32CE30043991E /* whistle.caf */,
-				3ACDF95E14D323340043991E /* sub.caf */,
 				3A9A4F8D14D2100C00D60E11 /* Capture.bundle */,
 				3A9A4F7914D2100C00D60E11 /* en.lproj */,
 				3A9A4F7D14D2100C00D60E11 /* es.lproj */,
@@ -314,11 +302,7 @@
 				3A9A4F8E14D2100C00D60E11 /* Capture.bundle in Resources */,
 				3A9A4F9014D2100C00D60E11 /* PhoneGap.plist in Resources */,
 				3A9A4FA214D2181000D60E11 /* www in Resources */,
-				3ACDF95F14D323340043991E /* sub.caf in Resources */,
 				3ACDF96414D32CE30043991E /* horn.caf in Resources */,
-				3ACDF96514D32CE30043991E /* steam.caf in Resources */,
-				3ACDF96614D32CE30043991E /* triangle.caf in Resources */,
-				3ACDF96714D32CE30043991E /* whistle.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
