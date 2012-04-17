@@ -56,18 +56,27 @@
  */
 - (void)createTabBar:(NSArray*)arguments withDict:(NSDictionary*)options
 {
-    tabBar = [UITabBar new];
-    [tabBar sizeToFit];
-    tabBar.delegate = self;
-    tabBar.multipleTouchEnabled   = NO;
-    tabBar.autoresizesSubviews    = YES;
-    tabBar.hidden                 = YES;
-    tabBar.userInteractionEnabled = YES;
+	tabBar = [UITabBar new];
+	tabBar.autoresizingMask =  UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+	[tabBar sizeToFit];
+	tabBar.delegate = self;
+	tabBar.multipleTouchEnabled   = NO;
+	tabBar.autoresizesSubviews    = YES;
+	tabBar.hidden                 = YES;
+	tabBar.userInteractionEnabled = YES;
 	tabBar.opaque = YES;
-	
 	self.webView.superview.autoresizesSubviews = YES;
 	
-	[ self.webView.superview addSubview:tabBar];    
+	/* Styling hints REF UIInterface.h
+	 
+	 tabBar.alpha = 0.5;
+	 tabBar.tintColor = [UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:1.000];
+	 
+	 */
+	
+	
+	
+	[self.webView.superview addSubview:tabBar];
 }
 
 /**
@@ -158,8 +167,8 @@
 {
     if (!tabBar)
         [self createTabBar:nil withDict:nil];
-    tabBar.hidden = YES;
-	
+	tabBar.hidden = YES;
+
 	NSNotification* notif = [NSNotification notificationWithName:@"CDVLayoutSubviewRemoved" object:tabBar];
 	[[NSNotificationQueue defaultQueue] enqueueNotification:notif postingStyle: NSPostASAP];
 	
@@ -321,8 +330,9 @@
 {
     CGFloat height   = 45.0f;
     BOOL atTop       = YES;
-    UIBarStyle style = UIBarStyleBlackOpaque;
-    
+	UIBarStyle style = UIBarStyleBlack;
+	//UIBarStyle style = UIBarStyleDefault;
+
     NSDictionary* toolBarSettings = options;//[settings objectForKey:@"ToolBarSettings"];
     if (toolBarSettings) 
 	{
@@ -338,9 +348,9 @@
         if ([styleStr isEqualToString:@"Default"])
             style = UIBarStyleDefault;
         else if ([styleStr isEqualToString:@"BlackOpaque"])
-            style = UIBarStyleBlackOpaque;
+            style = UIBarStyleBlackOpaque;//deprecated
         else if ([styleStr isEqualToString:@"BlackTranslucent"])
-            style = UIBarStyleBlackTranslucent;
+            style = UIBarStyleBlackTranslucent;//deprecated
     }
     
     CGRect webViewBounds = self.webView.bounds;
@@ -357,12 +367,21 @@
                                webViewBounds.size.height - height
                                );
     toolBar = [[UIToolbar alloc] initWithFrame:toolBarBounds];
-    [toolBar sizeToFit];
-    toolBar.hidden                 = NO;
-    toolBar.multipleTouchEnabled   = NO;
-    toolBar.autoresizesSubviews    = YES;
-    toolBar.userInteractionEnabled = YES;
-    toolBar.barStyle               = style;
+    
+	[toolBar sizeToFit];
+	toolBar.autoresizingMask =  UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+	toolBar.hidden                 = NO;
+	toolBar.multipleTouchEnabled   = NO;
+	toolBar.autoresizesSubviews    = YES;
+	toolBar.userInteractionEnabled = YES;
+	toolBar.barStyle               = style; //set in line: 324 above 	UIBarStyle style = UIBarStyleBlack;
+
+	/* Styling hints REF UIInterface.h
+	 
+	 toolBar.alpha = 0.5;
+	 toolBar.tintColor = [UIColor colorWithRed:1.000 green:0.000 blue:0.000 alpha:1.000];
+
+	 */
 	
     
     [toolBar setFrame:toolBarBounds];
@@ -473,7 +492,7 @@
   NSString  *title     = [arguments objectAtIndex:1];
 	NSString  *imageName = nil;
 
-	if (arguments.count >= 2)
+	if (arguments.count > 2)
 	{
 		imageName = [arguments objectAtIndex:2];
 	}
