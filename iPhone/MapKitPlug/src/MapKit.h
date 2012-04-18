@@ -1,27 +1,27 @@
 //
-//  UIControls.h
-//  PhoneGap
+// UIControls.h
+// Cordova
 //
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-#ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/PGPlugin.h>
+#ifdef CORDOVA_FRAMEWORK
+#import <CORDOVA/CDVPlugin.h>
 #else
-    #import "PGPlugin.h"
+#import "CDVPlugin.h"
 #endif
 
 
-@interface MapKitView : PGPlugin <MKMapViewDelegate> 
+@interface MapKitView : CDVPlugin <MKMapViewDelegate>
 {
 }
 
 @property (nonatomic, copy) NSString *buttonCallback;
 @property (nonatomic, retain) UIView* childView;
 @property (nonatomic, retain) MKMapView* mapView;
-@property (nonatomic, retain) UIButton*  imageButton;
+@property (nonatomic, retain) UIButton* imageButton;
 
 - (void)createView;
 
