@@ -4,6 +4,9 @@ NEW PLIST VALUE is
 
 TwitterPlugin / TwitterPlugin
 
+The TwitterPlugin needs to access the twitter api so relavent urls need to be added to the whitelist. 
+
+The TwitterPlugin uses the Accounts.framework and Twitter.framework therefore it is not supported on iOS 4
 
 ================================
 
