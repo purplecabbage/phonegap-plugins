@@ -8,8 +8,10 @@
 #import "TwitterPlugin.h"
 #ifdef CORDOVA_FRAMEWORK
     #import <Cordova/JSONKit.h>
+	#import <Cordova/CDVAvailability.h>
 #else
     #import "JSONKit.h"
+	#import "CDVAvailability.h"
 #endif
 
 #define TWITTER_URL @"http://api.twitter.com/1/"
@@ -25,6 +27,11 @@
     if(tweetViewController != nil){
         [tweetViewController release];
     }
+	
+	if (IsAtLeastiOSVersion(@"3.0")) {
+		NSString *version = @"5.1";
+		NSLog(@"The TwitterPlugin requires iOS %@ or above due to is dependency on Twitter.framework.", version); // @RandyMcMillan
+	}
     
     [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:twitterSDKAvailable ? 1 : 0] toSuccessCallbackString:callbackId]];
 }
