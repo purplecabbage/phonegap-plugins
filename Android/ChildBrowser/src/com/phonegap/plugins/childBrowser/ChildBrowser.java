@@ -211,7 +211,7 @@ public class ChildBrowser extends Plugin {
         // Create dialog in new thread 
         Runnable runnable = new Runnable() {
             public void run() {
-                dialog = new Dialog(ctx.getContext());
+                dialog = new Dialog(ctx.getContext(), android.R.style.Theme_Translucent_NoTitleBar);
 
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
