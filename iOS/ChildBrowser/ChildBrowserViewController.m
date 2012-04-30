@@ -31,6 +31,15 @@
 	{
         return [NSString stringWithFormat:@"%@.png", resource];
 	}
+    else {
+	if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES && [[UIScreen mainScreen] scale] == 2.00) {
+
+	    return [NSString stringWithFormat:@"%@-72@2x.png", resource];
+
+	}
+
+    }
+
 	
 	return resource;
 }
