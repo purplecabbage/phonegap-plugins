@@ -92,7 +92,7 @@
     else{
         
 #if TARGET_IPHONE_SIMULATOR
-        NSString *simWarning = @"Test TwitterPlugin on Real Hardware.";
+        NSString *simWarning = @"Test TwitterPlugin on Real Hardware. Tested on Cordova 1.7.0";
         //EXC_BAD_ACCESS occurs on simulator unable to reproduce on real device
         //running iOS 5.1 and Cordova 1.6.1
         NSLog(@"%@",simWarning);
