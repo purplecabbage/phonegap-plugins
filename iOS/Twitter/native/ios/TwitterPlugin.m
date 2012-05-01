@@ -28,7 +28,10 @@
         [tweetViewController release];
     }
 	
-	
+	if (IsAtLeastiOSVersion(@"3.0")) {
+		NSString *version = @"5.1";
+		NSLog(@"The TwitterPlugin requires iOS %@ or above due to is dependency on Twitter.framework.", version); // @RandyMcMillan
+	}
     
     [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:twitterSDKAvailable ? 1 : 0] toSuccessCallbackString:callbackId]];
 }
@@ -144,6 +147,25 @@
 	}];
     
     [postRequest release];
+}
+
+- (void) getTwitterUsername:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
+    NSString *callbackId = [arguments objectAtIndex:0];
+    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    
+    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+        if(granted) {
+            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
+            ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
+            NSString *userID = [[twitterAccount accountProperties] objectForKey:@"username"];
+            NSString *username = twitterAccount.username;
+            [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:username] toSuccessCallbackString:callbackId]];
+        }
+    }];
+    
+    [accountStore release];
+
 }
 
 - (void) getMentions:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
