@@ -14,7 +14,7 @@
 #ifdef CORDOVA_FRAMEWORK
     @interface ChildBrowserCommand : CDVPlugin <ChildBrowserDelegate>  {
 #endif
-	ChildBrowserViewController* childBrowser;
+    ChildBrowserViewController* childBrowser;
 }
 
 @property (nonatomic, retain) ChildBrowserViewController *childBrowser;
