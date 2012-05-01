@@ -18,9 +18,12 @@ Icons are located in the [ChildBrowser.bundle](https://github.com/phonegap/phone
 
 - Added Temporary Scope (self executing) per [Cordova Plugin Upgrade Guide](https://github.com/phonegap/phonegap-plugins/blob/master/iOS/README.md).
 
+
+
+
 - add Key **ChildBrowserCommand** and Value **ChildBrowserCommand** to the Cordova.plist in your application xcode project.
 
-![image](https://github.com/phonegap/phonegap-plugins/blob/master/iOS/ChildBrowser/Cordova.plist.png)
+![image](https://github.com/phonegap/phonegap-plugins/raw/master/iOS/ChildBrowser/Cordova.plist.png)
 
 Here is a sample command to open Google in a ChildBrowser :
 
