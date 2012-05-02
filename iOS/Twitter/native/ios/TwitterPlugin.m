@@ -93,14 +93,6 @@
                                                messageAsString:errorMessage] toErrorCallbackString:callbackId]];
     }
     else{
-        
-#if TARGET_IPHONE_SIMULATOR
-        NSString *simWarning = @"Test TwitterPlugin on Real Hardware. Tested on Cordova 1.7.0";
-        //EXC_BAD_ACCESS occurs on simulator unable to reproduce on real device
-        //running iOS 5.1 and Cordova 1.6.1
-        NSLog(@"%@",simWarning);
-#endif
-        
         [tweetViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
             switch (result) {
                 case TWTweetComposeViewControllerResultDone:
@@ -158,7 +150,6 @@
         if(granted) {
             NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
             ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-            NSString *userID = [[twitterAccount accountProperties] objectForKey:@"username"];
             NSString *username = twitterAccount.username;
             [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:username] toSuccessCallbackString:callbackId]];
         }
