@@ -21,12 +21,9 @@
 //  AppDelegate.m
 //  PushNotCDV160
 //
-//  Created by Randy McMillan on 4/19/12.
-//  Copyright OpenOSX.org 2012. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 
 #ifdef CORDOVA_FRAMEWORK
 #import <Cordova/CDVPlugin.h>
@@ -53,6 +50,9 @@
 #define UA_KEY @"Your App Key"
 #define UA_SECRET @"Your App Secret"
 
+@interface MainViewController : CDVViewController
+
+@end
 
 @implementation AppDelegate
 
@@ -155,5 +155,119 @@
 {
 	[super dealloc];
 }
+
+@end
+
+
+
+@implementation MainViewController
+
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+	// Custom initialization
+    }
+    return self;
+}
+
+- (void) didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+
+    // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - View lifecycle
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+}
+
+- (void) viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+}
+
+/* Comment out the block below to over-ride */
+/*
+ - (CDVCordovaView*) newCordovaViewWithFrame:(CGRect)bounds
+ {
+ return[super newCordovaViewWithFrame:bounds];
+ }
+ */
+
+/* Comment out the block below to over-ride */
+/*
+ #pragma CDVCommandDelegate implementation
+
+ - (id) getCommandInstance:(NSString*)className
+ {
+ return [super getCommandInstance:className];
+ }
+
+ - (BOOL) execute:(CDVInvokedUrlCommand*)command
+ {
+ return [super execute:command];
+ }
+
+ - (NSString*) pathForResource:(NSString*)resourcepath;
+ {
+ return [super pathForResource:resourcepath];
+ }
+
+ - (void) registerPlugin:(CDVPlugin*)plugin withClassName:(NSString*)className
+ {
+ return [super registerPlugin:plugin withClassName:className];
+ }
+ */
+
+#pragma UIWebDelegate implementation
+
+- (void) webViewDidFinishLoad:(UIWebView*) theWebView
+{
+    // only valid if ___PROJECTNAME__-Info.plist specifies a protocol to handle
+    if (self.invokeString)
+    {
+	// this is passed before the deviceready event is fired, so you can access it in js when you receive deviceready
+	NSString* jsString = [NSString stringWithFormat:@"var invokeString = \"%@\";", self.invokeString];
+	[theWebView stringByEvaluatingJavaScriptFromString:jsString];
+    }
+
+    // Black base color for background matches the native apps
+    theWebView.backgroundColor = [UIColor blackColor];
+
+	return [super webViewDidFinishLoad:theWebView];
+}
+
+/* Comment out the block below to over-ride */
+/*
+
+ - (void) webViewDidStartLoad:(UIWebView*)theWebView
+ {
+ return [super webViewDidStartLoad:theWebView];
+ }
+
+ - (void) webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
+ {
+ return [super webView:theWebView didFailLoadWithError:error];
+ }
+
+ - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
+ {
+ return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];
+ }
+ */
 
 @end
