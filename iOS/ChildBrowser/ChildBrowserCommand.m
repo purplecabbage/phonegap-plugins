@@ -19,14 +19,14 @@
 {
     if(childBrowser == NULL)
     {
-    childBrowser = [[ ChildBrowserViewController alloc ] initWithScale:FALSE ];
-    childBrowser.delegate = self;
+	childBrowser = [[ ChildBrowserViewController alloc ] initWithScale:FALSE ];
+	childBrowser.delegate = self;
     }
 
-/* // TODO: Work in progress
-    NSString* strOrientations = [ options objectForKey:@"supportedOrientations"];
-    NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
-*/
+    /* // TODO: Work in progress
+     NSString* strOrientations = [ options objectForKey:@"supportedOrientations"];
+     NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
+     */
 
 #ifdef CORDOVA_FRAMEWORK
     CDVViewController* cont = (CDVViewController*)[ super viewController ];
@@ -52,13 +52,13 @@
 
 -(void) onClose
 {
-    NSString* jsCallback = [NSString stringWithFormat:@"ChildBrowser._onClose();",@""];
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onClose();",@""];
     [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 }
 
 -(void) onOpenInSafari
 {
-    NSString* jsCallback = [NSString stringWithFormat:@"ChildBrowser._onOpenExternal();",@""];
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onOpenExternal();",@""];
     [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 }
 
@@ -69,7 +69,7 @@
     NSString* tempLoc = [NSString stringWithFormat:@"%@",newLoc];
     NSString* encUrl = [tempLoc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-    NSString* jsCallback = [NSString stringWithFormat:@"ChildBrowser._onLocationChange('%@');",encUrl];
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onLocationChange('%@');",encUrl];
     [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 
 }
