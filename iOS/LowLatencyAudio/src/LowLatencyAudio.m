@@ -21,7 +21,7 @@
 @implementation LowLatencyAudio
 
 NSString* ERROR_NOT_FOUND = @"file not found";
-NSString* ERROR_EXISTING_REFERENCE = @"a reference to the audio ID already exists";
+NSString* WARN_EXISTING_REFERENCE = @"a reference to the audio ID already exists";
 NSString* ERROR_MISSING_REFERENCE = @"a reference to the audio ID does not exist";
 NSString* CONTENT_LOAD_REQUESTED = @"content has been requested";
 NSString* PLAY_REQUESTED = @"PLAY REQUESTED";
@@ -78,8 +78,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     }
     else 
     {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_EXISTING_REFERENCE];        
-        [self writeJavascript: [pluginResult toErrorCallbackString:callbackID]];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WARN_EXISTING_REFERENCE];        
+        [self writeJavascript: [pluginResult toSuccessCallbackString:callbackID]];
     }
     
     [callbackID release];
@@ -145,8 +145,8 @@ NSString* RESTRICTED = @"ACTION RESTRICTED FOR FX AUDIO";
     }
     else 
     {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_EXISTING_REFERENCE];        
-        [self writeJavascript: [pluginResult toErrorCallbackString:callbackID]];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: WARN_EXISTING_REFERENCE];        
+        [self writeJavascript: [pluginResult toSuccessCallbackString:callbackID]];
     }
     
     [callbackID release];
