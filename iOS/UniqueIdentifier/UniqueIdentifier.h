@@ -1,5 +1,5 @@
 //
-//  PGUniqueIdentifier.h
+//  UniqueIdentifier.h
 //  UniqueIdentifierPlugin
 //
 //  Created by Andrew Thorp on 4/13/12
@@ -18,9 +18,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <PhoneGap/PGPlugin.h>
 
-@interface PGUniqueIdentifier : PGPlugin {
+#ifdef CORDOVA_FRAMEWORK
+#import <CORDOVA/CDVPlugin.h>
+#else
+#import "CORDOVA/CDVPlugin.h"
+#endif
+
+@interface UniqueIdentifier : CDVPlugin {
   NSString* callbackId;
   NSString* uuidString;
   CFUUIDRef uuid;

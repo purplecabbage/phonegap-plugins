@@ -1,5 +1,5 @@
 //
-//  PGUniqueIdentifier.m
+//  UniqueIdentifier.m
 //  UniqueIdentifierPlugin
 //
 //  Created by Andrew Thorp on 4/13/12
@@ -17,10 +17,10 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "PGUniqueIdentifier.h"
+#import "UniqueIdentifier.h"
 #define UUID_USER_DEFAULTS_KEY @"UUID"
 
-@implementation PGUniqueIdentifier
+@implementation UniqueIdentifier
 
 @synthesize callbackID;
 
@@ -40,26 +40,26 @@ NSString* UNIQUE_IDENTIFIER_ERROR = @"ERROR";
     if ([defaults stringForKey:UUID_USER_DEFAULTS_KEY] == nil) {
         [defaults setObject:uuidString forKey:UUID_USER_DEFAULTS_KEY];
         [defaults synchronize];
-    } 
+    }
 
     NSString *uniqueIdentifier = [defaults stringForKey:UUID_USER_DEFAULTS_KEY];
-    
-    PluginResult* pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsString: uniqueIdentifier];
+
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: uniqueIdentifier];
     [self writeJavascript: [pluginResult toSuccessCallbackString:self.callbackID]];
 }
 
 - (void) getUUID:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
     self.callbackID = [arguments pop];
-    PluginResult* pluginResult;
+    CDVPluginResult* pluginResult;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     if ([defaults stringForKey:UUID_USER_DEFAULTS_KEY] == nil){
-        pluginResult = [PluginResult resultWithStatus:PGCommandStatus_ERROR messageAsString: UNIQUE_IDENTIFIER_ERROR];        
-        [self writeJavascript: [pluginResult toErrorCallbackString:self.callbackID]];    
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: UNIQUE_IDENTIFIER_ERROR];
+        [self writeJavascript: [pluginResult toErrorCallbackString:self.callbackID]];
     } else {
         NSString *uniqueIdentifier = [defaults stringForKey:UUID_USER_DEFAULTS_KEY];
-        pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsString: uniqueIdentifier];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: uniqueIdentifier];
         [self writeJavascript: [pluginResult toSuccessCallbackString:self.callbackID]];
     }
 }
