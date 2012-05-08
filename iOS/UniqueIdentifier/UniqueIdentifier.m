@@ -30,16 +30,17 @@ NSString* UNIQUE_IDENTIFIER_ERROR = @"ERROR";
 - (void) generateUUID:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
     self.callbackID = [arguments pop];
-    uuid = CFUUIDCreate(NULL);
-    if (uuid) {
-      uuidString = (NSString *)CFUUIDCreateString(NULL, uuid);
-      CFRelease(uuid);
-    }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults stringForKey:UUID_USER_DEFAULTS_KEY] == nil) {
-        [defaults setObject:uuidString forKey:UUID_USER_DEFAULTS_KEY];
-        [defaults synchronize];
+      uuid = CFUUIDCreate(NULL);
+      if (uuid) {
+        uuidString = (NSString *)CFUUIDCreateString(NULL, uuid);
+        CFRelease(uuid);
+      }
+
+      [defaults setObject:uuidString forKey:UUID_USER_DEFAULTS_KEY];
+      [defaults synchronize];
     }
 
     NSString *uniqueIdentifier = [defaults stringForKey:UUID_USER_DEFAULTS_KEY];
