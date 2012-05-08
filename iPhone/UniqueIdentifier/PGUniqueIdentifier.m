@@ -30,20 +30,20 @@ NSString* UNIQUE_IDENTIFIER_ERROR = @"ERROR";
 - (void) generateUUID:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
     self.callbackID = [arguments pop];
-    uuid = CFUUIDCreate(NULL);
-    if (uuid) {
-      uuidString = (NSString *)CFUUIDCreateString(NULL, uuid);
-      CFRelease(uuid);
-    }
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults stringForKey:UUID_USER_DEFAULTS_KEY] == nil) {
+        uuid = CFUUIDCreate(NULL);
+        if (uuid) {
+          uuidString = (NSString *)CFUUIDCreateString(NULL, uuid);
+          CFRelease(uuid);
+        }
         [defaults setObject:uuidString forKey:UUID_USER_DEFAULTS_KEY];
         [defaults synchronize];
-    } 
+    }
 
     NSString *uniqueIdentifier = [defaults stringForKey:UUID_USER_DEFAULTS_KEY];
-    
+
     PluginResult* pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsString: uniqueIdentifier];
     [self writeJavascript: [pluginResult toSuccessCallbackString:self.callbackID]];
 }
@@ -55,8 +55,8 @@ NSString* UNIQUE_IDENTIFIER_ERROR = @"ERROR";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     if ([defaults stringForKey:UUID_USER_DEFAULTS_KEY] == nil){
-        pluginResult = [PluginResult resultWithStatus:PGCommandStatus_ERROR messageAsString: UNIQUE_IDENTIFIER_ERROR];        
-        [self writeJavascript: [pluginResult toErrorCallbackString:self.callbackID]];    
+        pluginResult = [PluginResult resultWithStatus:PGCommandStatus_ERROR messageAsString: UNIQUE_IDENTIFIER_ERROR];
+        [self writeJavascript: [pluginResult toErrorCallbackString:self.callbackID]];
     } else {
         NSString *uniqueIdentifier = [defaults stringForKey:UUID_USER_DEFAULTS_KEY];
         pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsString: uniqueIdentifier];
