@@ -8,8 +8,10 @@
 #import "TwitterPlugin.h"
 #ifdef CORDOVA_FRAMEWORK
     #import <Cordova/JSONKit.h>
+	#import <Cordova/CDVAvailability.h>
 #else
     #import "JSONKit.h"
+	#import "CDVAvailability.h"
 #endif
 
 #define TWITTER_URL @"http://api.twitter.com/1/"
@@ -25,6 +27,8 @@
     if(tweetViewController != nil){
         [tweetViewController release];
     }
+	
+	
     
     [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:twitterSDKAvailable ? 1 : 0] toSuccessCallbackString:callbackId]];
 }
@@ -86,6 +90,14 @@
                                                messageAsString:errorMessage] toErrorCallbackString:callbackId]];
     }
     else{
+        
+#if TARGET_IPHONE_SIMULATOR
+        NSString *simWarning = @"Test TwitterPlugin on Real Hardware. Tested on Cordova 1.7.0";
+        //EXC_BAD_ACCESS occurs on simulator unable to reproduce on real device
+        //running iOS 5.1 and Cordova 1.6.1
+        NSLog(@"%@",simWarning);
+#endif
+        
         [tweetViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
             switch (result) {
                 case TWTweetComposeViewControllerResultDone:
@@ -132,6 +144,24 @@
 	}];
     
     [postRequest release];
+}
+
+- (void) getTwitterUsername:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
+    NSString *callbackId = [arguments objectAtIndex:0];
+    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    
+    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+        if(granted) {
+            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
+            ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
+            NSString *username = twitterAccount.username;
+            [super writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:username] toSuccessCallbackString:callbackId]];
+        }
+    }];
+    
+    [accountStore release];
+
 }
 
 - (void) getMentions:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options{
