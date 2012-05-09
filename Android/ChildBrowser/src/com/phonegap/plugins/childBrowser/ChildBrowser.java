@@ -10,7 +10,8 @@ package com.phonegap.plugins.childBrowser;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.cordova.api.CordovaInterface;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,15 +30,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
-import com.phonegap.api.PhonegapActivity;
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
 
 public class ChildBrowser extends Plugin {
     
@@ -301,18 +300,20 @@ public class ChildBrowser extends Plugin {
                 close.setLayoutParams(closeParams);
                                 
                 webview = new WebView(ctx.getContext());
-                webview.getSettings().setJavaScriptEnabled(true);
-                webview.getSettings().setBuiltInZoomControls(true);
-                webview.getSettings().setPluginsEnabled(true);
+                webview.setWebChromeClient(new WebChromeClient());
                 WebViewClient client = new ChildBrowserClient(edittext);
-                webview.setWebViewClient(client);                
+                webview.setWebViewClient(client);
+                WebSettings settings = webview.getSettings();
+                settings.setJavaScriptEnabled(true);
+                settings.setJavaScriptCanOpenWindowsAutomatically(true);
+                settings.setBuiltInZoomControls(true);
+                settings.setPluginsEnabled(true);
                 webview.loadUrl(url);
                 webview.setId(5);
                 webview.setInitialScale(0);
                 webview.setLayoutParams(wvParams);
                 webview.requestFocus();
-                webview.requestFocusFromTouch();
-                
+                webview.requestFocusFromTouch();   
                 
                 toolbar.addView(back);
                 toolbar.addView(forward);
