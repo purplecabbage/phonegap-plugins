@@ -179,10 +179,11 @@ public class ChildBrowser extends Plugin {
         InputMethodManager imm = (InputMethodManager)this.ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edittext.getWindowToken(), 0);
 
-        if (!url.startsWith("http")) {
+        if (!url.startsWith("http") || !url.startsWith("file:")) {
             this.webview.loadUrl("http://" + url);            
+        } else {
+            this.webview.loadUrl(url);
         }
-        this.webview.loadUrl(url);
         this.webview.requestFocus();
     }
 
@@ -238,6 +239,7 @@ public class ChildBrowser extends Plugin {
                 main.setOrientation(LinearLayout.VERTICAL);
                 
                 LinearLayout toolbar = new LinearLayout(ctx.getContext());
+                toolbar.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
                 toolbar.setOrientation(LinearLayout.HORIZONTAL);
                 
                 ImageButton back = new ImageButton(ctx.getContext());
@@ -284,7 +286,7 @@ public class ChildBrowser extends Plugin {
                 edittext.setText(url);
                 edittext.setLayoutParams(editParams);
                 
-                ImageButton close = new ImageButton((Context) ctx);                
+                ImageButton close = new ImageButton(ctx.getContext());                
                 close.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         closeDialog();
@@ -301,6 +303,7 @@ public class ChildBrowser extends Plugin {
                 webview = new WebView(ctx.getContext());
                 webview.getSettings().setJavaScriptEnabled(true);
                 webview.getSettings().setBuiltInZoomControls(true);
+                webview.getSettings().setPluginsEnabled(true);
                 WebViewClient client = new ChildBrowserClient(edittext);
                 webview.setWebViewClient(client);                
                 webview.loadUrl(url);
@@ -379,7 +382,7 @@ public class ChildBrowser extends Plugin {
         public void onPageStarted(WebView view, String url,  Bitmap favicon) {
             super.onPageStarted(view, url, favicon);            
             String newloc;
-            if (url.startsWith("http:") || url.startsWith("https:")) {
+            if (url.startsWith("http:") || url.startsWith("https:") || url.startsWith("file:")) {
                 newloc = url;
             } else {
                 newloc = "http://" + url;
