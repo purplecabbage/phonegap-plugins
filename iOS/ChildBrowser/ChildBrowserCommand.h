@@ -4,9 +4,9 @@
 
 
 #ifdef CORDOVA_FRAMEWORK
-#import <CORDOVA/CDVPlugin.h>
+#import <Cordova/CDVPlugin.h>
 #else
-#import "CORDOVA/CDVPlugin.h"
+#import "Cordova/CDVPlugin.h"
 #endif
 #import "ChildBrowserViewController.h"
 
@@ -14,7 +14,7 @@
 #ifdef CORDOVA_FRAMEWORK
     @interface ChildBrowserCommand : CDVPlugin <ChildBrowserDelegate>  {
 #endif
-	ChildBrowserViewController* childBrowser;
+    ChildBrowserViewController* childBrowser;
 }
 
 @property (nonatomic, retain) ChildBrowserViewController *childBrowser;
