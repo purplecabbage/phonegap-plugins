@@ -308,6 +308,7 @@ public class ChildBrowser extends Plugin {
                 settings.setJavaScriptCanOpenWindowsAutomatically(true);
                 settings.setBuiltInZoomControls(true);
                 settings.setPluginsEnabled(true);
+                settings.setDomStorageEnabled(true);
                 webview.loadUrl(url);
                 webview.setId(5);
                 webview.setInitialScale(0);
