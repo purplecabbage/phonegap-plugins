@@ -67,12 +67,29 @@ Analytics.prototype.trackEvent = function(category, action, label, value, succes
 				    typeof label === "undefined" ? "" : label, 
 				    (isNaN(parseInt(value,10))) ? 0 : parseInt(value, 10)
 				]);					
-}
+};
+
+Analytics.prototype.setCustomVar = function(index, label, value, scope, successCallback, failureCallback){
+	return PhoneGap.exec(
+				successCallback,			
+				failureCallback,		
+				'GoogleAnalyticsTracker',
+				'setCustomVariable',		
+				[
+				    (isNaN(parseInt(index,10))) ? 0 : parseInt(index, 10),
+				    label,
+				    value,
+				    (isNaN(parseInt(scope,10))) ? 0 : parseInt(scope, 10)
+				]);					
+};
 
 /**
  * Load Analytics
  */
 PhoneGap.addConstructor(function() {
 	PhoneGap.addPlugin('analytics', new Analytics());
- 	PluginManager.addService("GoogleAnalyticsTracker", "com.phonegap.plugins.analytics.GoogleAnalyticsTracker");
+	
+//	@deprecated: No longer needed in PhoneGap 1.0. Uncomment the addService code for earlier 
+//	PhoneGap releases.
+// 	PluginManager.addService("GoogleAnalyticsTracker", "com.phonegap.plugins.analytics.GoogleAnalyticsTracker");
 });
