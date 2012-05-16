@@ -2,7 +2,7 @@
 //  ActionSheet.m
 //  
 // Created by Olivier Louvignes on 11/27/2011.
-//
+// Added Cordova 1.5 support - @RandyMcMillan 2012
 // Copyright 2011 Olivier Louvignes. All rights reserved.
 // MIT Licensed
 
@@ -26,6 +26,7 @@
 	// Compiling options with defaults
 	NSString *title = [options objectForKey:@"title"] ?: @"";
 	NSString *style = [options objectForKey:@"style"] ?: @"black-translucent";
+	//NSString *style = [options objectForKey:@"style"] ?: @"default";
 	NSArray *items = [options objectForKey:@"items"];
 	NSInteger cancelButtonIndex = [[options objectForKey:@"cancelButtonIndex"] intValue] ?: false;
 	NSInteger destructiveButtonIndex = [[options objectForKey:@"destructiveButtonIndex"] intValue] ?: false;
@@ -37,9 +38,10 @@
 									 destructiveButtonTitle:nil
 										  otherButtonTitles:nil];
 	
-	// Style actionSheet, defaults to BlackTranslucent
+	// Style actionSheet, defaults to UIActionSheetStyleDefault
 	if([style isEqualToString:@"black-opaque"]) actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
-	else actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+	else if([style isEqualToString:@"black-translucent"]) actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+	else actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
 	
 	// Fill with elements
 	for(int i = 0; i < [items count]; i++) {
@@ -75,8 +77,13 @@
 	[result setObject:[NSNumber numberWithInteger:buttonIndex] forKey:@"buttonIndex"];
 	
 	// Create Plugin Result
+#ifdef PHONEGAP_FRAMEWORK
 	PluginResult* pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsDictionary:result];
-	
+#endif
+#ifdef CORDOVA_FRAMEWORK
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+#endif
+    
 	// Checking if cancel was clicked
 	if (buttonIndex != actionSheet.cancelButtonIndex) {
 		//Call  the Failure Javascript function

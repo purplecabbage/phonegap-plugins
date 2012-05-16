@@ -24,8 +24,17 @@ GoogleAnalyticsPlugin.prototype.trackEvent = function(category,action,label,valu
 	PhoneGap.exec("GoogleAnalyticsPlugin.trackEvent",options);
 };
 
-GoogleAnalyticsPlugin.prototype.trackerDispatchDidComplete = function(count)
-{
+GoogleAnalyticsPlugin.prototype.setCustomVariable = function(index,name,value) {
+	var options = {index:index,
+		name:name,
+		value:value};
+	PhoneGap.exec("GoogleAnalyticsPlugin.setCustomVariable",options);
+};
+
+GoogleAnalyticsPlugin.prototype.hitDispatched = function(hitString) {
+	//console.log("hitDispatched :: " + hitString);
+};
+GoogleAnalyticsPlugin.prototype.trackerDispatchDidComplete = function(count) {
 	//console.log("trackerDispatchDidComplete :: " + count);
 };
 

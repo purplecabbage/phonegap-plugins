@@ -10,6 +10,8 @@ package com.phonegap.plugins.childBrowser;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,15 +30,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
-import com.phonegap.api.PhonegapActivity;
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
 
 public class ChildBrowser extends Plugin {
     
@@ -119,7 +119,7 @@ public class ChildBrowser extends Plugin {
         try {
             Intent intent = null;
             if (usePhoneGap) {
-                intent = new Intent().setClass(this.ctx, com.phonegap.DroidGap.class);
+                intent = new Intent().setClass(this.ctx.getContext(), org.apache.cordova.DroidGap.class);
                 intent.setData(Uri.parse(url)); // This line will be removed in future.
                 intent.putExtra("url", url);
 
@@ -147,7 +147,6 @@ public class ChildBrowser extends Plugin {
      */
     private void closeDialog() {
         if (dialog != null) {
-            this.webview.stopLoading();
             dialog.dismiss();
         }
     }
@@ -179,10 +178,11 @@ public class ChildBrowser extends Plugin {
         InputMethodManager imm = (InputMethodManager)this.ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edittext.getWindowToken(), 0);
 
-        if (!url.startsWith("http")) {
+        if (!url.startsWith("http") || !url.startsWith("file:")) {
             this.webview.loadUrl("http://" + url);            
+        } else {
+            this.webview.loadUrl(url);
         }
-        this.webview.loadUrl(url);
         this.webview.requestFocus();
     }
 
@@ -211,7 +211,7 @@ public class ChildBrowser extends Plugin {
         // Create dialog in new thread 
         Runnable runnable = new Runnable() {
             public void run() {
-                dialog = new Dialog(ctx);
+                dialog = new Dialog(ctx.getContext(), android.R.style.Theme_Translucent_NoTitleBar);
 
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
@@ -234,13 +234,14 @@ public class ChildBrowser extends Plugin {
                 LinearLayout.LayoutParams closeParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
                 LinearLayout.LayoutParams wvParams = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
                 
-                LinearLayout main = new LinearLayout(ctx);
+                LinearLayout main = new LinearLayout(ctx.getContext());
                 main.setOrientation(LinearLayout.VERTICAL);
                 
-                LinearLayout toolbar = new LinearLayout(ctx);
+                LinearLayout toolbar = new LinearLayout(ctx.getContext());
+                toolbar.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
                 toolbar.setOrientation(LinearLayout.HORIZONTAL);
                 
-                ImageButton back = new ImageButton(ctx);
+                ImageButton back = new ImageButton(ctx.getContext());
                 back.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         goBack();
@@ -254,7 +255,7 @@ public class ChildBrowser extends Plugin {
                 }
                 back.setLayoutParams(backParams);
 
-                ImageButton forward = new ImageButton(ctx);
+                ImageButton forward = new ImageButton(ctx.getContext());
                 forward.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         goForward();
@@ -268,7 +269,7 @@ public class ChildBrowser extends Plugin {
                 }               
                 forward.setLayoutParams(forwardParams);
                 
-                edittext = new EditText(ctx);
+                edittext = new EditText(ctx.getContext());
                 edittext.setOnKeyListener(new View.OnKeyListener() {
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
                         // If the event is a key-down event on the "enter" button
@@ -284,7 +285,7 @@ public class ChildBrowser extends Plugin {
                 edittext.setText(url);
                 edittext.setLayoutParams(editParams);
                 
-                ImageButton close = new ImageButton(ctx);                
+                ImageButton close = new ImageButton(ctx.getContext());                
                 close.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         closeDialog();
@@ -298,18 +299,22 @@ public class ChildBrowser extends Plugin {
                 }
                 close.setLayoutParams(closeParams);
                                 
-                webview = new WebView(ctx);
-                webview.getSettings().setJavaScriptEnabled(true);
-                webview.getSettings().setBuiltInZoomControls(true);
-                WebViewClient client = new ChildBrowserClient(ctx, edittext);
-                webview.setWebViewClient(client);                
+                webview = new WebView(ctx.getContext());
+                webview.setWebChromeClient(new WebChromeClient());
+                WebViewClient client = new ChildBrowserClient(edittext);
+                webview.setWebViewClient(client);
+                WebSettings settings = webview.getSettings();
+                settings.setJavaScriptEnabled(true);
+                settings.setJavaScriptCanOpenWindowsAutomatically(true);
+                settings.setBuiltInZoomControls(true);
+                settings.setPluginsEnabled(true);
+                settings.setDomStorageEnabled(true);
                 webview.loadUrl(url);
                 webview.setId(5);
                 webview.setInitialScale(0);
                 webview.setLayoutParams(wvParams);
                 webview.requestFocus();
-                webview.requestFocusFromTouch();
-                
+                webview.requestFocusFromTouch();   
                 
                 toolbar.addView(back);
                 toolbar.addView(forward);
@@ -357,7 +362,6 @@ public class ChildBrowser extends Plugin {
      * The webview client receives notifications about appView
      */
     public class ChildBrowserClient extends WebViewClient {
-        PhonegapActivity ctx;
         EditText edittext;
 
         /**
@@ -366,8 +370,7 @@ public class ChildBrowser extends Plugin {
          * @param mContext
          * @param edittext 
          */
-        public ChildBrowserClient(PhonegapActivity mContext, EditText mEditText) {
-            this.ctx = mContext;
+        public ChildBrowserClient(EditText mEditText) {
             this.edittext = mEditText;
         }       
 
@@ -381,7 +384,7 @@ public class ChildBrowser extends Plugin {
         public void onPageStarted(WebView view, String url,  Bitmap favicon) {
             super.onPageStarted(view, url, favicon);            
             String newloc;
-            if (url.startsWith("http:") || url.startsWith("https:")) {
+            if (url.startsWith("http:") || url.startsWith("https:") || url.startsWith("file:")) {
                 newloc = url;
             } else {
                 newloc = "http://" + url;
