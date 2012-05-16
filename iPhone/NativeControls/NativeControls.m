@@ -471,7 +471,8 @@
     
     NSString  *tagId      = [arguments objectAtIndex:0];
     NSString  *title     = [arguments objectAtIndex:1];
-	NSString  *imageName	= nil;
+	NSString  *imageName = nil;
+
 	if (arguments.count >= 2)
 	{
 		imageName = [arguments objectAtIndex:2];
@@ -505,7 +506,7 @@
 	}
     
     UIBarButtonItem *item = nil;    
-    if ([imageName length] > 0) 
+    if (imageName && [imageName length] > 0) 
 	{
         UIBarButtonSystemItem systemItem = -1;
         if ([imageName isEqualToString:@"UIBarButtonSystemItemDone"])
