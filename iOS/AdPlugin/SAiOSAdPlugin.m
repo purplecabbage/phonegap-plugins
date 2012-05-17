@@ -45,10 +45,10 @@
         {
             if (self.bannerIsAtBottom) {
                 webViewFrame.origin.y = 0;
-		CGRect adViewFrame = self.adView.frame;
-		CGRect superViewFrame = [[super webView] superview].frame;
-		adViewFrame.origin.y = (self.isLandscape ? superViewFrame.size.width : superViewFrame.size.height) - adViewFrame.size.height;
-		self.adView.frame = adViewFrame;
+                CGRect adViewFrame = self.adView.frame;
+                CGRect superViewFrame = [[super webView] superview].frame;
+                adViewFrame.origin.y = (self.isLandscape ? superViewFrame.size.width : superViewFrame.size.height) - adViewFrame.size.height;
+                self.adView.frame = adViewFrame;
             } else {
                 webViewFrame.origin.y = adViewFrame.size.height;
             }
@@ -74,24 +74,24 @@
 {
     NSInteger orientation = [[arguments objectAtIndex:0] integerValue];
 
-	switch (orientation) {
-            // landscape
-		case 90:
-		case -90:
-			self.isLandscape = YES;
-			break;
-            // portrait
-		case 0:
-		case 180:
-			self.isLandscape = NO;
-			break;
-		default:
-			break;
-	}
+    switch (orientation) {
+        // landscape
+        case 90:
+        case -90:
+            self.isLandscape = YES;
+            break;
+        // portrait
+        case 0:
+        case 180:
+            self.isLandscape = NO;
+            break;
+        default:
+            break;
+    }
     
     Class adBannerViewClass = NSClassFromString(@"ADBannerView");
-	if (adBannerViewClass && self.adView)
-	{
+    if (adBannerViewClass && self.adView)
+    {
         self.adView.currentContentSizeIdentifier = self.isLandscape ? ADBannerContentSizeIdentifierLandscape : ADBannerContentSizeIdentifierPortrait;
         [self resizeViews];
     }
@@ -225,4 +225,3 @@
 }
 
 @end
-
