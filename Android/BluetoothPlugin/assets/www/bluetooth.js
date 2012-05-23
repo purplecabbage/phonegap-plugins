@@ -14,13 +14,20 @@
    limitations under the License.
 */
 
-if( !PhoneGap.hasResource("BluetoothPlugin") ) {
-	PhoneGap.addResource("BluetoothPlugin");
-
+cordova.define("cordova/plugin/bluetooth", function(require, exports, module) {
+	var exec = require('cordova/exec');
+	
+	var Bluetooth = function() {};
+	
 	/**
-	 * @returns instance of powermanagement
+	 * Check if bluetooth API is supported on this platform
+	 * @returns true if bluetooth API is supported, false otherwise
 	 */
-	var Bluetooth = function() {	
+	Bluetooth.prototype.isSupported = function() {
+		// Currently only supported on android
+		if( device.platform.toLowerCase() == "android" ) return true;
+		
+		return false;
 	}
 	
 	/**
@@ -83,11 +90,6 @@ if( !PhoneGap.hasResource("BluetoothPlugin") ) {
 	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'read', [socketid]);
 	}
 	
-	/**
-	 * Register the plugin with PhoneGap
-	 */
-	PhoneGap.addConstructor(function() {
-		// Register the PowerManagement plugin with PhoneGap
-		PhoneGap.addPlugin('BluetoothPlugin', new Bluetooth());
-	});
-}
+	var bluetooth = new Bluetooth();
+	module.exports = bluetooth;
+});
