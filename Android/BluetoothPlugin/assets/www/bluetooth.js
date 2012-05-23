@@ -37,7 +37,7 @@ cordova.define("cordova/plugin/bluetooth", function(require, exports, module) {
 	 * @param errorCallback function to be called when enabling was not possible / did fail
 	 */
 	Bluetooth.prototype.enable = function(successCallback,failureCallback) {
-	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'enable', []);
+	    return exec(successCallback, failureCallback, 'BluetoothPlugin', 'enable', []);
 	}
 	
 	/**
@@ -47,7 +47,7 @@ cordova.define("cordova/plugin/bluetooth", function(require, exports, module) {
 	 * @param errorCallback function to be called when disabling was not possible / did fail
 	 */
 	Bluetooth.prototype.disable = function(successCallback,failureCallback) {
-	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'disable', []);
+	    return exec(successCallback, failureCallback, 'BluetoothPlugin', 'disable', []);
 	}
 	
 	/**
@@ -57,7 +57,7 @@ cordova.define("cordova/plugin/bluetooth", function(require, exports, module) {
 	 * @param errorCallback function to be called when there was a problem while discovering devices
 	 */
 	Bluetooth.prototype.discoverDevices = function(successCallback,failureCallback) {
-	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'discoverDevices', []);
+	    return exec(successCallback, failureCallback, 'BluetoothPlugin', 'discoverDevices', []);
 	}
 	
 	/**
@@ -67,7 +67,7 @@ cordova.define("cordova/plugin/bluetooth", function(require, exports, module) {
 	 * @param errorCallback function to be called when there was a problem while listing UUIDs
 	 */
 	Bluetooth.prototype.getUUIDs = function(successCallback,failureCallback,address) {
-	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'getUUIDs', [address]);
+	    return exec(successCallback, failureCallback, 'BluetoothPlugin', 'getUUIDs', [address]);
 	}
 	
 	/**
@@ -77,7 +77,7 @@ cordova.define("cordova/plugin/bluetooth", function(require, exports, module) {
 	 * @param errorCallback function to be called when there was a problem while opening the connection
 	 */
 	Bluetooth.prototype.connect = function(successCallback,failureCallback,address,uuid) {
-	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'connect', [address, uuid]);
+	    return exec(successCallback, failureCallback, 'BluetoothPlugin', 'connect', [address, uuid]);
 	}
 	
 	/**
@@ -87,7 +87,7 @@ cordova.define("cordova/plugin/bluetooth", function(require, exports, module) {
 	 * @param errorCallback function to be called when there was a problem while reading
 	 */
 	Bluetooth.prototype.read = function(successCallback,failureCallback,socketid) {
-	    return PhoneGap.exec(successCallback, failureCallback, 'BluetoothPlugin', 'read', [socketid]);
+	    return exec(successCallback, failureCallback, 'BluetoothPlugin', 'read', [socketid]);
 	}
 	
 	var bluetooth = new Bluetooth();
