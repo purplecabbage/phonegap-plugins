@@ -21,7 +21,7 @@ var Resources = function() {
  *            The callback which will be called when directory listing encouters
  *            an error
  */
-DeviceInfo.prototype.getStringResources = function(params, successCallback,
+Resources.prototype.getStringResources = function(params, successCallback,
         failureCallback) {
     return PhoneGap.exec(successCallback, failureCallback, 'Resources',
             'getStringResources', [ params ], false);
