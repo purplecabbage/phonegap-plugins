@@ -44,5 +44,5 @@ RemoteSound.prototype.loadRemoteSounds = function(params, successCallback,
 
 
 cordova.addConstructor(function() {
-	cordova.addPlugin('remoteSound', new RemoteSound());
+	cordova.addPlugin('remotesound', new RemoteSound());
 });

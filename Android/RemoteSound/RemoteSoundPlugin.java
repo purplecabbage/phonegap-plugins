@@ -1,4 +1,4 @@
-package com.phonegap.plugins.remotesound;
+package com.phonegap.plugin.remotesound;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
