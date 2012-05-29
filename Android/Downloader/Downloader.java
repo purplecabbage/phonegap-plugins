@@ -36,7 +36,7 @@ public class Downloader extends Plugin {
 			
 			String dirName = params.has("dirName") ?
 					params.getString("dirName"):
-					"sdcard/download";
+					Environment.getExternalStorageDirectory().getPath() + "/download";
 					
 			Boolean overwrite = params.has("overwrite") ? params.getBoolean("overwrite") : false;
 			
