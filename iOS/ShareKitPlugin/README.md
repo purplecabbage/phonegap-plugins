@@ -9,25 +9,25 @@ Updated for Cordova 1.7/Sharekit 2.0 by Kerri Shotts
 
 * Download [ShareKit 2.0](https://github.com/ShareKit/ShareKit) and install it into your project following the instructions provided in [the wiki](https://github.com/ShareKit/ShareKit/wiki).
 
-** Make sure you follow *all* the steps, all the way through step 7. This will ensure you have FaceBook SSO working properly.
+* * Make sure you follow *all* the steps, all the way through step 7. This will ensure you have FaceBook SSO working properly.
 
-** Also make sure to configure the services with their appropriate API keys. This step is not described particularly well on the wiki. It boils down to creating a new Objective C class in your project that is based on DefaultSHKConfigurator, copying & pasting from DefaultSHKConfigurator, and filling in your API keys. (See the example configuration files under example-config directory.)
+* * Also make sure to configure the services with their appropriate API keys. This step is not described particularly well on the wiki. It boils down to creating a new Objective C class in your project that is based on DefaultSHKConfigurator, copying & pasting from DefaultSHKConfigurator, and filling in your API keys. (See the example configuration files under example-config directory.)
 
 * Because ShareKit utilizes JSONKit, you will receive errors when building your app. You *must*:
 
-** Update the subproject's User Header Search Paths for the Sharekit SubProject to "/Users/Shared/Cordova/Frameworks/Cordova.framework/**"
+* * Update the subproject's User Header Search Paths for the Sharekit SubProject to "/Users/Shared/Cordova/Frameworks/Cordova.framework/**"
 
-** Rename (or delete) Sharekit's JSONKit.h/.m. If you rename them, make sure not to have an ending in .h or .m.
+* * Rename (or delete) Sharekit's JSONKit.h/.m. If you rename them, make sure not to have an ending in .h or .m.
 
 ### Other potential issues you may (or may not) have:
 
 * Instant crash due to missing symbol _NSURLIsExcludedFromBackupKey on IOS < 5.1
 
-** Current fix: comment lines 804-814 out in SHK.m. If anyone has a better fix, I'd love to hear it.
+* * Current fix: comment lines 804-814 out in SHK.m. If anyone has a better fix, I'd love to hear it.
 
 * Crashes when trying to share from the action sheet OR when cancelling an action.
 
-** In hideCurrentViewControllerAnimated, comment out the completion block and change the method to dismissModalViewControllerAnimated. It should look like this:
+* * In hideCurrentViewControllerAnimated, comment out the completion block and change the method to dismissModalViewControllerAnimated. It should look like this:
 
     [[currentView presentingViewController] dismissModalViewControllerAnimated:animated ];
     /* completion:^{                                                                           
@@ -36,7 +36,7 @@ Updated for Cordova 1.7/Sharekit 2.0 by Kerri Shotts
          }];
       }];*/
 
-** Crash when sharing with Twitter on iOS 5 - the simple fix is to force the old Twitter method used in iOS 4 and below in your configuration file. 
+* * Crash when sharing with Twitter on iOS 5 - the simple fix is to force the old Twitter method used in iOS 4 and below in your configuration file. 
 
 ## Adding the Plugin to the Project
 
