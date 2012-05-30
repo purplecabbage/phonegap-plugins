@@ -8,18 +8,25 @@ Updated for Cordova 1.7/Sharekit 2.0 by Kerri Shotts
 ## Adding ShareKit to a PhoneGap Project (revised for 2.0)
 
 * Download [ShareKit 2.0](https://github.com/ShareKit/ShareKit) and install it into your project following the instructions provided in [the wiki](https://github.com/ShareKit/ShareKit/wiki).
+
 ** Make sure you follow *all* the steps, all the way through step 7. This will ensure you have FaceBook SSO working properly.
+
 ** Also make sure to configure the services with their appropriate API keys. This step is not described particularly well on the wiki. It boils down to creating a new Objective C class in your project that is based on DefaultSHKConfigurator, copying & pasting from DefaultSHKConfigurator, and filling in your API keys. (See the example configuration files under example-config directory.)
+
 * Because ShareKit utilizes JSONKit, you will receive errors when building your app. You *must*:
+
 ** Update the subproject's User Header Search Paths for the Sharekit SubProject to "/Users/Shared/Cordova/Frameworks/Cordova.framework/**"
+
 ** Rename (or delete) Sharekit's JSONKit.h/.m. If you rename them, make sure not to have an ending in .h or .m.
 
 ### Other potential issues you may (or may not) have:
 
 * Instant crash due to missing symbol _NSURLIsExcludedFromBackupKey on IOS < 5.1
+
 ** Current fix: comment lines 804-814 out in SHK.m. If anyone has a better fix, I'd love to hear it.
 
 * Crashes when trying to share from the action sheet OR when cancelling an action.
+
 ** In hideCurrentViewControllerAnimated, comment out the completion block and change the method to dismissModalViewControllerAnimated. It should look like this:
 
     [[currentView presentingViewController] dismissModalViewControllerAnimated:animated ];
@@ -76,6 +83,7 @@ you must logout the current one first );
 9. `shareToMail(subject, body)` Opens up the iOS mail dialog with pre-filled subject and body
 
 ## Running the example
+
 The example has been removed; I don't have the time to upgrade it with all the various issues involved in moving it to Sharekit 2.0. The plugin /does/ work; however you should use the above as a reference.
 
 ## Limitations
