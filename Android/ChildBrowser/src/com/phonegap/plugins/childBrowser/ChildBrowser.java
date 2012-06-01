@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -232,6 +233,7 @@ public class ChildBrowser extends Plugin {
             public void run() {
             	// Let's create the main dialog
                 dialog = new Dialog(ctx.getContext(), android.R.style.Theme_NoTitleBar);
+                dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
