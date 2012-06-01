@@ -325,6 +325,7 @@ public class ChildBrowser extends Plugin {
                     }
                 });
                 
+                // Close button
                 ImageButton close = new ImageButton(ctx.getContext());
                 RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
                 closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -341,7 +342,8 @@ public class ChildBrowser extends Plugin {
                         closeDialog();
                     }
                 });
-                                
+                   
+                // WebView
                 webview = new WebView(ctx.getContext());
                 webview.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
                 webview.setWebChromeClient(new WebChromeClient());
