@@ -55,4 +55,4 @@
                              cordova.addPlugin("thumbnailCreator", new ThumbnailCreator());
                              PluginManager.addService ("ThumbnailCreator","com.salman.plugins.thumbnailcreator.ThumbnailCreator");
                          });
- }
+ 
