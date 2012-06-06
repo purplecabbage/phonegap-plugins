@@ -33,4 +33,4 @@ ExtractZipFilePlugin - String - ExtractZipFilePlugin
 
 ## Function Call ##
 
-<input type="button" value="Extract Zip File" onClick="extractFile('/path/to/ZipFile.zip');"/>
+    <input type="button" value="Extract Zip File" onClick="extractFile('/path/to/ZipFile.zip');"/>
