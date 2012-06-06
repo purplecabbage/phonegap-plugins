@@ -16,7 +16,7 @@ ExtractZipFilePlugin - String - ExtractZipFilePlugin
 
 ## Using the plugin ##
 
-    function extractFile(fileName)
+    function extractFile(fileName, destination)
     {
         window.plugins.extractZipFile.extractFile(fileName,destination,win,fail);
     }
