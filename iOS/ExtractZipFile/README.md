@@ -1,5 +1,5 @@
 # ExtractZipFile Phonegap Plugin for iOS #
-by Shaun Rowe
+by Shaun Rowe (@shakie), Pobl Creative Cyf. (@poblcreative)
 
 This plugin allows you to extract a zip file
 
@@ -11,8 +11,9 @@ To install the plugin, copy ZipPlugin.js to your project's www folder and includ
 
 Add SSZipArchive directory, ExtractZipFilePlugin.h and ExtractZipFilePlugin.m to the Plugins directory of your phonegap project.
 
-Add a plugin line to your cordova.plist
-ExtractZipFilePlugin - String - ExtractZipFilePlugin
+In the Cordova.plist section, you need to add the plugin with the key/pair value of:
+
+ExtractZipFilePlugin ExtractZipFilePlugin
 
 ## Using the plugin ##
 
