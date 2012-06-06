@@ -17,21 +17,21 @@ ExtractZipFilePlugin ExtractZipFilePlugin
 
 ## Using the plugin ##
 
-    function extractFile(fileName, destination)
-    {
-        window.plugins.extractZipFile.extractFile(fileName,destination,win,fail);
-    }
+    <script type="text/javascript">
+        function extractFile(fileName, destination)
+        {
+            window.plugins.extractZipFile.extractFile(fileName,destination,win,fail);
+        }
 
-    function win(status) 
-    {	 
-        alert('Success'+status);
-    }	 
+        function win(status) 
+        {
+            alert('Success'+status);
+        }
   
-    function fail(error) 
-    { 
-        alert(error);
-    }
-
-## Function Call ##
+        function fail(error) 
+        { 
+            alert(error);
+        }
+    </script>
 
     <input type="button" value="Extract Zip File" onClick="extractFile('/path/to/ZipFile.zip', '/path/to/extract/to');"/>
