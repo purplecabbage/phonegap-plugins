@@ -16,20 +16,20 @@ ExtractZipFilePlugin - String - ExtractZipFilePlugin
 
 ## Using the plugin ##
 
-function extractFile(fileName)
-{
-	window.plugins.extractZipFile.extractFile(fileName,destination,win,fail);
-}
+    function extractFile(fileName)
+    {
+        window.plugins.extractZipFile.extractFile(fileName,destination,win,fail);
+    }
 
-function win(status) 
-{	 
-	alert('Success'+status);
-}	 
+    function win(status) 
+    {	 
+        alert('Success'+status);
+    }	 
   
-function fail(error) 
-{ 
-	alert(error);
-}
+    function fail(error) 
+    { 
+        alert(error);
+    }
 
 ## Function Call ##
 
