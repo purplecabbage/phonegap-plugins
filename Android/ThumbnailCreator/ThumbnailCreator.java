@@ -71,7 +71,7 @@ public class ThumbnailCreator extends Plugin {
 		
 		try
 		{
-			JSONObject params = args.getJSONObject (0);
+			JSONObject params = args.getJSONObject (1);
 			String sourceImageUrl = params.has ("sourceImageUrl") ? params.getString ( "sourceImageUrl" ) : "";
 			String targetImageUrl = params.has ("targetImageUrl") ? params.getString ( "targetImageUrl" ) : "";
 			Integer newWidth = params.has ("newWidth") ? params.getInt("newWidth") : 1024;
