@@ -11,12 +11,10 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using WP7CordovaClassLib.Cordova;
-using WP7CordovaClassLib.Cordova.Commands;
-using WP7CordovaClassLib.Cordova.JSON;
+using WP7GapClassLib.PhoneGap.UI;
 using Microsoft.Phone.Shell;
 
-namespace WP7CordovaClassLib.Cordova.Commands
+namespace WP7GapClassLib.PhoneGap.Commands
 {
     [DataContract]
     public class BrowserOptions
