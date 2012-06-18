@@ -26,7 +26,7 @@ import org.apache.cordova.api.Plugin;
 import org.apache.cordova.api.PluginResult;
 
 /**
- * @author Matt McGrath, 
+ * @author Tommy-Carlos Williams, 
  * Huge chunks lifted/adapted from the NextworkManager core PhoneGap plugin
  */
 public class PhoneListener extends Plugin {
