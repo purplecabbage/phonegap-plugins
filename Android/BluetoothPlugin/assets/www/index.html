@@ -67,18 +67,6 @@ function bp_readError( error ) {
 	alert( 'Error: ' + error );
 }
 
-function byteToSignedShort( p_byte ) {
-	var sign = p_byte & 0x80;
-	var val = p_byte & 0x7F;
-	
-	if( sign ) {
-		return (val * -1);
-	}
-	else {
-		return val;
-	}
-}
-
 function bp_readSuccess( p_data ) {
 	$( '#bt-data-dump' ).html( p_data );
 }
