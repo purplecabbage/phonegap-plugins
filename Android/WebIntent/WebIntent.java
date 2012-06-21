@@ -184,6 +184,6 @@ public class WebIntent extends Plugin {
             intent.putExtra(key, value);
         }
 
-        ((DroidGap) this.ctx)).sendBroadcast(intent);
+        ((DroidGap) this.ctx).sendBroadcast(intent);
     }
 }
