@@ -117,6 +117,7 @@ public class Downloader extends Plugin {
 			obj.put("status", 1);
 			obj.put("total", fileSize);
 			obj.put("file", fileName);
+			obj.put("dir", dirName);
 			obj.put("progress", progress);
 			
 			return new PluginResult(PluginResult.Status.OK, obj);
