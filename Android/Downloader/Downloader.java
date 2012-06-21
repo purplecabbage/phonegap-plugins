@@ -85,7 +85,6 @@ public class Downloader extends Plugin {
 			URL url = new URL(fileUrl);
 			HttpURLConnection ucon = (HttpURLConnection) url.openConnection();
 			ucon.setRequestMethod("GET");
-			ucon.setDoOutput(true);
 			ucon.connect();
 
 			Log.d("PhoneGapLog", "Download start");
