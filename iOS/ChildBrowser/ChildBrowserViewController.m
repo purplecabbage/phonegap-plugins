@@ -34,6 +34,11 @@
     {
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES && [[UIScreen mainScreen] scale] == 2.00) {
             return [NSString stringWithFormat:@"%@-72@2x.png", resource];
+	} else {
+	    //
+
+	    return [NSString stringWithFormat:@"%@@2x.png", resource];
+
         }
     }
 
@@ -110,8 +115,8 @@
 -(IBAction) onDoneButtonPress:(id)sender
 {
     [ self closeBrowser];
-
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"about:blank"]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@""]];
     [webView loadRequest:request];
 }
 
