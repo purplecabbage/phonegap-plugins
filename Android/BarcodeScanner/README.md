@@ -38,6 +38,11 @@ Updates by Simon MacDonald
         <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>`
+    
+9. And make sure you have the following permission in your AndroidManifest.xml file:
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
 ## Using the plugin ##
 The plugin creates the object `window.plugins.barcodeScanner` with the method `scan(success, fail)`. 
