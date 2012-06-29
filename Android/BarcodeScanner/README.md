@@ -41,7 +41,7 @@ Updates by Simon MacDonald
     
 9. And make sure you have the following permission in your AndroidManifest.xml file:
 
-    <uses-permission android:name="android.permission.CAMERA" />
+    `<uses-permission android:name="android.permission.CAMERA" />`
 
 
 ## Using the plugin ##
