@@ -2,7 +2,7 @@
  *  This code is adapted from the work of Michael Nachbaur 
  *  by Simon Madine of The Angry Robot Zombie Factory
  *   - Converted to Cordova 1.6.1 by Josemando Sobral.
- *  2012-06-03
+ *  2012-07-03
  *  MIT licensed
  */
 
@@ -25,7 +25,7 @@
 	 * Save the screenshot to the user's Photo Library
 	 */
 	Screenshot.prototype.saveScreenshot = function() {
-		cordovaRef.exec("Screenshot.saveScreenshot");
+		cordovaRef.exec(null, null, "Screenshot", "saveScreenshot", []);
 	};
 
 	cordovaRef.addConstructor(function() {
