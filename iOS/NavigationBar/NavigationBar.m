@@ -53,236 +53,35 @@
 
 -(void)correctWebViewBounds
 {
-    //always the same...
-    CGFloat originX = originalWebViewBounds.origin.x;
-    CGFloat width = originalWebViewBounds.size.width;
+    // This plugin has to play nice with the tab bar plugin, so let's only change the top bound, not the one at the
+    // bottom. Of course this assumes that the tab bar plugin does not relayout in parallel (can that happen?).
 
-    //changes based on controls visible
-    CGFloat originY = originalWebViewBounds.origin.y;
-    CGFloat height = originalWebViewBounds.size.height;
+    // TODO: does this still work if the application was started in landscape mode and thus originalWebViewBounds are switched?
+    CGFloat left = originalWebViewBounds.origin.x;
+    CGFloat right = left + originalWebViewBounds.size.width;
+    CGFloat top = originalWebViewBounds.origin.y;
+    CGFloat bottom = top + originalWebViewBounds.size.height;
 
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     switch (orientation)
     {
         case UIDeviceOrientationPortrait:
         case UIDeviceOrientationPortraitUpsideDown:
-            width = originalWebViewBounds.size.width;
-            height = originalWebViewBounds.size.height;
+            // No need to change width/height from original bounds
             break;
         case UIDeviceOrientationLandscapeLeft:
         case UIDeviceOrientationLandscapeRight:
-            width = originalWebViewBounds.size.height + 20.0f;
-            height = originalWebViewBounds.size.width - 20.0f;
+            right = left + (bottom - top) + 20.0f;
+            bottom = top + (right - left) - 20.0f;
             break;
     }
 
-    if ( tabBar != nil && !tabBar.hidden && navBar != nil && !navBar.hidden)
-    {
-        originY = navBarHeight;
-        height = height - navBarHeight - tabBarHeight;
-        //DLog(@"Both");
-    }
-    else if ( (tabBar == nil || tabBar.hidden) && navBar != nil && !navBar.hidden)
-    {
-        originY = navBarHeight;
-        height = height - navBarHeight;
-        //DLog(@"Top");
-    }
-    else if ( !tabBar.hidden && (navBar == nil || navBar.hidden))
-    {
-        height = height - tabBarHeight;
-        //DLog(@"Bottom");
-    }
-    else
-    {
-        //DLog(@"None");
-    }
+    if(navBar != nil && !navBar.hidden)
+        top += navBarHeight;
 
-    CGRect webViewBounds = CGRectMake(
-                                      originX,
-                                      originY,
-                                      width,
-                                      height
-                                      );
+    CGRect webViewBounds = CGRectMake(left, top, right - left, bottom - top);
 
     [self.webView setFrame:webViewBounds];
-
-}
-
-#pragma mark -
-#pragma mark TabBar
-
-/**
- * Create a native tab bar at either the top or the bottom of the display.
- * @brief creates a tab bar
- * @param arguments unused
- * @param options unused
- */
-- (void)createTabBar:(NSArray*)arguments withDict:(NSDictionary*)options
-{
-    tabBar = [UITabBar new];
-    [tabBar sizeToFit];
-    tabBar.delegate = self;
-    tabBar.multipleTouchEnabled   = NO;
-    tabBar.autoresizesSubviews    = YES;
-    tabBar.hidden                 = YES;
-    tabBar.userInteractionEnabled = YES;
-	tabBar.opaque = YES;
-
-	self.webView.superview.autoresizesSubviews = YES;
-
-	[ self.webView.superview addSubview:tabBar];
-}
-
-/**
- * Show the tab bar after its been created.
- * @brief show the tab bar
- * @param arguments unused
- * @param options used to indicate options for where and how the tab bar should be placed
- * - \c height integer indicating the height of the tab bar (default: \c 49)
- * - \c position specifies whether the tab bar will be placed at the \c top or \c bottom of the screen (default: \c bottom)
- */
-- (void)showTabBar:(NSArray*)arguments withDict:(NSDictionary*)options
-{
-    if (!tabBar)
-        [self createTabBar:nil withDict:nil];
-
-	// if we are calling this again when its shown, reset
-	if (!tabBar.hidden)
-		return;
-
-    CGFloat height = 0.0f;
-    BOOL atBottom = YES;
-
-    //	CGRect offsetRect = [ [UIApplication sharedApplication] statusBarFrame];
-
-    if (options)
-	{
-        height   = [[options objectForKey:@"height"] floatValue];
-        atBottom = [[options objectForKey:@"position"] isEqualToString:@"bottom"];
-    }
-	if(height == 0)
-	{
-		height = 49.0f;
-		atBottom = YES;
-	}
-    tabBar.hidden = NO;
-    CGRect webViewBounds = originalWebViewBounds;
-    CGRect tabBarBounds;
-
-	NSNotification* notif = [NSNotification notificationWithName:@"CDVLayoutSubviewAdded" object:tabBar];
-	[[NSNotificationQueue defaultQueue] enqueueNotification:notif postingStyle: NSPostASAP];
-
-    if (atBottom)
-    {
-        tabBarBounds = CGRectMake(
-                                  webViewBounds.origin.x,
-                                  webViewBounds.origin.y + webViewBounds.size.height - height,
-                                  webViewBounds.size.width,
-                                  height
-                                  );
-        webViewBounds = CGRectMake(
-                                   webViewBounds.origin.x,
-                                   webViewBounds.origin.y,
-                                   webViewBounds.size.width,
-                                   webViewBounds.size.height - height
-                                   );
-    }
-    else
-    {
-        tabBarBounds = CGRectMake(
-                                  webViewBounds.origin.x,
-                                  webViewBounds.origin.y,
-                                  webViewBounds.size.width,
-                                  height
-                                  );
-        webViewBounds = CGRectMake(
-                                   webViewBounds.origin.x,
-                                   webViewBounds.origin.y + height,
-                                   webViewBounds.size.width,
-                                   webViewBounds.size.height - height
-                                   );
-    }
-
-    [tabBar setFrame:tabBarBounds];
-    [self.webView setFrame:webViewBounds];
-}
-
-/**
- * Resize the tab bar (this should be called on orientation change)
- * @brief resize the tab bar on rotation
- * @param arguments unused
- * @param options unused
- */
-- (void)resizeTabBar:(NSArray*)arguments withDict:(NSDictionary*)options {
-
-    //DLog(@"TabBar Resizing");
-
-    CGFloat height   = 49.0f;
-    CGRect webViewBounds = self.webView.bounds;
-    webViewBounds.size.height += height;
-    CGFloat topBar = 44.0f;
-    CGRect tabBarBounds = CGRectMake(
-                              webViewBounds.origin.x,
-                              webViewBounds.origin.y + webViewBounds.size.height - height + topBar,
-                              webViewBounds.size.width,
-                              height
-                              );
-    webViewBounds = CGRectMake(
-                               webViewBounds.origin.x,
-                               webViewBounds.origin.y + topBar,
-                               webViewBounds.size.width,
-                               webViewBounds.size.height - height
-                               );
-
-    [tabBar setFrame:tabBarBounds];
-    [self.webView setFrame:webViewBounds];
-
-}
-
-/**
- * Hide the tab bar
- * @brief hide the tab bar
- * @param arguments unused
- * @param options unused
- */
-- (void)hideTabBar:(NSArray*)arguments withDict:(NSDictionary*)options
-{
-    if (!tabBar)
-        [self createTabBar:nil withDict:nil];
-    tabBar.hidden = YES;
-
-    NSNotification* notif = [NSNotification notificationWithName:@"CDVLayoutSubviewRemoved" object:tabBar];
-	[[NSNotificationQueue defaultQueue] enqueueNotification:notif postingStyle: NSPostASAP];
-
-    CGRect webViewBounds = originalWebViewBounds;
-
-    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    switch (orientation) {
-        case UIDeviceOrientationPortrait:
-        case UIDeviceOrientationPortraitUpsideDown:
-            webViewBounds = CGRectMake(
-                                       webViewBounds.origin.x,
-                                       webViewBounds.origin.y,
-                                       webViewBounds.size.width,
-                                       webViewBounds.size.height
-                                       );
-
-            break;
-        case UIDeviceOrientationLandscapeLeft:
-        case UIDeviceOrientationLandscapeRight:
-            webViewBounds = CGRectMake(
-                                       webViewBounds.origin.x,
-                                       webViewBounds.origin.y,
-                                       webViewBounds.size.height + 20.0f,
-                                       webViewBounds.size.width - 20.0f
-                                       );
-
-            break;
-    }
-
-    [self.webView setFrame:webViewBounds];
-//	[self.webView setFrame:originalWebViewBounds];
 }
 
 /**
