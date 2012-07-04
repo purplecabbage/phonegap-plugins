@@ -28,23 +28,23 @@ This example shows how to use the navigation bar:
     document.addEventListener("deviceready", function() {
         console.log("Cordova ready")
 
-        plugins.navigationBar.createNavBar()
-        plugins.navigationBar.hideLeftNavButton()
-        plugins.navigationBar.hideRightNavButton()
+        plugins.navigationBar.create()
+        plugins.navigationBar.hideLeftButton()
+        plugins.navigationBar.hideRightButton()
 
-        plugins.navigationBar.setNavBarTitle("My heading")
+        plugins.navigationBar.setTitle("My heading")
 
-        plugins.navigationBar.showLeftNavButton()
-        plugins.navigationBar.showRightNavButton()
+        plugins.navigationBar.showLeftButton()
+        plugins.navigationBar.showRightButton()
 
         // Create left navigation button with a title (you can either have a title or an image, not both!)
-        plugins.navigationBar.setupLeftNavButton("Text", null, function() {
+        plugins.navigationBar.setupLeftButton("Text", null, function() {
             alert("left nav button tapped")
         })
 
         // Create right navigation button from a system-predefined button (see the full list in NativeControls.m)
         // or from an image
-        plugins.navigationBar.setupRightNavButton(
+        plugins.navigationBar.setupRightButton(
             null,
             "barButton:Bookmarks", // or your own file like "/www/stylesheets/images/ajax-loader.png",
             function() {
@@ -52,9 +52,7 @@ This example shows how to use the navigation bar:
             }
         )
 
-        plugins.navigationBar.showNavBar()
-
-        window.addEventListener("resize", function() { plugins.navigationBar.resizeTabBar(); }, false);
+        plugins.navigationBar.show()
     }, false)
 
 Reporting issues or requests for improvement
