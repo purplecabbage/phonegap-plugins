@@ -1,12 +1,12 @@
 /*
-    NavigationBar.m
+ NavigationBar.m
 
-    Work based on the NativeControls plugin (Jesse MacFadyen, MIT licensed) and additions made by Hiedi Utley
-    (https://github.com/hutley/HelloPhoneGap1.0/) and zSprawl (https://github.com/zSprawl/NativeControls/).
+ Work based on the NativeControls plugin (Jesse MacFadyen, MIT licensed) and additions made by Hiedi Utley
+ (https://github.com/hutley/HelloPhoneGap1.0/) and zSprawl (https://github.com/zSprawl/NativeControls/).
 
-    Navigation bar API cleaned, improved and moved in a separate plugin by Andreas Sommer
-    (AndiDog, https://github.com/AndiDog/phonegap-plugins).
-*/
+ Navigation bar API cleaned, improved and moved in a separate plugin by Andreas Sommer
+ (AndiDog, https://github.com/AndiDog/phonegap-plugins).
+ */
 
 #import "NavigationBar.h"
 #import <QuartzCore/QuartzCore.h>
@@ -85,7 +85,18 @@
     if (!navBar)
     {
         navBarController = [[CDVNavigationBarController alloc] init];
-        navBar = [navBarController view];
+        navBar = (UINavigationBar*)[navBarController view];
+
+        NSString * style = [arguments objectAtIndex:0];
+
+        if(style && [style isEqualToString:@"BlackTranslucent"])
+            navBar.barStyle = UIBarStyleBlackTranslucent;
+        else if(style && [style isEqualToString:@"BlackOpaque"])
+            navBar.barStyle = UIBarStyleBlackOpaque;
+        else if(style && [style isEqualToString:@"Black"])
+            navBar.barStyle = UIBarStyleBlack;
+        // else the default will be used
+
         [navBarController setDelegate:self];
 
         [[navBarController view] setFrame:CGRectMake(0, 0, originalWebViewBounds.size.width, navBarHeight)];
@@ -98,7 +109,7 @@
 {
     UIBarButtonSystemItem systemItem = -1;
 
-         if([imageName isEqualToString:@"barButton:Action"])        systemItem = UIBarButtonSystemItemAction;
+    if([imageName isEqualToString:@"barButton:Action"])        systemItem = UIBarButtonSystemItemAction;
     else if([imageName isEqualToString:@"barButton:Add"])           systemItem = UIBarButtonSystemItemAdd;
     else if([imageName isEqualToString:@"barButton:Bookmarks"])     systemItem = UIBarButtonSystemItemBookmarks;
     else if([imageName isEqualToString:@"barButton:Camera"])        systemItem = UIBarButtonSystemItemCamera;

@@ -9,7 +9,7 @@
 #import "CDVNavigationBarController.h"
 
 @interface NavigationBar : CDVPlugin <CDVNavigationBarDelegate> {
-    UIView * navBar;
+    UINavigationBar * navBar;
 
 	CGRect	originalWebViewBounds;
     CGFloat navBarHeight;
@@ -17,7 +17,7 @@
     CDVNavigationBarController * navBarController;
 }
 
-@property (nonatomic, retain) CDVNavigationBarController * navBarController;
+@property (nonatomic, retain) CDVNavigationBarController *navBarController;
 
 - (void)create:(NSArray*)arguments withDict:(NSDictionary*)options;
 - (void)setTitle:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options;

@@ -28,7 +28,7 @@ This example shows how to use the navigation bar:
     document.addEventListener("deviceready", function() {
         console.log("Cordova ready")
 
-        plugins.navigationBar.create()
+        plugins.navigationBar.create() // or .create("BlackOpaque") to apply a certain style
         plugins.navigationBar.hideLeftButton()
         plugins.navigationBar.hideRightButton()
 

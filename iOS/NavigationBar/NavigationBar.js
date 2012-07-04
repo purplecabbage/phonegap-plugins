@@ -5,10 +5,12 @@ function NavigationBar() {
 
 /**
  * Create a navigation bar.
+ *
+ * @param style: One of "BlackTransparent", "BlackOpaque", "Black" or "Default". The latter will be used if no style is given.
  */
-NavigationBar.prototype.create = function()
+NavigationBar.prototype.create = function(style)
 {
-    Cordova.exec("NavigationBar.create");
+    Cordova.exec("NavigationBar.create", style || "Default");
 };
 
 /**
