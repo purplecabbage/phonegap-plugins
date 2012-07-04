@@ -102,7 +102,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">leftNavButtonTapped:</string>
+						<string key="label">leftButtonTapped:</string>
 						<reference key="source" ref="126787943"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
@@ -110,7 +110,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">rightNavButtonTapped:</string>
+						<string key="label">rightButtonTapped:</string>
 						<reference key="source" ref="959462074"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
