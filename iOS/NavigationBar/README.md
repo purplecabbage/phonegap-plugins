@@ -20,6 +20,24 @@ Installing the plugin
 - They have to be added to the project as well, so drag them from the "Plugins" folder (in Finder) to the same folder (in Xcode) and select to create references
 - Open "Supporting Files/Cordova.plist" and under "Plugins", add a key with the plugin name "NavigationBar" and a string value of "NavigationBar" (I guess it's the plugin's main class name)
 
+Using the tab bar and navigation bar plugin together
+----------------------------------------------------
+
+In order to use the [tab bar plugin](https://github.com/AndiDog/phonegap-plugins/tree/master/iOS/TabBar) and [navigation bar plugin](https://github.com/AndiDog/phonegap-plugins/tree/master/iOS/NavigationBar) together, you must initialize both plugins before calling any of their methods, i.e. before creating a navigation/tab bar. For example right when your application starts:
+
+    document.addEventListener("deviceready", function() {
+        console.log("Cordova ready")
+
+        plugins.navigationBar.init()
+        plugins.tabBar.init()
+
+        plugins.navigationBar.create()
+        plugins.tabBar.create()
+
+        // ...
+
+This is because both plugins are aware of each other and resize Cordova's web view accordingly, but therefore they have to know the web view's initial dimensions. If for example you only initialize the tab bar plugin, create the tab bar and later decide to also create a navigation bar, the navigation bar plugin would think the original web view size is 320x411 instead of 320x460 (on iPhone). Layouting *could* be done using the screen size as well but it's currently implemented like this.
+
 Example
 -------
 
@@ -27,6 +45,8 @@ This example shows how to use the navigation bar:
 
     document.addEventListener("deviceready", function() {
         console.log("Cordova ready")
+
+        plugins.navigationBar.init()
 
         plugins.navigationBar.create() // or .create("BlackOpaque") to apply a certain style
         plugins.navigationBar.hideLeftButton()
