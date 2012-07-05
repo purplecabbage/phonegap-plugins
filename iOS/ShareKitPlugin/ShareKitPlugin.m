@@ -115,7 +115,9 @@
     NSString *subject = [arguments objectAtIndex:1];
     NSString *body = [arguments objectAtIndex:2];
 
-    item = [SHKItem text:body title:subject];    
+    item = [SHKItem text:body];
+    item.title = subject;
+
     [SHKMail shareItem:item];
     
 }
