@@ -1,21 +1,18 @@
 /*
- * Copyright (C) 2011-2012 Wolfgang Koller
- * 
- * This file is part of GOFG Sports Computer - http://www.gofg.at/.
- * 
- * GOFG Sports Computer is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * GOFG Sports Computer is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with GOFG Sports Computer.  If not, see <http://www.gnu.org/licenses/>.
- */
+   Copyright 2011-2012 Wolfgang Koller - http://www.gofg.at/
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
 
 /**
  * Cordova (Android) plugin for accessing the power-management functions of the device
@@ -51,7 +48,7 @@ public class PowerManagement extends Plugin {
 	public void setContext(CordovaInterface ctx) {
 		super.setContext(ctx);
 		
-		this.powerManager = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
+		this.powerManager = (PowerManager) ctx.getActivity().getSystemService(Context.POWER_SERVICE);
 	}
 	
 	/**
@@ -91,7 +88,7 @@ public class PowerManagement extends Plugin {
 			result = new PluginResult(Status.JSON_EXCEPTION, e.getMessage());
 		}
 		
-		Log.d("PowerManagementPlugin", "Result is " + result.toString() );
+		Log.d("PowerManagementPlugin", "Result is " + result.getJSONString() );
 
 		return result;
 	}
@@ -108,7 +105,7 @@ public class PowerManagement extends Plugin {
 			this.wakeLock = this.powerManager.newWakeLock(p_flags, "PowerManagementPlugin");
 			try {
 				this.wakeLock.acquire();
-				result = new PluginResult(PluginResult.Status.OK);
+				result = new PluginResult(PluginResult.Status.OK, "OK");
 			}
 			catch( Exception e ) {
 				this.wakeLock = null;
@@ -133,7 +130,7 @@ public class PowerManagement extends Plugin {
 			this.wakeLock.release();
 			this.wakeLock = null;
 			
-			result = new PluginResult(PluginResult.Status.OK);
+			result = new PluginResult(PluginResult.Status.OK, "OK");
 		}
 		else {
 			result = new PluginResult(PluginResult.Status.ILLEGAL_ACCESS_EXCEPTION, "No WakeLock active - acquire first");
