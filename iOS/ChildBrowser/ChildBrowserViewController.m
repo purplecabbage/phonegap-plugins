@@ -26,23 +26,21 @@
     NSString* systemVersion = [[UIDevice currentDevice] systemVersion];
     BOOL isLessThaniOS4 = ([systemVersion compare:@"4.0" options:NSNumericSearch] == NSOrderedAscending);
 
-    // the iPad image (nor retina) differentiation code was not in 3.x, and we have to explicitly set the path
     if (isLessThaniOS4) {
+
         return [NSString stringWithFormat:@"%@.png", resource];
-    }
-    else
-    {
+
+    } else {
+
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES && [[UIScreen mainScreen] scale] == 2.00) {
-            return [NSString stringWithFormat:@"%@-72@2x.png", resource];
-	} else {
-	    //
 
 	    return [NSString stringWithFormat:@"%@@2x.png", resource];
 
-        }
+	}
+
     }
 
-    return resource;
+    return resource;//if all else fails
 }
 
 
