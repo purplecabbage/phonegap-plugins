@@ -26,7 +26,7 @@ Note regarding the tab bar
 Don't forget to add an event handler for orientation changes as follows:
 
     window.addEventListener("resize", function() {
-        plugins.tabBar.resizeTabBar();
+        plugins.tabBar.resize();
     ), false);
 
 Using the tab bar and navigation bar plugin together
