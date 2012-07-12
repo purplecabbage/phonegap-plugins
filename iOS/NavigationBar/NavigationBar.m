@@ -75,7 +75,7 @@
                 // be positioned at the top, here's some magic to find out where it's positioned:
                 tabBarAtBottom = true;
                 if([view respondsToSelector:@selector(tabBarAtBottom)])
-                    tabBarAtBottom = [view tabBarAtBottom];
+                    tabBarAtBottom = [view performSelector:@selector(tabBarAtBottom)];
             }
 
             break;
