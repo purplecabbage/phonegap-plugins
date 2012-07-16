@@ -36,6 +36,13 @@
                 </VideoBrush>
             </Rectangle.Fill>
         </Rectangle>
+        <Button Height="100" Width="100" x:Name="_focusButton"
+                Click="_focusButton_Click" Margin="368,656,12,44"
+                FontSize="18" Background="Black" Foreground="White">
+            <TextBlock Text="Focus"/>
+        </Button>
+        <Border Height="400" Width="240" BorderBrush="Green" BorderThickness="3">
+        </Border>
     </Grid>
  
 

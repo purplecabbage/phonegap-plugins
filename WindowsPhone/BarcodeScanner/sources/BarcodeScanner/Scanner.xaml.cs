@@ -120,12 +120,28 @@ namespace BarcodeScanner
                 return false;
             }
             _timer.Stop();
+            _timer = null;
             _luminance = null;
             _reader = null;
             _photoCamera.Dispose();
             _photoCamera = null;
 
             return true;
+        }
+
+        private void _focusButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_photoCamera != null && _photoCamera.IsFocusSupported)
+            {
+                try
+                {
+                    _photoCamera.CancelFocus();
+                    _photoCamera.Focus();
+                }
+                catch
+                {
+                }
+            }
         }
     }
 }
