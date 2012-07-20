@@ -51,6 +51,7 @@
     [super dealloc];
 }
 
+// NOTE: Returned object is owned
 -(UIBarButtonItem*)backgroundButtonFromImage:(NSString*)imageName title:(NSString*)title fixedMarginLeft:(float)fixedMarginLeft fixedMarginRight:(float)fixedMarginRight target:(id)target action:(SEL)action
 {
     UIButton *backButton = [[UIButton alloc] init];
@@ -79,7 +80,7 @@
     [backButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 
     [backButton release];
-    [imgNormal release];
+    // imgNormal is autoreleased
 
     return backButtonItem;
 }
