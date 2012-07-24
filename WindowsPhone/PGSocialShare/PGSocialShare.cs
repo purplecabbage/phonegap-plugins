@@ -41,7 +41,7 @@ namespace WP7CordovaClassLib.Cordova.Commands
 
         public void share(string options)
         {
-            ShareOptions opts = JSON.JsonHelper.Deserialize<ShareOptions>(options);
+            ShareOptions opts = JSON.JsonHelper.Deserialize<ShareOptions[]>(options)[0];
             switch (opts.shareType)
             {
                 case ShareType.Status :
