@@ -7,9 +7,9 @@
  */
 
 using System.Runtime.Serialization;
-using WP7GapClassLib.PhoneGap;
-using WP7GapClassLib.PhoneGap.Commands;
-using WP7GapClassLib.PhoneGap.JSON;
+using WP7CordovaClassLib.Cordova;
+using WP7CordovaClassLib.Cordova.Commands;
+using WP7CordovaClassLib.Cordova.JSON;
 using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Linq;
 using Microsoft.Phone.Controls;
 using System.Windows;
 
-namespace PhoneGap.Extension.Commands
+namespace Cordova.Extension.Commands
 {
     /// <summary>
     /// Implementes access to application live tiles
@@ -87,7 +87,7 @@ namespace PhoneGap.Extension.Commands
             LiveTilesOptions liveTileOptions;
             try
             {
-                liveTileOptions = WP7GapClassLib.PhoneGap.JSON.JsonHelper.Deserialize<LiveTilesOptions>(options);
+                liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
             catch (Exception e)
             {
@@ -124,7 +124,7 @@ namespace PhoneGap.Extension.Commands
             LiveTilesOptions liveTileOptions;
             try
             {
-                liveTileOptions = WP7GapClassLib.PhoneGap.JSON.JsonHelper.Deserialize<LiveTilesOptions>(options);
+                liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
             catch (Exception e)
             {
@@ -171,7 +171,7 @@ namespace PhoneGap.Extension.Commands
             LiveTilesOptions liveTileOptions;
             try
             {
-                liveTileOptions = WP7GapClassLib.PhoneGap.JSON.JsonHelper.Deserialize<LiveTilesOptions>(options);
+                liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
             catch (Exception e)
             {
@@ -214,7 +214,7 @@ namespace PhoneGap.Extension.Commands
             LiveTilesOptions liveTileOptions;
             try
             {
-                liveTileOptions = WP7GapClassLib.PhoneGap.JSON.JsonHelper.Deserialize<LiveTilesOptions>(options);
+                liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
             catch (Exception e)
             {
@@ -238,8 +238,7 @@ namespace PhoneGap.Extension.Commands
                 else
                 {
                     DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "Can't get secondary live tile"));
-                }
-                
+                }   
             }
             catch (Exception e)
             {
