@@ -13,7 +13,6 @@
     }
 
     var cdv = window.cordova || window.Cordova;
-   // if(cdv && cdv.exec) { 
         navigator.plugins.liveTiles = {
             updateAppTile: function (successCallback, errorCallback, options) {
                 if(checkArgs(successCallback, errorCallback)) {
@@ -40,6 +39,5 @@
             }
 
         };
-  //  }
 
 })();
