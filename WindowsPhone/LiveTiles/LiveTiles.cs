@@ -89,7 +89,7 @@ namespace Cordova.Extension.Commands
             {
                 liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
                 return;
@@ -110,7 +110,7 @@ namespace Cordova.Extension.Commands
                     DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "Can't get application tile"));
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "Error updating application tile"));
             }
@@ -126,7 +126,7 @@ namespace Cordova.Extension.Commands
             {
                 liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
                 return;
@@ -157,7 +157,7 @@ namespace Cordova.Extension.Commands
                     DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR,"Tile already exist"));
                 }                
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR,"Error creating secondary live tile"));
             }
@@ -173,7 +173,7 @@ namespace Cordova.Extension.Commands
             {
                 liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
                 return;
@@ -200,7 +200,7 @@ namespace Cordova.Extension.Commands
                     DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "Can't get secondary live tile"));
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR,"Error updating secondary live tile"));
             }
@@ -216,7 +216,7 @@ namespace Cordova.Extension.Commands
             {
                 liveTileOptions = JsonHelper.Deserialize<LiveTilesOptions[]>(options)[0];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
                 return;
@@ -240,7 +240,7 @@ namespace Cordova.Extension.Commands
                     DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "Can't get secondary live tile"));
                 }   
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "Error deleting secondary live tile"));
             }
