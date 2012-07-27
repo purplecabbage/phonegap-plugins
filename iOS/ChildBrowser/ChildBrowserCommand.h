@@ -3,17 +3,13 @@
 //  Copyright 2012, Randy McMillan
 
 
-#ifdef CORDOVA_FRAMEWORK
-#import <Cordova/CDVPlugin.h>
-#else
-#import "Cordova/CDVPlugin.h"
-#endif
+#import "CDVPlugin.h"
 #import "ChildBrowserViewController.h"
 
 
-#ifdef CORDOVA_FRAMEWORK
-    @interface ChildBrowserCommand : CDVPlugin <ChildBrowserDelegate>  {
-#endif
+
+@interface ChildBrowserCommand : CDVPlugin <ChildBrowserDelegate>  {
+
     ChildBrowserViewController* childBrowser;
 }
 

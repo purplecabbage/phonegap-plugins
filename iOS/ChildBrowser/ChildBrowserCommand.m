@@ -3,12 +3,8 @@
 //  Copyright 2012, Randy McMillan
 
 #import "ChildBrowserCommand.h"
+#import "CDVViewController.h"
 
-#ifdef CORDOVA_FRAMEWORK
-#import <Cordova/CDVViewController.h>
-#else
-#import "Cordova/CDVViewController.h"
-#endif
 
 
 @implementation ChildBrowserCommand
@@ -28,11 +24,9 @@
      NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
      */
 
-#ifdef CORDOVA_FRAMEWORK
     CDVViewController* cont = (CDVViewController*)[ super viewController ];
     childBrowser.supportedOrientations = cont.supportedOrientations;
     [ cont presentModalViewController:childBrowser animated:YES ];
-#endif
 
     NSString *url = (NSString*) [arguments objectAtIndex:0];
 
