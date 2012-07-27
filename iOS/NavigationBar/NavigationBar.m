@@ -52,7 +52,14 @@
 -(UIBarButtonItem*)backgroundButtonFromImage:(NSString*)imageName title:(NSString*)title fixedMarginLeft:(float)fixedMarginLeft fixedMarginRight:(float)fixedMarginRight target:(id)target action:(SEL)action
 {
     UIButton *backButton = [[UIButton alloc] init];
-    UIImage *imgNormal = [[UIImage imageNamed:imageName] resizableImageWithCapInsets:UIEdgeInsetsMake(0, fixedMarginLeft, 0, fixedMarginRight)];
+    UIImage *imgNormal = [UIImage imageNamed:imageName];
+
+    // UIImage's resizableImageWithCapInsets method is only available from iOS 5.0. With earlier versions, the
+    // stretchableImageWithLeftCapWidth is used which behaves a bit differently.
+    if([imgNormal respondsToSelector:@selector(resizableImageWithCapInsets)])
+        imgNormal = [imgNormal resizableImageWithCapInsets:UIEdgeInsetsMake(0, fixedMarginLeft, 0, fixedMarginRight)];
+    else
+        imgNormal = [imgNormal stretchableImageWithLeftCapWidth:MAX(fixedMarginLeft, fixedMarginRight) topCapHeight:0];
 
     [backButton setBackgroundImage:imgNormal forState:UIControlStateNormal];
 
