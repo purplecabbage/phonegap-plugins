@@ -118,7 +118,7 @@ public class BluetoothPlugin extends Plugin {
 				// Check if bluetooth isn't disabled already
 				if( !m_bluetoothAdapter.isEnabled() ) {
 					m_stateChanging = true;
-					ctx.startActivityForResult(this, new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);
+					cordova.startActivityForResult(this, new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);
 					while(m_stateChanging) {};
 				}
 				

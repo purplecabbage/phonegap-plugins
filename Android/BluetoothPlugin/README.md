@@ -1,6 +1,6 @@
 Bluetooth
 ===============
-Plugin for Cordova 1.9
+Plugin for Cordova 2.0
 
 The Bluetooth plugin offers access to the devices bluetooth functionality.
 Useful for any application requiring interaction with the bluetooth stack.
