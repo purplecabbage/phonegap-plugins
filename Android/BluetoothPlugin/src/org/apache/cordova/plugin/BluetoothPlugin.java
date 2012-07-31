@@ -92,12 +92,11 @@ public class BluetoothPlugin extends Plugin {
 		super.setContext(ctx);
 
 		// Register for necessary bluetooth events
-		ctx.getActivity().registerReceiver(m_bpBroadcastReceiver, new IntentFilter(
+		cordova.getActivity().registerReceiver(m_bpBroadcastReceiver, new IntentFilter(
 				BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
-		ctx.getActivity().registerReceiver(m_bpBroadcastReceiver, new IntentFilter(
+		cordova.getActivity().registerReceiver(m_bpBroadcastReceiver, new IntentFilter(
 				BluetoothDevice.ACTION_FOUND));
-		ctx.getActivity().registerReceiver(m_bpBroadcastReceiver, new IntentFilter(BluetoothPlugin.ACTION_UUID));
-		//ctx.registerReceiver(m_bpBroadcastReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+		cordova.getActivity().registerReceiver(m_bpBroadcastReceiver, new IntentFilter(BluetoothPlugin.ACTION_UUID));
 	}
 
 	/**
