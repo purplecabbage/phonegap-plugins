@@ -17,7 +17,7 @@ The plugin creates the object `window.plugins.sms` with one method:
 ### send ###
 Send an sms message.  For example:
 
-	window.plugins.sms.send($('#phone').val(), 
+	window.plugins.SmsPlugin.send($('#phone').val(), 
 		$('#message').val(), 
 		function () { 
 		   alert('Message sent successfully');	
