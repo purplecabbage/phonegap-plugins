@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+  
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, target-densitydpi=device-dpi'>
+    <title>Amazon In-App Purchasing Plugin</title>
+    <!-- Phonegap -->
+    <script type='text/javascript' src='js/cordova.js'></script>
+    <!-- jQuery -->
+    <script type='text/javascript' src='js/jquery-1.7.2.min.js'></script>
+    <!-- Amazon Appstore Plugin -->
+    <script type='text/javascript' src='js/amazonInApp.js'></script>
+    <script type='text/javascript'>
+      $(document).on('deviceready', function() {
+
+        var $status = $('#status');
+        console.log('Init complete.');
+        var inAppPurchasing = new AmazonInAppPurchasing();
+        
+        inAppPurchasing.initialize(function(response) {
+          console.log('Initializing In App Purchasing SDK');
+          // check if the sdk is available
+          var isSdkAvailable = response['isSdkAvailable'];
+          $status.append('<p>' + JSON.stringify(response) + '</p>');
+
+          $('#purchase').click(function(event) {
+            console.log('Intitating Purchase request');
+            if(!isSdkAvailable) {
+              $status.append('<p>Amazon In-App Purchasing SDK is unavailable.</p>');
+            } else {
+              // initiate a purchase
+              inAppPurchasing.purchase('consumable', function(purchaseResponse) {
+                 $status.append('<p>' + JSON.stringify(purchaseResponse) + '</p>');
+              }, function(errorResponse) {
+                 $status.append('<p>' + JSON.stringify(errorResponse) + '</p>');
+              });
+            }
+            event.preventDefault();
+          });
+
+
+        });
+
+      });
+    </script>
+
+  </head>
+
+  <body>
+    <h3>Amazon Appstore In-App Purchasing</h3>
+    <p>
+      Purchase a consumable item. <br/> <br/>
+      <input id='purchase' type='button' value='Purchase Consumable' /> <br/>
+    </p>
+    
+    <div id='status'>
+    </div>
+  </body>
+</html>

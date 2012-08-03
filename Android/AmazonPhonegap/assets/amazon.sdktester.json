@@ -1,0 +1,32 @@
+{
+  "consumable" : {
+    "itemType": "CONSUMABLE",
+    "price": 0.99,
+	  "title": "Consumable Item",
+	  "description": "This item is a consumable item.",
+    "smallIconUrl": "http://bit.ly/consumable"
+  },
+  "entitled" : {
+    "itemType": "ENTITLED",
+    "price": 1.99,
+	  "title": "Entitled Item",
+	  "description": "This is an entitled item",
+    "smallIconUrl": "http://bit.ly/entitled"
+  },
+  "subscription.1month" : {
+    "itemType" : "SUBSCRIPTION",
+    "price" : 2.99,
+    "title": "One month Subscription",
+    "description": "This is a one month subscription",
+    "smallIconUrl": "http://bit.ly/subscription.1month",
+    "subscriptionParent": "subscription"
+  },
+  "subscription.6month" : {
+    "itemType" : "SUBSCRIPTION",
+    "price" : 12.99,
+    "title": "6 month Subscription",
+    "description": "This is a six month subscription",
+    "smallIconUrl": "http://bit.ly/subscription.1month",
+    "subscriptionParent": "subscription"
+  }
+}
