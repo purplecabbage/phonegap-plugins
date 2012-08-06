@@ -28,7 +28,7 @@ A full set example could be:
 	    }
 	);
 
-NOTE: The preference must exist in a settings bundle and Root.plist in your project. See [http://developer.apple.com/library/ios/#DOCUMENTATION/Cocoa/Conceptual/UserDefaults/Preferences/Preferences.html] for further details.
+NOTE: The preference must exist in a settings bundle and Root.plist in your project. See http://developer.apple.com/library/ios/#DOCUMENTATION/Cocoa/Conceptual/UserDefaults/Preferences/Preferences.html for further details.
 
 ## Registering the plugin ##
 
