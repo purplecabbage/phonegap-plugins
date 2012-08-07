@@ -3,6 +3,7 @@
 //	MIT Licensed
 
 #import "Prompt.h"
+#import <Cordova/CDVPluginResult.h>
 
 @implementation Prompt
 
