@@ -45,9 +45,10 @@ If you are using PhoneGap 1.5.0 to 1.8.1 please use the 1.8.1 directory. If you 
       </intent-filter>
     </activity>`
     
-9. And make sure you have the following permission in your AndroidManifest.xml file:
+9. And make sure you have the following permissions in your AndroidManifest.xml file:
 
-    `<uses-permission android:name="android.permission.CAMERA" />`
+    `<uses-permission android:name="android.permission.CAMERA" />
+     <uses-permission android:name="android.permission.FLASHLIGHT" />`
 
 
 ## Using the plugin ##
