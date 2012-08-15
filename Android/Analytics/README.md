@@ -89,7 +89,17 @@ Sample use:
 
 
 Please keep in mind that these methods, as in any other plugin, are ready to be invoked only after '[deviceready](http://docs.phonegap.com/phonegap_events_events.md.html#deviceready)' event has been fired
-    
+Good practice will be manual dispatch and stop session. Add this code to your main activity:
+<pre>    
+@Override
+public void onDestroy() 
+{
+    super.onDestroy();
+    GoogleAnalyticsTracker tracker = com.google.android.apps.analytics.GoogleAnalyticsTracker.getInstance();
+    tracker.dispatch();
+    tracker.stopSession();
+}
+</pre>
 
 ## RELEASE NOTES ##
 
