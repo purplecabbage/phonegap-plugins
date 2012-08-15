@@ -15,7 +15,7 @@ The "plugin" directory contains all source code for the plugin, separated into 2
 The "samples" directory contains a sample application that shows how to open a document with an external viewer using the EternalFilePlugin native plugin.   
 
 Further explanation, plus videos showing the sample applications at:
-http://www.tricedesigns.com/2012/01/12/multi-screen-ios-apps-with-phonegap
+http://www.tricedesigns.com/2012/08/15/open-with-in-ios-phonegap-apps/
 
 THIS SOFTWARE IS PROVIDED BY THE ANDREW TRICE "AS IS" AND ANY EXPRESS OR
 IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
