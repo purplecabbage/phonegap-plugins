@@ -58,6 +58,9 @@ This example shows how to use the tab bar:
         plugins.tabBar.init()
 
         plugins.tabBar.create()
+        // or with an orange tint:
+        plugins.tabBar.create({selectedImageTintColorRgba: '255,40,0,255'})
+
         plugins.tabBar.createItem("contacts", "Unused, iOS replaces this text by Contacts", "tabButton:Contacts")
         plugins.tabBar.createItem("recents", "Unused, iOS replaces this text by Recents", "tabButton:Recents")
 
