@@ -7,19 +7,14 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/PGPlugin.h>
-#else
-    #import "PGPlugin.h"
-#endif
+#import <Cordova/CDVPlugin.h>
+#import <Cordova/CDVPluginResult.h>
 
-@interface AudioEncode : PGPlugin {
-    NSString* successCallback;
-    NSString* failCallback;
+@interface AudioEncode : CDVPlugin {
+    NSString* callback;
 }
 
-@property (nonatomic, retain) NSString* successCallback;
-@property (nonatomic, retain) NSString* failCallback;
+@property (nonatomic, retain) NSString* callback;
 
 - (void)encodeAudio:(NSArray*)arguments withDict:(NSDictionary*)options;
 @end
