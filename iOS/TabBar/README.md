@@ -78,6 +78,17 @@ This example shows how to use the tab bar:
         window.addEventListener("resize", function() { plugins.tabBar.resize() }, false)
     }, false)
 
+Retina images
+-------------
+
+You can also have different images for the normal and retina quality like "image.png" and "image@2x.png". The code to assign the image would be:
+
+    plugins.tabBar.createItem("home", "Home", "image.png", {
+        onSelect: function() {
+            alert("tab selected")
+        }
+    })
+
 Reporting issues or requests for improvement
 --------------------------------------------
 
