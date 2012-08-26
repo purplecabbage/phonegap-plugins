@@ -25,36 +25,25 @@
 *
 */
 
-/**
- *  
- *	Constructor
- */
-var NotificationMessenger = function() { 
-}
+var cordovaRef = window.PhoneGap || window.Cordova || window.cordova; // old to new fallbacks
+
+var NotificationMessenger = function() { }
 
 /**
  * @param title Title of the notification
  * @param body Body of the notification
  */
 NotificationMessenger.prototype.notify = function(title, body) {
-    return PhoneGap.exec(null, null, 'StatusBarNotification',	'notify', [title, body]);
-};
+  return cordovaRef.exec(null, null, 'StatusBarNotification',	'notify', [title, body])
+}
 
 /**
  * Clears the Notificaiton Bar
  */
 NotificationMessenger.prototype.clear = function() {
-    return PhoneGap.exec(null, null, 'StatusBarNotification', 'clear', []);
-};
+  return cordovaRef.exec(null, null, 'StatusBarNotification', 'clear', []);
+}
 
-/**
- * 	Load StatusBarNotification
- * */
-
-PhoneGap.addConstructor(function() {
-	PhoneGap.addPlugin('statusBarNotification', new NotificationMessenger());
-	
-//	@deprecated: No longer needed in PhoneGap 1.0. Uncomment the addService code for earlier 
-//	PhoneGap releases.
-//	PluginManager.addService("StatusBarNotificationPlugin","com.trial.phonegap.plugin.directorylisting.StatusBarNotificationPlugin");
-});
+if (!window.plugins) window.plugins = {}
+if (!window.plugins.statusBarNotification) window.plugins.statusBarNotification = new NotificationMessenger()
+;

@@ -26,13 +26,11 @@
 */
 
 package com.phonegap.plugins.statusBarNotification;
-// import com.yourappid.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Notification;
-import android.app.Notification.Builder;
 import android.app.NotificationManager;
+import android.app.Notification;
 import android.content.Context;
 import android.util.Log;
 
@@ -57,10 +55,6 @@ public class StatusBarNotification extends Plugin {
 	 * */
 	@Override
 	public PluginResult execute(String action, JSONArray data, String callbackId) {
-		String ns = Context.NOTIFICATION_SERVICE;
-		mNotificationManager = (NotificationManager) cordova.getActivity().getSystemService(ns);
-        context = cordova.getActivity();
-		
 		PluginResult result = null;
 		if (NOTIFY.equals(action)) {
 			try {
@@ -91,17 +85,17 @@ public class StatusBarNotification extends Plugin {
 	 *  @param contentText	Notification text
 	 * */
 	public void showNotification( CharSequence contentTitle, CharSequence contentText ) {
-		int icon = R.drawable.notification;
-        
-        Notification noti = new Notification.Builder(context)
-          .setContentTitle(contentTitle)
-          .setContentText(contentText)
-          .setSmallIcon(icon)
-          .build();
-        //notification.flags |= Notification.FLAG_NO_CLEAR; //Notification cannot be clearned by user
-
-
-        mNotificationManager.notify(1, noti);
+    String ns = Context.NOTIFICATION_SERVICE;
+    mNotificationManager = (NotificationManager) cordova.getContext().getSystemService(ns);
+    context = ctx.getApplicationContext();  
+    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+    if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+      Notification noti = new StatusNotificationBuilder().buildNotification(context, contentTitle, contentText);
+      mNotificationManager.notify(1, noti);
+    } else {
+      Notification noti = new StatusNotificationIntent().buildNotification(context, contentTitle, contentText);
+      mNotificationManager.notify(1, noti);
+    }
 	}
 	
 	/**
@@ -111,6 +105,6 @@ public class StatusBarNotification extends Plugin {
 		mNotificationManager.cancelAll();
 	}
 	
-	private NotificationManager mNotificationManager;
-    private Context context;
+  private NotificationManager mNotificationManager;
+  private Context context;
 }
