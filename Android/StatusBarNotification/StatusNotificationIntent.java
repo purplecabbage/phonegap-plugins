@@ -1,3 +1,4 @@
+// This class is used on all Androids below Honeycomb
 package com.phonegap.plugins.statusBarNotification;
 // import com.yourapp.R;
 
