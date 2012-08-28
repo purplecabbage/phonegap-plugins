@@ -1,8 +1,7 @@
 // This class is used on all Androids below Honeycomb
 package com.phonegap.plugins.statusBarNotification;
+// import com.yourapp.R;
 
-
-import com.google.cordova.statusbarnotificationtest.R;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
