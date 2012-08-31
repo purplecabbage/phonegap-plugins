@@ -3,21 +3,26 @@ by `Simon Cruise`
 
 ## DESCRIPTION ##
 
-* The status bar and screen will be rotated with animation to the desired orientation 'portrait' or 'landscape'. 
+The status bar and screen will be rotated with animation to the desired orientation 'portrait' or 'landscape'. 
 
 
 ## SETUP ##
 
-1. To use the AppDelegate must have the main view controller that extends CDVViewController as a member variable called viewController. 
-2. This main view controller header file should have the below allowed orientations variable introduced.
+To use the AppDelegate must have the main view controller that extends CDVViewController as a member variable called viewController. 
+This main view controller header file should have the below allowed orientations variable introduced.
+	
 	@interface MainViewController : CDVViewController {
 		NSMutableArray *allowedOrientations;
 	}
 
 	@property (nonatomic, retain) NSMutableArray *allowedOrientations;
-3. Source file should have the allowedOrientations synthesized.
+
+Source file should have the allowedOrientations synthesized.
+	
 	@synthesize allowedOrientations;
-4. Then perform setup in viewDidLoad method. UIDeviceOrientationPortrait can be replaced with UIDeviceOrientationLandscapeRight depending on desired start up orientation.
+
+Then perform setup in viewDidLoad method. UIDeviceOrientationPortrait can be replaced with UIDeviceOrientationLandscapeRight depending on desired start up orientation.
+	
 	- (void) viewDidLoad
 	{
 		[super viewDidLoad];
