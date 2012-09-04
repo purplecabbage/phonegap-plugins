@@ -35,7 +35,32 @@
         // in order to make Cordova call *this* method. If someone forgets the init() call and uses the navigation bar
         // and tab bar plugins together, these values won't be the original web view bounds and layout will be wrong.
         tabBarItems = [[NSMutableDictionary alloc] initWithCapacity:5];
-		originalWebViewBounds = theWebView.bounds;
+
+        originalWebViewBounds = theWebView.bounds;
+
+        // This code block is the same for both the navigation and tab bar plugin!
+        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+        {
+            // In this case, the app started in landscape mode and the web view is sized accordingly. The frame
+            // (0,0,480,300) is expected on the non-Retina display. Since the originalWebViewBounds variable represents
+            // the original frame as if the app was started in portrait mode, the values are corrected here:
+
+            UIApplication *app = [UIApplication sharedApplication];
+
+            if(app.statusBarHidden)
+            {
+                originalWebViewBounds.size.width = theWebView.bounds.size.height;
+                originalWebViewBounds.size.height = theWebView.bounds.size.width;
+            }
+            else
+            {
+                float statusBarHeight = MIN(app.statusBarFrame.size.width, app.statusBarFrame.size.height);
+                originalWebViewBounds.size.width = theWebView.bounds.size.height + statusBarHeight;
+                originalWebViewBounds.size.height = theWebView.bounds.size.width - statusBarHeight;
+            }
+        }
+
         tabBarHeight = 49.0f;
         navBarHeight = 44.0f;
         tabBarAtBottom = true;

@@ -23,7 +23,9 @@
 
 	NSMutableDictionary* tabBarItems;
 
+	// Represents bounds as if started in portrait mode!
 	CGRect	originalWebViewBounds;
+
     CGFloat navBarHeight;
     CGFloat tabBarHeight;
     bool tabBarAtBottom;
