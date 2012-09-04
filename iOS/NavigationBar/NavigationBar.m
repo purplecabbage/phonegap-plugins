@@ -212,6 +212,17 @@
             navBar.barStyle = UIBarStyleBlack;
         // else the default will be used
 
+        NSString *tint = [options valueForKey:@"tintColorRgba"];
+
+        if(tint)
+        {
+            NSArray *rgba = [tint componentsSeparatedByString:@","];
+            navBar.tintColor = [UIColor colorWithRed:[[rgba objectAtIndex:0] intValue]/255.0f
+                                               green:[[rgba objectAtIndex:1] intValue]/255.0f
+                                                blue:[[rgba objectAtIndex:2] intValue]/255.0f
+                                               alpha:[[rgba objectAtIndex:3] intValue]/255.0f];
+        }
+
         [navBarController setDelegate:self];
 
         [[navBarController view] setFrame:CGRectMake(0, 0, originalWebViewBounds.size.width, navBarHeight)];

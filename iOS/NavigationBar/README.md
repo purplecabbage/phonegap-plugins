@@ -57,7 +57,12 @@ This example shows how to use the navigation bar:
 
         plugins.navigationBar.init()
 
-        plugins.navigationBar.create() // or .create("BlackOpaque") to apply a certain style
+        plugins.navigationBar.create()
+        // or to apply a certain style (one of "Black", "BlackOpaque", "BlackTranslucent", "Default"):
+        plugins.navigationBar.create("BlackOpaque")
+        // or with a yellow tint color (note: parameters might be changed to one object in a later version)
+        plugins.navigationBar.create('BlackOpaque', {tintColorRgba: '255,255,0,255'})
+
         plugins.navigationBar.hideLeftButton()
         plugins.navigationBar.hideRightButton()
 
