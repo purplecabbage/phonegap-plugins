@@ -4,40 +4,12 @@ A plugin (and framework code) that allows the development and operation of an An
 
 The example MyService Background Service will write a Hello message to the LogCat every minute.  The MyService is designed as sample code.
 
-## Adding the plugin to your project ##
+## Versions ##
 
-Copy the files to the following locations:
+Folders used for different Cordova versions:
 
-* libs\backgroundserviceplugin.jar
-* src\com\yournamespace\yourappname\MyService.java
-* assets\www\backgroundService.js
-* assets\www\myService.js
-* assets\www\index.html
-
-Add the following to res\xml\plugins.xml
-
-```
-<plugin name="BackgroundServicePlugin" value="com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePlugin"/>
-```
-
-Add the following to AndroidManifest.xml
-
-```
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-<!-- To be added within Application nde -->
-<service android:name="com.yournamespace.yourappname.MyService">
-	<intent-filter>         
-		<action android:name="com.yournamespace.yourappname.MyService"/> 
-	</intent-filter>     
-</service>
-
-<receiver android:name="com.red_folder.phonegap.plugin.backgroundservice.BootReceiver">
-	<intent-filter>     
-		<action android:name="android.intent.action.BOOT_COMPLETED"></action>   
-	</intent-filter> 
-</receiver>
-```
+* /1.8.1 - For use with Cordova 1.8.1
+* /2.0.0 - Coming soon
 
 ## Further Information ##
 
