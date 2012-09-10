@@ -16,35 +16,28 @@ Copy the files to the following locations:
 
 Add the following to res\xml\plugins.xml
 
+```
 &lt;plugin name="BackgroundServicePlugin" value="com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePlugin"/&gt;
+```
 
 Add the following to AndroidManifest.xml
 
+```
 &lt;uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /&gt; 
 
 &lt;!-- To be added within Application nde --&gt;
-
 &lt;service android:name="com.yournamespace.yourappname.MyService"&gt;
-
 	&lt;intent-filter&gt;         
-
 		&lt;action android:name="com.yournamespace.yourappname.MyService"/&gt; 
-
 	&lt;/intent-filter&gt;     
-
 &lt;/service&gt;
 
 &lt;receiver android:name="com.red_folder.phonegap.plugin.backgroundservice.BootReceiver"&gt;
-   
 	&lt;intent-filter&gt;     
-
-		&lt;action android:name="android.intent.action.BOOT_COMPLETED"&gt;     
-
-	&lt;/action&gt;   
-
+		&lt;action android:name="android.intent.action.BOOT_COMPLETED"&gt;&lt;/action&gt;   
 	&lt;/intent-filter&gt; 
-
 &lt;/receiver&gt;
+```
 
 ## Further Information ##
 
