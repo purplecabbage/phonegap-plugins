@@ -17,7 +17,7 @@ Copy the files to the following locations:
 Add the following to res\xml\plugins.xml
 
 ```
-&lt;plugin name="BackgroundServicePlugin" value="com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePlugin"/&gt;
+<plugin name="BackgroundServicePlugin" value="com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePlugin"/>
 ```
 
 Add the following to AndroidManifest.xml
