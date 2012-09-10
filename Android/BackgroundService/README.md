@@ -15,24 +15,24 @@ The example MyService Background Service will write a Hello message to the LogCa
 * assets\www\index.html
 
 2. Add the following to res\xml\plugins.xml
-<plugin name="BackgroundServicePlugin" value="com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePlugin"/>
+&lt;plugin name="BackgroundServicePlugin" value="com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePlugin"/&gt;
 
 3. Add the following to AndroidManifest.xml
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> 
+&lt;uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /&gt; 
 
-<!-- To be added within Application nde -->
-<service android:name="com.yournamespace.yourappname.MyService">
- <intent-filter>         
-  <action android:name="com.yournamespace.yourappname.MyService"/> 
- </intent-filter>     
-</service>
+&lt;!-- To be added within Application nde --&gt;
+&lt;service android:name="com.yournamespace.yourappname.MyService"&gt;
+ &lt;intent-filter&gt;         
+  &lt;action android:name="com.yournamespace.yourappname.MyService"/&gt; 
+ &lt;/intent-filter&gt;     
+&lt;/service&gt;
 
-<receiver android:name="com.red_folder.phonegap.plugin.backgroundservice.BootReceiver">   
- <intent-filter>     
-  <action android:name="android.intent.action.BOOT_COMPLETED">     
-  </action>   
- </intent-filter> 
-</receiver>
+&lt;receiver android:name="com.red_folder.phonegap.plugin.backgroundservice.BootReceiver"&gt;   
+ &lt;intent-filter&gt;     
+  &lt;action android:name="android.intent.action.BOOT_COMPLETED"&gt;     
+  &lt;/action&gt;   
+ &lt;/intent-filter&gt; 
+&lt;/receiver&gt;
 
 ## Further Information ##
 
