@@ -6,7 +6,7 @@ The example MyService Background Service will write a Hello message to the LogCa
 
 ## Adding the plugin to your project ##
 
-1. Copy the files to the following locations:
+Copy the files to the following locations:
 
 * libs\backgroundserviceplugin.jar
 * src\com\yournamespace\yourappname\MyService.java
@@ -14,10 +14,12 @@ The example MyService Background Service will write a Hello message to the LogCa
 * assets\www\myService.js
 * assets\www\index.html
 
-2. Add the following to res\xml\plugins.xml
+Add the following to res\xml\plugins.xml
+
 &lt;plugin name="BackgroundServicePlugin" value="com.red_folder.phonegap.plugin.backgroundservice.BackgroundServicePlugin"/&gt;
 
-3. Add the following to AndroidManifest.xml
+Add the following to AndroidManifest.xml
+
 &lt;uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /&gt; 
 
 &lt;!-- To be added within Application nde --&gt;
@@ -39,6 +41,8 @@ The example MyService Background Service will write a Hello message to the LogCa
 Further information on the plugin can be found at:
 
 http://red-folder.blogspot.co.uk/2012/09/phonegap-android-background-service.html
+
+Please let me know your thoughts and comments.
 
 ## Licence ##
 
