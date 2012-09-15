@@ -107,6 +107,8 @@ In order to support launch notifications (app starting from a remote notificatio
 
 
     pushNotification.registerDevice({alert:true, badge:true, sound:true}, function(status) {
+        // if successful status is an object that looks like this: 
+        // {"type":"7","pushBadge":"1","pushSound":"1","enabled":"1","deviceToken":"blablahblah","pushAlert":"1"}
         console.warn('registerDevice:%o', status);
         navigator.notification.alert(JSON.stringify(['registerDevice', status]));
     });
