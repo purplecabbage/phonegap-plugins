@@ -15,14 +15,14 @@ Folders used for different Cordova versions:
 
 Further information on the plugin can be found at:
 
-http://red-folder.blogspot.co.uk/2012/09/phonegap-android-background-service.html
-http://red-folder.blogspot.com/2012/09/phonegap-android-background-service_11.html
+* http://red-folder.blogspot.co.uk/2012/09/phonegap-android-background-service.html
+* http://red-folder.blogspot.com/2012/09/phonegap-android-background-service_11.html
 
 The below is a tutorial to create your own Twitter service:
 
-http://red-folder.blogspot.com/2012/09/phonegap-service-tutorial-part-1.html
-http://red-folder.blogspot.com/2012/09/phonegap-service-tutorial-part-2.html
-http://red-folder.blogspot.com/2012/09/phonegap-service-tutorial-part-3.html
+* http://red-folder.blogspot.com/2012/09/phonegap-service-tutorial-part-1.html
+* http://red-folder.blogspot.com/2012/09/phonegap-service-tutorial-part-2.html
+* http://red-folder.blogspot.com/2012/09/phonegap-service-tutorial-part-3.html
 
 Please let me know your thoughts and comments.
 
