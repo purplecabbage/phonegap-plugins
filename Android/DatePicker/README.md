@@ -9,7 +9,7 @@
 6. Add the following jQuery fragment to handle the click on these input elements:
 
 ```
-	$('.nativedatepicker').click(function(event) {
+	$('.nativedatepicker').focus(function(event) {
 		var currentField = $(this);
 		var myNewDate = Date.parse(currentField.val()) || new Date();
 
