@@ -1,18 +1,19 @@
 AdMob Cordova Plugin for iOS
+================================
 
 This is the AdMob Cordova Plugin for iOS.  It provides a way to request
 AdMob ads natively from JavaScript.  This plugin was written and tested with
 the Google AdMob SDK version 6.1.4 for iOS, and Cordova 2.0.0.
 
-Requirements:
+##Requirements:
 
 - Cordova SDK for iOS
 - Cordova JS for iOS
 - Google AdMob Ads SDK for iOS
 - iOS version 3.2 or later as well as XCode 4.2 or later
-- AdMob publisher ID from www.admob.com
+- AdMob publisher ID from [AdMob](www.admob.com)
 
-Setup:
+##Setup:
 
 1. Import Cordova SDK binary and Google AdMob SDK binary into your project (with
    their associated header files).
@@ -26,31 +27,31 @@ Setup:
 6. Complete the Google AdMob SDK setup for iOS at
    https://developers.google.com/mobile-ads-sdk/docs.
 
-Implementation:
+##Implementation:
 
 There are two calls needed to get AdMob Ads:
 
-1. createBannerView
+1. `createBannerView`
 
    Takes in a object containing a publisherId and adSize, as well as success
    and failure callbacks.  An example call is provided below:
 
-     window.plugins.AdMob.createBannerView(
+     `window.plugins.AdMob.createBannerView(
          {
            'publisherId': 'INSERT_YOUR_PUBLISHER_ID_HERE',
            'adSize': AdMob.AdSize.BANNER
          },
          successCallback,
          failureCallback
-     );
+     );`
 
-2. requestAd
+2. `requestAd`
 
    Takes in an object containing an optional testing flag, and an optional
    list of extras.  This method should only be invoked once createBannerView
    has invoked successCallback.  An example call is provided below:
 
-     logCreateBannerSuccess();
+     `logCreateBannerSuccess();
      window.plugins.AdMob.requestAd(
          {
            'isTesting': false,
@@ -65,14 +66,14 @@ There are two calls needed to get AdMob Ads:
          },
          successCallback,
          failureCallback
-     );
+     );`
 
 
 This plugin also allows you the option to listen for ad events.  The following
 events are supported:
 
-document.addEventListener('onReceiveAd', callback);
+`document.addEventListener('onReceiveAd', callback);
 document.addEventListener('onFailedToReceiveAd', callback);
 document.addEventListener('onDismissScreen', callback);
 document.addEventListener('onPresentScreen', callback);
-document.addEventListener('onLeaveApplication', callback);
+document.addEventListener('onLeaveApplication', callback);`
