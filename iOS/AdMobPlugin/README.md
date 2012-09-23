@@ -36,14 +36,14 @@ There are two calls needed to get AdMob Ads:
    Takes in a object containing a publisherId and adSize, as well as success
    and failure callbacks.  An example call is provided below:
 
-     `window.plugins.AdMob.createBannerView(
-         {
-           'publisherId': 'INSERT_YOUR_PUBLISHER_ID_HERE',
-           'adSize': AdMob.AdSize.BANNER
-         },
-         successCallback,
-         failureCallback
-     );`
+         window.plugins.AdMob.createBannerView(
+             {
+               'publisherId': 'INSERT_YOUR_PUBLISHER_ID_HERE',
+               'adSize': AdMob.AdSize.BANNER
+             },
+             successCallback,
+             failureCallback
+         );
 
 2. `requestAd`
 
@@ -51,29 +51,29 @@ There are two calls needed to get AdMob Ads:
    list of extras.  This method should only be invoked once createBannerView
    has invoked successCallback.  An example call is provided below:
 
-     `logCreateBannerSuccess();
-     window.plugins.AdMob.requestAd(
-         {
-           'isTesting': false,
-           'extras': {
-             'color_bg': 'AAAAFF',
-             'color_bg_top': 'FFFFFF',
-             'color_border': 'FFFFFF',
-             'color_link': '000080',
-             'color_text': '808080',
-             'color_url': '008000'
-           },
-         },
-         successCallback,
-         failureCallback
-     );`
+         logCreateBannerSuccess();
+         window.plugins.AdMob.requestAd(
+             {
+               'isTesting': false,
+               'extras': {
+                 'color_bg': 'AAAAFF',
+                 'color_bg_top': 'FFFFFF',
+                 'color_border': 'FFFFFF',
+                 'color_link': '000080',
+                 'color_text': '808080',
+                 'color_url': '008000'
+               },
+             },
+             successCallback,
+             failureCallback
+         );
 
 
 This plugin also allows you the option to listen for ad events.  The following
 events are supported:
 
-`document.addEventListener('onReceiveAd', callback);
-document.addEventListener('onFailedToReceiveAd', callback);
-document.addEventListener('onDismissScreen', callback);
-document.addEventListener('onPresentScreen', callback);
-document.addEventListener('onLeaveApplication', callback);`
+    document.addEventListener('onReceiveAd', callback);
+    document.addEventListener('onFailedToReceiveAd', callback);
+    document.addEventListener('onDismissScreen', callback);
+    document.addEventListener('onPresentScreen', callback);
+    document.addEventListener('onLeaveApplication', callback);
