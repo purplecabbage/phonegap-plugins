@@ -8,11 +8,7 @@
 // MIT Licensed
 
 #import "PushNotification.h"
-#ifdef CORDOVA_FRAMEWORK
-	#import <Cordova/JSONKit.h>
-#else
-	#import "JSONKit.h"
-#endif
+#import <Cordova/JSONKit.h>
 
 @implementation PushNotification
 
