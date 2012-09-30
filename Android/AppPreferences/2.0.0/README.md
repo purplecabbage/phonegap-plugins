@@ -3,7 +3,7 @@ Originally by Simon MacDonald (@macdonst)
 
 Please note that the following steps are for PhoneGap 2.0
 
-Information on writing plugins for PhoneGap 2.0 was taken from [this blog](http://simonmacdonald.blogspot.com/2012/08/so-you-wanna-write-phonegap-200-android.html). 
+Information on writing plugins for PhoneGap 2.0 was taken from [this blog](http://simonmacdonald.blogspot.com/2012/08/so-you-wanna-write-phonegap-200-android.html) by Simon MacDonald (@macdonst)
 
 ## Adding the Plugin to your project ##
 
@@ -101,7 +101,11 @@ In order to get all the properties you can call the load method. The success cal
 
 Sample use:
 
-    window.plugins.applicationPreference.load(success, fail);
+    preferences.load(function(prefs) {
+			alert(JSON.stringify(prefs));
+		}, function() {
+			alert("Error! " + JSON.stringify(error));
+	});
 
 ### show ###
 
@@ -115,7 +119,13 @@ If you want to load the PreferenceActivity of your application that displays all
 
 Sample use:
     
-    window.plugins.applicationPreference.show("com.simonmacdonald.prefs.PreferenceActivity", success, fail);
+    function showPreferenceActivity() {
+		preferences.show("com.ranhiru.apppreferences.PreferenceActivity", function() {
+			alert("Showing Preferences Activity!");
+		}, function(error) {
+			alert("Error! " + JSON.stringify(error));
+		});
+	  }
 	
 ## Licence ##
 
