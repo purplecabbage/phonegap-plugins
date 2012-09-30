@@ -87,7 +87,25 @@ Sample use:
 			alert("Value removed!");
 		}, function(error) {
 			alert("Error! " + JSON.stringify(error));
-		});	
+		});
+
+### clear ###
+
+In order to remove all shared preferences, you would call the clear method.
+
+     /**
+	  * Clear all shared preferences
+	  *	       
+	  */
+     clear(success, fail)
+
+Sample use:
+
+		preferences.clear(function() {
+			alert("Cleared all preferences!");
+		}, function(error) {
+			alert("Error! " + JSON.stringify(error));
+		});
 
 ### load ###
 
