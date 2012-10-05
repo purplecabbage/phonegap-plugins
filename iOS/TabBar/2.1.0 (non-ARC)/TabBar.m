@@ -146,6 +146,15 @@
     }
 }
 
+- (UIColor*)colorStringToColor:(NSString*)colorStr
+{
+    NSArray *rgba = [colorStr componentsSeparatedByString:@","];
+    return [UIColor colorWithRed:[[rgba objectAtIndex:0] intValue]/255.0f
+                           green:[[rgba objectAtIndex:1] intValue]/255.0f
+                            blue:[[rgba objectAtIndex:2] intValue]/255.0f
+                           alpha:[[rgba objectAtIndex:3] intValue]/255.0f];
+}
+
 /**
  * Create a native tab bar at either the top or the bottom of the display.
  */
@@ -161,18 +170,16 @@
     tabBar.opaque = YES;
 
     const NSDictionary *options = command ? [command.arguments objectAtIndex:0] : nil;
-    NSString *iconTint = nil;
 
     if(options)
-        iconTint = [options valueForKey:@"selectedImageTintColorRgba"];
-
-    if(iconTint && [tabBar respondsToSelector:@selector(setSelectedImageTintColor:)])
     {
-        NSArray *rgba = [iconTint componentsSeparatedByString:@","];
-        tabBar.selectedImageTintColor = [UIColor colorWithRed:[[rgba objectAtIndex:0] intValue]/255.0f
-                                                        green:[[rgba objectAtIndex:1] intValue]/255.0f
-                                                         blue:[[rgba objectAtIndex:2] intValue]/255.0f
-                                                        alpha:[[rgba objectAtIndex:3] intValue]/255.0f];
+        NSString *iconTint = [options valueForKey:@"selectedImageTintColorRgba"];
+        NSString *tint = [options valueForKey:@"tintColorRgba"];
+
+        if(iconTint && [tabBar respondsToSelector:@selector(setSelectedImageTintColor:)])
+            [tabBar setSelectedImageTintColor:[self colorStringToColor:iconTint]];
+        if(tint && [tabBar respondsToSelector:@selector(setTintColor:)])
+            [tabBar setTintColor:[self colorStringToColor:tint]];
     }
 
     self.webView.superview.autoresizesSubviews = YES;
