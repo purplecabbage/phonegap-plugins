@@ -59,7 +59,7 @@ NavigationBar.prototype.leftButtonTapped = function()
 NavigationBar.prototype.setupRightButton = function(title, image, onselect, options)
 {
     this.rightButtonCallback = onselect;
-    cordova.exec("NavigationBar.setupRightButton", title || "", image || "", onselect, options || {});
+    cordova.exec("NavigationBar.setupRightButton", title || "", image || "", options || {});
 };
 
 
