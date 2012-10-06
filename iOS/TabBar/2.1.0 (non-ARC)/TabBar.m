@@ -173,12 +173,12 @@
 
     if(options)
     {
-        NSString *iconTint = [options valueForKey:@"selectedImageTintColorRgba"];
-        NSString *tint = [options valueForKey:@"tintColorRgba"];
+        id iconTint = [options objectForKey:@"selectedImageTintColorRgba"];
+        id tint = [options objectForKey:@"tintColorRgba"];
 
-        if(iconTint && [tabBar respondsToSelector:@selector(setSelectedImageTintColor:)])
+        if(iconTint && iconTint != [NSNull null] && [tabBar respondsToSelector:@selector(setSelectedImageTintColor:)])
             [tabBar setSelectedImageTintColor:[self colorStringToColor:iconTint]];
-        if(tint && [tabBar respondsToSelector:@selector(setTintColor:)])
+        if(tint && tint != [NSNull null] && [tabBar respondsToSelector:@selector(setTintColor:)])
             [tabBar setTintColor:[self colorStringToColor:tint]];
     }
 
@@ -213,8 +213,14 @@
 
     if(options)
     {
-        tabBarHeight = [[options objectForKey:@"height"] floatValue];
-        tabBarAtBottom = [[options objectForKey:@"position"] isEqualToString:@"bottom"];
+        id tabBarHeightOpt = [options objectForKey:@"height"];
+        id positionOpt = [options objectForKey:@"position"];
+
+        if(tabBarHeightOpt && tabBarHeightOpt != [NSNull null])
+            tabBarHeight = [tabBarHeightOpt floatValue];
+
+        if([positionOpt isKindOfClass:[NSString class]])
+            tabBarAtBottom = ![positionOpt isEqualToString:@"top"];
     }
 
     tabBar.tabBarAtBottom = tabBarAtBottom;
@@ -316,8 +322,13 @@
     if (item == nil)
         item = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imageName] tag:tag];
 
-    if (options && [options objectForKey:@"badge"])
-        item.badgeValue = [options objectForKey:@"badge"];
+    if(options)
+    {
+        id badgeOpt = [options objectForKey:@"badge"];
+
+        if(badgeOpt && badgeOpt != [NSNull null])
+            item.badgeValue = [badgeOpt stringValue];
+    }
 
     [tabBarItems setObject:item forKey:name];
 	[item release];
@@ -347,8 +358,13 @@
 
     NSString  *name = [command.arguments objectAtIndex:0];
     UITabBarItem *item = [tabBarItems objectForKey:name];
-    if (item)
-        item.badgeValue = [options objectForKey:@"badge"];
+    if(item)
+    {
+        id badgeOpt = [options objectForKey:@"badge"];
+
+        if(badgeOpt && badgeOpt != [NSNull null])
+            item.badgeValue = [badgeOpt stringValue];
+    }
 }
 
 

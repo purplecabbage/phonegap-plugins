@@ -210,19 +210,22 @@
 
     if(options)
     {
-        NSString * style = [options valueForKey:@"style"];
+        id style = [options objectForKey:@"style"];
 
-        if(style && [style isEqualToString:@"BlackTranslucent"])
-            navBar.barStyle = UIBarStyleBlackTranslucent;
-        else if(style && [style isEqualToString:@"BlackOpaque"])
-            navBar.barStyle = UIBarStyleBlackOpaque;
-        else if(style && [style isEqualToString:@"Black"])
-            navBar.barStyle = UIBarStyleBlack;
-        // else the default will be used
+        if(style && style != [NSNull null])
+        {
+            if([style isEqualToString:@"BlackTranslucent"])
+                navBar.barStyle = UIBarStyleBlackTranslucent;
+            else if([style isEqualToString:@"BlackOpaque"])
+                navBar.barStyle = UIBarStyleBlackOpaque;
+            else if([style isEqualToString:@"Black"])
+                navBar.barStyle = UIBarStyleBlack;
+            // else the default will be used
+        }
 
-        NSString *tint = [options valueForKey:@"tintColorRgba"];
+        id tint = [options objectForKey:@"tintColorRgba"];
 
-        if(tint)
+        if(tint && tint != [NSNull null])
         {
             NSArray *rgba = [tint componentsSeparatedByString:@","];
             navBar.tintColor = [UIColor colorWithRed:[[rgba objectAtIndex:0] intValue]/255.0f
@@ -286,11 +289,13 @@
     if(options)
     {
         useImageAsBackgroundOpt = [options objectForKey:@"useImageAsBackground"];
+        id fixedMarginLeftOpt = [options objectForKey:@"fixedMarginLeft"];
+        id fixedMarginRightOpt = [options objectForKey:@"fixedMarginRight"];
 
-        if([options objectForKey:@"fixedMarginLeft"] != nil)
-            fixedMarginLeft = [[options objectForKey:@"fixedMarginLeft"] floatValue];
-        if([options objectForKey:@"fixedMarginRight"] != nil)
-            fixedMarginRight = [[options objectForKey:@"fixedMarginRight"] floatValue];
+        if(fixedMarginLeftOpt && fixedMarginLeftOpt != [NSNull null])
+            fixedMarginLeft = [fixedMarginLeftOpt floatValue];
+        if(fixedMarginRightOpt && fixedMarginRightOpt != [NSNull null])
+            fixedMarginRight = [fixedMarginRightOpt floatValue];
     }
 
     bool useImageAsBackground = useImageAsBackgroundOpt ? [useImageAsBackgroundOpt boolValue] : false;

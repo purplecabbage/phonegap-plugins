@@ -119,9 +119,7 @@ TabBar.prototype.selectItem = function(tab) {
  * - \c position specifies whether the tab bar will be placed at the \c top or \c bottom of the screen (default: \c bottom)
  */
 TabBar.prototype.show = function(options) {
-    if(!options)
-        options = {position: 'bottom'};
-    cordova.exec("TabBar.show", options);
+    cordova.exec("TabBar.show", options || {});
 };
 
 /**
