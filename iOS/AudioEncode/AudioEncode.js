@@ -2,6 +2,7 @@
 //  AudioEncode.js
 //
 //  Created by Lyle Pratt, September 2011.
+//    Updated Opt 2012 by Keenan Wyrobek for Cordova 2.0.0
 //  MIT licensed
 //
 
@@ -9,18 +10,17 @@
  * This class converts audio at a file path to M4A format
  * @constructor
  */
-function AudioEncode() {
+
+function CompressAudio(originalSrc, externalSuccessCallback, failCallback, passThroughObject){
+  
+  cordova.exec(successCallback, 
+               failCallback, 
+               "AudioEncode",
+               "encodeAudio", 
+               [originalSrc]);
+  
+  function successCallback(newSource){
+    if (passThroughObject) return externalSuccessCallback(newSource, passThroughObject);
+    else  return externalSuccessCallback(newSource);
+  }
 }
-
-AudioEncode.prototype.encodeAudio = function(audioPath, successCallback, failCallback) {
-    PhoneGap.exec("AudioEncode.encodeAudio", audioPath, GetFunctionName(successCallback), GetFunctionName(failCallback));
-};
-
-PhoneGap.addConstructor(function()
-{
-	if(!window.plugins)
-	{
-		window.plugins = {};
-	}
-    window.plugins.AudioEncode = new AudioEncode();
-});

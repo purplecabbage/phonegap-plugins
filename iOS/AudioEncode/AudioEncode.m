@@ -2,6 +2,7 @@
 //  AudioEncode.m
 //
 //  By Lyle Pratt, September 2011.
+//    Updated Oct 2012 by Keenan Wyrobek for Cordova 2.0.0
 //  MIT licensed
 //
 
@@ -9,13 +10,12 @@
 
 @implementation AudioEncode
 
-@synthesize successCallback, failCallback;
+@synthesize callbackId;
 
 - (void)encodeAudio:(NSArray*)arguments withDict:(NSDictionary*)options
 {
-    self.successCallback = [[arguments objectAtIndex:1] retain];
-    self.failCallback = [[arguments objectAtIndex:2] retain];
-	NSString* audioPath = [arguments objectAtIndex:0];
+    self.callbackId = [arguments objectAtIndex:0];
+	NSString* audioPath = [arguments objectAtIndex:1];
     
 	NSURL* audioURL = [NSURL fileURLWithPath:audioPath];
 	AVURLAsset* audioAsset = [[AVURLAsset alloc] initWithURL:audioURL options:nil];
@@ -23,12 +23,12 @@
 	
 	NSURL* exportURL = [NSURL fileURLWithPath:[[audioPath componentsSeparatedByString:@".wav"] objectAtIndex:0]];
 	NSURL* destinationURL = [exportURL URLByAppendingPathExtension:@"m4a"];
-
+    
     exportSession.outputURL = destinationURL;
 	exportSession.outputFileType = AVFileTypeAppleM4A;
 	
     [exportSession exportAsynchronouslyWithCompletionHandler:^{
-    
+        
         if (AVAssetExportSessionStatusCompleted == exportSession.status) {
             NSLog(@"AVAssetExportSessionStatusCompleted");
             [self performSelectorOnMainThread:@selector(doSuccessCallback:) withObject:[exportSession.outputURL path] waitUntilDone:NO];
@@ -52,23 +52,28 @@
 	if ([fileMgr removeItemAtPath:audioPath error:&error] != YES) {
 		NSLog(@"Unable to delete file: %@", [error localizedDescription]);
     }
-    
 }
-
-
 
 -(void) doSuccessCallback:(NSString*)path {
     NSLog(@"doing success callback");
-    NSString* jsCallback = [NSString stringWithFormat:@"%@(\"%@\");", self.successCallback, path];
-    [self writeJavascript: jsCallback];
-    [self.successCallback release];
+    
+    CDVPluginResult* pluginResult = nil;
+    NSString* javaScript = nil;
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:path];
+    javaScript = [pluginResult toSuccessCallbackString:self.callbackId];
+    [self writeJavascript:javaScript];
 }
 
 -(void) doFailCallback:(NSString*)status {
     NSLog(@"doing fail callback");
-    NSString* jsCallback = [NSString stringWithFormat:@"%@(\"%@\");", self.failCallback, status];
-    [self writeJavascript: jsCallback];
-    [self.failCallback release];
+
+    CDVPluginResult* pluginResult = nil;
+    NSString* javaScript = nil;
+    
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:status];
+    javaScript = [pluginResult toErrorCallbackString:self.callbackId];
+
+    [self writeJavascript:javaScript];
 }
 
 @end

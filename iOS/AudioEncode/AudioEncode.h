@@ -2,24 +2,20 @@
 //  AudioEncode.h
 //
 //  By Lyle Pratt, September 2011.
+//    Updated Oct 2012 by Keenan Wyrobek for Cordova 2.0.0
 //  MIT licensed
 //
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/PGPlugin.h>
-#else
-    #import "PGPlugin.h"
-#endif
+#import <Cordova/CDV.h>
 
-@interface AudioEncode : PGPlugin {
-    NSString* successCallback;
-    NSString* failCallback;
+@interface AudioEncode : CDVPlugin{
+    NSString* callbackId;
 }
 
-@property (nonatomic, retain) NSString* successCallback;
-@property (nonatomic, retain) NSString* failCallback;
+@property (nonatomic, retain) NSString* callbackId;
 
 - (void)encodeAudio:(NSArray*)arguments withDict:(NSDictionary*)options;
+
 @end
