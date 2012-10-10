@@ -17,8 +17,8 @@
 
 @interface calendarPlugin : CDVPlugin <EKEventEditViewDelegate> {
     
-	EKEventStore *eventStore;
-    EKCalendar *defaultCalendar;
+	//EKEventStore *eventStore;
+    //EKCalendar *defaultCalendar;
     //NSArray *events;
     
     //future plan to have global type variables
@@ -26,8 +26,8 @@
     
 }
 
-@property (nonatomic,retain) EKEventStore *eventStore;
-@property (nonatomic,retain) EKCalendar *defaultCalendar;
+//@property (nonatomic,retain) EKEventStore *eventStore;
+//@property (nonatomic,retain) EKCalendar *defaultCalendar;
 
 //-(NSArray *)fetchEvents;
 
