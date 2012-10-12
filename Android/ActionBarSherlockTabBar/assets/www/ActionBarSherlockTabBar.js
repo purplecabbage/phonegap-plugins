@@ -6,22 +6,38 @@
 
 // Usage: actionBarSherlockTabBar = cordova.require('cordova/plugin/actionBarSherlockTabBar');
 cordova.define('cordova/plugin/actionBarSherlockTabBar', function(require, exports, module) {
-    var exec = require('cordova/exec');
+    var exec = require('cordova/exec')
 
     var ActionBarSherlockTabBar = function() {}
+
+    ActionBarSherlockTabBar.prototype.hide = function() {
+        exec(null,
+             null,
+             'ActionBarSherlockTabBar',
+             'hide',
+             [])
+    }
+
+    ActionBarSherlockTabBar.prototype.show = function() {
+        exec(null,
+             null,
+             'ActionBarSherlockTabBar',
+             'show',
+             [])
+    }
 
     ActionBarSherlockTabBar.prototype.setTabSelectedListener = function(callback) {
         if(typeof callback != 'function')
             throw 'ActionBarSherlockTabBar.setTabSelectedListener: Callback not a function'
 
         exec(callback,
-             function() { /* log error here?! */ },
+             function() {},
              'ActionBarSherlockTabBar',
              'setTabSelectedListener',
              [])
     }
 
-    module.exports = new ActionBarSherlockTabBar();
+    module.exports = new ActionBarSherlockTabBar()
 
     exec(null,
          null,

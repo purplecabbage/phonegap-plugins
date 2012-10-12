@@ -15,9 +15,9 @@ Features
 - Should work on Android versions down to 2.1 (SDK version 7)
 - You can register a callback function that is triggered when the selected tab changes
 - Only tabs implemented (with text or icon), no other features of ActionBarSherlock
+- Can show/hide tab bar at runtime
 - If a tab is reselected, you won't be notified (*TODO*)
 - Tab creation only from Java code, not from JavaScript (*TODO*)
-- Cannot show/hide tab bar at runtime (*TODO*)
 
 Setup
 -----
@@ -116,10 +116,13 @@ Use the plugin like so:
         document.addEventListener('deviceready', function() {
             actionBarSherlockTabBar = cordova.require('cordova/plugin/actionBarSherlockTabBar')
 
-            // Note: setTabSelectedListener is the only exposed function at the moment
             actionBarSherlockTabBar.setTabSelectedListener(function(tabTag) {
                 console.log('Tab ' + tabTag + ' selected')
             })
+
+            // Tab bar is shown by default, but you can change that at runtime
+            // actionBarSherlockTabBar.hide()
+            // actionBarSherlockTabBar.show()
         }
     </script>
 

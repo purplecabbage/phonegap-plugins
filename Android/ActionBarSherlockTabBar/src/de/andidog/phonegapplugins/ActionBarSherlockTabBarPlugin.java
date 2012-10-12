@@ -111,6 +111,30 @@ public class ActionBarSherlockTabBarPlugin extends Plugin implements ActionBar.T
             res.setKeepCallback(true);
             return res;
         }
+        else if(action.equals("hide"))
+        {
+            final ActionBar actionBar = sherlock.getActionBar();
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run()
+                {
+                    actionBar.hide();
+                }
+            });
+            return new PluginResult(PluginResult.Status.NO_RESULT);
+        }
+        else if(action.equals("show"))
+        {
+            final ActionBar actionBar = sherlock.getActionBar();
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run()
+                {
+                    actionBar.show();
+                }
+            });
+            return new PluginResult(PluginResult.Status.NO_RESULT);
+        }
         else if(action.equals("_init"))
         {
             // This is the signal send from the JavaScript that forces construction of this plugin
