@@ -122,3 +122,5 @@ Use the plugin like so:
             })
         }
     </script>
+
+See also the example project in the repository (note: you have to download and reference ActionBarSherlock yourself).
