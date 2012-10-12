@@ -1,3 +1,8 @@
+/*
+    MIT licensed (http://www.opensource.org/licenses/mit-license.html)
+
+    See https://github.com/AndiDog/phonegap-plugins
+*/
 package de.andidog.phonegapplugins;
 
 import org.apache.cordova.api.Plugin;

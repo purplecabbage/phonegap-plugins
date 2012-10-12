@@ -1,3 +1,9 @@
+/*
+    MIT licensed (http://www.opensource.org/licenses/mit-license.html)
+
+    See https://github.com/AndiDog/phonegap-plugins
+*/
+
 // Usage: actionBarSherlockTabBar = cordova.require('cordova/plugin/actionBarSherlockTabBar');
 cordova.define('cordova/plugin/actionBarSherlockTabBar', function(require, exports, module) {
     var exec = require('cordova/exec');
