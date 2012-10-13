@@ -23,8 +23,10 @@
 
 	NSMutableDictionary* tabBarItems;
 
-	// Represents bounds as if started in portrait mode!
-	CGRect	originalWebViewBounds;
+	// Represents frame of web view as if started in portrait mode. Coordinates are relative to the superview. With
+    // Cordova 2.1.0, frame.origin.y=0 means directly under the status bar, while in older versions it would have been
+    // frame.origin.y=20.
+	CGRect	originalWebViewFrame;
 
     CGFloat navBarHeight;
     CGFloat tabBarHeight;

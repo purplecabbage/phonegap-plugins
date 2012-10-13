@@ -30,27 +30,35 @@
         // This code block is the same for both the navigation and tab bar plugin!
         // -----------------------------------------------------------------------
 
-        // The original web view bounds must be retrieved here. On iPhone, it would be 0,0,320,460 for example. Since
+        // The original web view frame must be retrieved here. On iPhone, it would be 0,0,320,460 for example. Since
         // Cordova seems to initialize plugins on the first call, there is a plugin method init() that has to be called
         // in order to make Cordova call *this* method. If someone forgets the init() call and uses the navigation bar
-        // and tab bar plugins together, these values won't be the original web view bounds and layout will be wrong.
-        // UPDATE for Cordova 2.1.0: Status bar not considered anymore in the original bounds, so they are 0,0,320,480
-        //                           for instance. Now we detect the screen resolution instead and calculate the
-        //                           expected value.
-        originalWebViewBounds = theWebView.bounds;
-        const CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        // and tab bar plugins together, these values won't be the original web view frame and layout will be wrong.
+        originalWebViewFrame = theWebView.frame;
         UIApplication *app = [UIApplication sharedApplication];
 
-        if(!app.statusBarHidden)
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        switch (orientation)
         {
-            float statusBarHeight = MIN(app.statusBarFrame.size.width, app.statusBarFrame.size.height);
+            case UIInterfaceOrientationPortrait:
+            case UIInterfaceOrientationPortraitUpsideDown:
+                break;
+            case UIInterfaceOrientationLandscapeLeft:
+            case UIInterfaceOrientationLandscapeRight:
+            {
+                float statusBarHeight = 0;
+                if(!app.statusBarHidden)
+                    statusBarHeight = MIN(app.statusBarFrame.size.width, app.statusBarFrame.size.height);
 
-            // IMPORTANT: The originalWebViewBounds variable represents the original frame as if the app was started in
-            //            portrait mode.
-            originalWebViewBounds = CGRectMake(screenBounds.origin.x,
-                                               screenBounds.origin.y + statusBarHeight,
-                                               screenBounds.size.width,
-                                               screenBounds.size.height - statusBarHeight);
+                originalWebViewFrame = CGRectMake(originalWebViewFrame.origin.y,
+                                                  originalWebViewFrame.origin.x,
+                                                  originalWebViewFrame.size.height + statusBarHeight,
+                                                  originalWebViewFrame.size.width - statusBarHeight);
+                break;
+            }
+            default:
+                NSLog(@"Unknown orientation: %d", orientation);
+                break;
         }
 
         navBarHeight = 44.0f;
@@ -112,7 +120,7 @@
     return backButtonItem;
 }
 
--(void)correctWebViewBounds
+-(void)correctWebViewFrame
 {
     if(!navBar)
         return;
@@ -146,22 +154,22 @@
     // IMPORTANT: Below code is the same in both the navigation and tab bar plugins!
     // -----------------------------------------------------------------------------
 
-    CGFloat left = originalWebViewBounds.origin.x;
-    CGFloat right = left + originalWebViewBounds.size.width;
-    CGFloat top = originalWebViewBounds.origin.y;
-    CGFloat bottom = top + originalWebViewBounds.size.height;
+    CGFloat left = originalWebViewFrame.origin.x;
+    CGFloat right = left + originalWebViewFrame.size.width;
+    CGFloat top = originalWebViewFrame.origin.y;
+    CGFloat bottom = top + originalWebViewFrame.size.height;
 
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     switch (orientation)
     {
         case UIInterfaceOrientationPortrait:
         case UIInterfaceOrientationPortraitUpsideDown:
-            // No need to change width/height from original bounds
+            // No need to change width/height from original frame
             break;
         case UIInterfaceOrientationLandscapeLeft:
         case UIInterfaceOrientationLandscapeRight:
-            right = left + originalWebViewBounds.size.height + 20.0f;
-            bottom = top + originalWebViewBounds.size.width - 20.0f;
+            right = left + originalWebViewFrame.size.height + 20.0f;
+            bottom = top + originalWebViewFrame.size.width - 20.0f;
             break;
         default:
             NSLog(@"Unknown orientation: %d", orientation);
@@ -179,9 +187,9 @@
             top += tabBarHeight;
     }
 
-    CGRect webViewBounds = CGRectMake(left, top, right - left, bottom - top);
+    CGRect webViewFrame = CGRectMake(left, top, right - left, bottom - top);
 
-    [self.webView setFrame:webViewBounds];
+    [self.webView setFrame:webViewFrame];
 
     // -----------------------------------------------------------------------------
 
@@ -190,9 +198,9 @@
     if(navBarShown)
     {
         if(tabBarAtBottom)
-            [navBar setFrame:CGRectMake(left, originalWebViewBounds.origin.y, right - left, navBarHeight)];
+            [navBar setFrame:CGRectMake(left, originalWebViewFrame.origin.y, right - left, navBarHeight)];
         else
-            [navBar setFrame:CGRectMake(left, originalWebViewBounds.origin.y + tabBarHeight, right - left, navBarHeight)];
+            [navBar setFrame:CGRectMake(left, originalWebViewFrame.origin.y + tabBarHeight, right - left, navBarHeight)];
     }
 }
 
@@ -237,7 +245,7 @@
 
     [navBarController setDelegate:self];
 
-    [[navBarController view] setFrame:CGRectMake(0, 0, originalWebViewBounds.size.width, navBarHeight)];
+    [[navBarController view] setFrame:CGRectMake(0, 0, originalWebViewFrame.size.width, navBarHeight)];
     [[[self webView] superview] addSubview:[navBarController view]];
     [navBar setHidden:YES];
 }
@@ -394,7 +402,7 @@
     if ([navBar isHidden])
     {
         [navBar setHidden:NO];
-        [self correctWebViewBounds];
+        [self correctWebViewFrame];
     }
 }
 
@@ -404,7 +412,7 @@
     if (navBar && ![navBar isHidden])
     {
         [navBar setHidden:YES];
-        [self correctWebViewBounds];
+        [self correctWebViewFrame];
     }
 }
 
@@ -415,7 +423,7 @@
  */
 - (void)resize:(CDVInvokedUrlCommand*)command
 {
-    [self correctWebViewBounds];
+    [self correctWebViewFrame];
 }
 
 -(void) setTitle:(CDVInvokedUrlCommand*)command
