@@ -22,7 +22,7 @@ function TabBar() {
  *   - tintColorRgba: Tint color for the bar itself (value as above)
  */
 TabBar.prototype.create = function(options) {
-    cordova.exec("TabBar.create", options);
+    cordova.exec("TabBar.create", options || {});
 };
 
 /**

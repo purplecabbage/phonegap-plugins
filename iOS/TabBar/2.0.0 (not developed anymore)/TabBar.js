@@ -21,7 +21,7 @@ function TabBar() {
  *     color as string e.g. '255,0,0,128' for 50% transparent red. This is only supported on iOS 5 or newer.
  */
 TabBar.prototype.create = function(options) {
-    cordova.exec("TabBar.create", options);
+    cordova.exec("TabBar.create", options || {});
 };
 
 /**
