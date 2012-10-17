@@ -22,6 +22,7 @@ Using this plugin requires [Cordova iOS](https://github.com/apache/incubator-cor
 The MIT License
 
 Copyright (c) 2012 Dov Goldberg
+
 EMAIL: dov.goldberg@ogonium.com   
 WEBSITE: http://www.ogonium.com
 
