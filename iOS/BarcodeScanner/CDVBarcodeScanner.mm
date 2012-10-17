@@ -647,13 +647,16 @@ parentViewController:(UIViewController*)parentViewController
 }
 
 //--------------------------------------------------------------------------
-- (void)viewDidAppear:(BOOL)animated {
-    [self startCapturing];
-    
+- (void)viewWillAppear:(BOOL)animated {
     // this fixes the bug when the statusbar is landscape, and the preview layer
     // starts up in portrait (not filling the whole view)
     self.processor.previewLayer.frame = self.view.bounds;
+}
 
+//--------------------------------------------------------------------------
+- (void)viewDidAppear:(BOOL)animated {
+    [self startCapturing];
+    
     [super viewDidAppear:animated];
 }
 
