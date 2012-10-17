@@ -40,6 +40,9 @@ Now change your main activity (the one deriving from DroidGap) like this:
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
+            // Show the title bar, or else the ActionBar will be null on Android 4.x
+            super.setBooleanProperty("showTitle", true);
+
             super.onCreate(savedInstanceState);
 
             ActionBarSherlockTabBarPlugin.setOnInitListener(this);
