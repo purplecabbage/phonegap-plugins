@@ -85,7 +85,7 @@
 //------------------------------------------------------------------------------
 // view controller for the ui
 //------------------------------------------------------------------------------
-@interface CDVbcsViewController : UIViewController {}
+@interface CDVbcsViewController : UIViewController <CDVBarcodeScannerOrientationDelegate> {}
 @property (nonatomic, retain) CDVbcsProcessor*  processor;
 @property (nonatomic, retain) NSString*        alternateXib;
 @property (nonatomic)         BOOL             shutterPressed;
