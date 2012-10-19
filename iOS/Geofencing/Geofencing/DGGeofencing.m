@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Geofencing.h"
+#import "DGGeofencing.h"
 
 @implementation DGLocationData
 
@@ -19,6 +19,7 @@
 	{
         self.locationInfo = nil;
         self.locationCallbacks = nil;
+        [CDVPluginResult setVerbose:YES];
     }
     return self;
 }
@@ -31,13 +32,13 @@
 
 @end
 
-@implementation Geofencing
+@implementation DGGeofencing
 
 @synthesize locationManager, locationData;
 
 - (CDVPlugin*) initWithWebView:(UIWebView*)theWebView
 {
-    self = (Geofencing*)[super initWithWebView:(UIWebView*)theWebView];
+    self = (DGGeofencing*)[super initWithWebView:(UIWebView*)theWebView];
     if (self) 
 	{
         self.locationManager = [[[CLLocationManager alloc] init] autorelease];
@@ -113,6 +114,7 @@
 }
 
 - (void) saveGeofenceCallbackId:(NSString *) callbackId {
+    NSLog(@"callbackId: %@", callbackId);
     if (!self.locationData) {
         self.locationData = [[[DGLocationData alloc] init] autorelease];
     }
@@ -133,7 +135,7 @@
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:posError];
     NSString *callbackId = [self.locationData.locationCallbacks dequeue];
     if (callbackId) {
-        [super writeJavascript:[result toSuccessCallbackString:callbackId]];
+        [self writeJavascript:[result toSuccessCallbackString:callbackId]];
     }
 }
 
@@ -145,16 +147,15 @@
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:posError];
     NSString *callbackId = [self.locationData.locationCallbacks dequeue];
     if (callbackId) {
-        [super writeJavascript:[result toErrorCallbackString:callbackId]];
+        [self writeJavascript:[result toErrorCallbackString:callbackId]];
     }
 }
 
 #pragma mark Plugin Functions
 
-- (void)addRegion:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options {
+- (void)addRegion:(CDVInvokedUrlCommand*)command {
     
-    NSUInteger argc = [arguments count];
-    NSString* callbackId = (argc > 0)? [arguments objectAtIndex:0] : @"INVALID";
+    NSString* callbackId = command.callbackId;
     
     [self saveGeofenceCallbackId:callbackId];
     
@@ -198,30 +199,56 @@
 		[self returnLocationError:REGIONMONITORINGPERMISSIONDENIED withMessage: @"User has restricted the use of region monitoring"];
         return;
     }
-    
-    [self addRegion:options];
+    NSMutableDictionary *options;
+    [command legacyArguments:nil andDict:&options];
+    [self addRegionToMonitor:options];
     
     [self returnRegionSuccess];
 }
 
-- (void) addRegion:(NSMutableDictionary *)params {
+- (void) getPendingRegionUpdates:(CDVInvokedUrlCommand*)command {
+    NSString* callbackId = command.callbackId;
+    
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSString *finalPath = [path stringByAppendingPathComponent:@"notifications.dg"];
+    NSMutableArray *updates = [NSMutableArray arrayWithContentsOfFile:finalPath];
+    
+    if (updates) {
+        NSError *error;
+        [[NSFileManager defaultManager] removeItemAtPath:finalPath error:&error];
+    } else {
+        updates = [NSMutableArray array];
+    }
+    
+    NSMutableDictionary* posError = [NSMutableDictionary dictionaryWithCapacity:3];
+    [posError setObject: [NSNumber numberWithInt: CDVCommandStatus_OK] forKey:@"code"];
+    [posError setObject: @"Region Success" forKey: @"message"];
+    [posError setObject: updates forKey: @"pendingupdates"];
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:posError];
+    if (callbackId) {
+        [self writeJavascript:[result toSuccessCallbackString:callbackId]];
+    }
+    NSLog(@"pendingupdates: %@", updates);
+}
+
+- (void) addRegionToMonitor:(NSMutableDictionary *)params {
     // Parse Incoming Params
     NSString *regionId = [params objectForKey:KEY_REGION_ID];
-    NSString *latitude = [params objectForKey:KEY_PROJECT_LAT];
-    NSString *longitude = [params objectForKey:KEY_PROJECT_LNG];
+    NSString *latitude = [params objectForKey:KEY_REGION_LAT];
+    NSString *longitude = [params objectForKey:KEY_REGION_LNG];
+    double radius = [[params objectForKey:KEY_REGION_RADIUS] doubleValue];
     
     CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]);
-    CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:coord radius:10.0 identifier:regionId];
+    CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:coord radius:radius identifier:regionId];
     [self.locationManager startMonitoringForRegion:region desiredAccuracy:kCLLocationAccuracyBestForNavigation];
     [region release];
 }
 
-- (void) removeRegion:(NSMutableDictionary *)params {
+- (void) removeRegionToMonitor:(NSMutableDictionary *)params {
     // Parse Incoming Params
     NSString *regionId = [params objectForKey:KEY_REGION_ID];
-    NSString *latitude = [params objectForKey:KEY_PROJECT_LAT];
-    NSString *longitude = [params objectForKey:KEY_PROJECT_LNG];
-    //NSString *projectName = [options objectForKey:KEY_PROJECT_NAME];
+    NSString *latitude = [params objectForKey:KEY_REGION_LAT];
+    NSString *longitude = [params objectForKey:KEY_REGION_LNG];
     
     CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]);
     CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:coord radius:10.0 identifier:regionId];
@@ -229,10 +256,9 @@
     [region release];
 }
 
-- (void)removeRegion:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options {
+- (void)removeRegion:(CDVInvokedUrlCommand*)command {
     
-    NSUInteger argc = [arguments count];
-    NSString* callbackId = (argc > 0)? [arguments objectAtIndex:0] : @"INVALID";
+    NSString* callbackId = command.callbackId;
     
     [self saveGeofenceCallbackId:callbackId];
     
@@ -276,10 +302,30 @@
 		[self returnLocationError:REGIONMONITORINGPERMISSIONDENIED withMessage: @"User has restricted the use of region monitoring"];
         return;
     }
-    
-    [self removeRegion:options];
+    NSMutableDictionary *options;
+    [command legacyArguments:nil andDict:&options];
+    [self removeRegionToMonitor:options];
     
     [self returnRegionSuccess];
+}
+
+- (void)getWatchedRegionIds:(CDVInvokedUrlCommand*)command {
+    NSString* callbackId = command.callbackId;
+    
+    NSSet *regions = self.locationManager.monitoredRegions;
+    NSMutableArray *watchedRegions = [NSMutableArray array];
+    for (CLRegion *region in regions) {
+        [watchedRegions addObject:region.identifier];
+    }
+    NSMutableDictionary* posError = [NSMutableDictionary dictionaryWithCapacity:3];
+    [posError setObject: [NSNumber numberWithInt: CDVCommandStatus_OK] forKey:@"code"];
+    [posError setObject: @"Region Success" forKey: @"message"];
+    [posError setObject: watchedRegions forKey: @"regionids"];
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:posError];
+    if (callbackId) {
+        [self writeJavascript:[result toSuccessCallbackString:callbackId]];
+    }
+    NSLog(@"watchedRegions: %@", watchedRegions);
 }
 
 #pragma mark Core Location Delegates
@@ -291,23 +337,13 @@
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:posError];
     NSString *callbackId = [self.locationData.locationCallbacks dequeue];
     if (callbackId) {
-        [super writeJavascript:[result toErrorCallbackString:callbackId]];
+        [self writeJavascript:[result toErrorCallbackString:callbackId]];
     }
-}
-
-- (void) locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    [super writeJavascript:[NSString stringWithFormat:@"alert('Entered: %@')", region.identifier]];
-}
-
-- (void) locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-    [super writeJavascript:[NSString stringWithFormat:@"alert('Left: %@')", region.identifier]];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
-    [super writeJavascript:[NSString stringWithFormat:@"Error: %@", error.description]];
+    [self writeJavascript:[NSString stringWithFormat:@"Error: %@", error.description]];
 }
 
 @end
