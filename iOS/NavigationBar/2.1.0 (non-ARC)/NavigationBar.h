@@ -13,7 +13,7 @@
     // Represents frame of web view as if started in portrait mode. Coordinates are relative to the superview. With
     // Cordova 2.1.0, frame.origin.y=0 means directly under the status bar, while in older versions it would have been
     // frame.origin.y=20.
-	CGRect	originalWebViewFrame;
+    CGRect  originalWebViewFrame;
 
     CGFloat navBarHeight;
     CGFloat tabBarHeight;
@@ -35,8 +35,10 @@
 - (void)rightButtonTapped;
 
 - (void)hideLeftButton:(CDVInvokedUrlCommand*)command;
-- (void)showRightButton:(CDVInvokedUrlCommand*)command;
+- (void)setLeftButtonTitle:(CDVInvokedUrlCommand*)command;
+- (void)showLeftButton:(CDVInvokedUrlCommand*)command;
 - (void)hideLeftButton:(CDVInvokedUrlCommand*)command;
+- (void)setRightButtonTitle:(CDVInvokedUrlCommand*)command;
 - (void)showRightButton:(CDVInvokedUrlCommand*)command;
 
 @end

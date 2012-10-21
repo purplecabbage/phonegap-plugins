@@ -364,22 +364,48 @@
 
 - (void)hideLeftButton:(CDVInvokedUrlCommand*)command
 {
-    [[navBarController navItem] setLeftBarButtonItem:nil];
+    const NSDictionary *options = [command.arguments objectAtIndex:0];
+    bool animated = [[options objectForKey:@"animated"] boolValue];
+
+    [[navBarController navItem] setLeftBarButtonItem:nil animated:animated];
+}
+
+- (void)setLeftButtonTitle:(CDVInvokedUrlCommand*)command
+{
+    NSString *title = [command.arguments objectAtIndex:0];
+    if(navBarController.navItem.leftBarButtonItem)
+        navBarController.navItem.leftBarButtonItem.title = title;
 }
 
 - (void)showLeftButton:(CDVInvokedUrlCommand*)command
 {
-    [[navBarController navItem] setLeftBarButtonItem:[navBarController leftButton]];
+    const NSDictionary *options = [command.arguments objectAtIndex:0];
+    bool animated = [[options objectForKey:@"animated"] boolValue];
+
+    [[navBarController navItem] setLeftBarButtonItem:[navBarController leftButton] animated:animated];
 }
 
 - (void)hideRightButton:(CDVInvokedUrlCommand*)command
 {
-    [[navBarController navItem] setRightBarButtonItem:nil];
+    const NSDictionary *options = [command.arguments objectAtIndex:0];
+    bool animated = [[options objectForKey:@"animated"] boolValue];
+
+    [[navBarController navItem] setRightBarButtonItem:nil animated:animated];
+}
+
+- (void)setRightButtonTitle:(CDVInvokedUrlCommand*)command
+{
+    NSString *title = [command.arguments objectAtIndex:0];
+    if(navBarController.navItem.rightBarButtonItem)
+        navBarController.navItem.rightBarButtonItem.title = title;
 }
 
 - (void)showRightButton:(CDVInvokedUrlCommand*)command
 {
-    [[navBarController navItem] setRightBarButtonItem:[navBarController rightButton]];
+    const NSDictionary *options = [command.arguments objectAtIndex:0];
+    bool animated = [[options objectForKey:@"animated"] boolValue];
+
+    [[navBarController navItem] setRightBarButtonItem:[navBarController rightButton] animated:animated];
 }
 
 -(void) leftButtonTapped

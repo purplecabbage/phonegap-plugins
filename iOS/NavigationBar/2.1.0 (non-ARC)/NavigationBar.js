@@ -38,14 +38,30 @@ NavigationBar.prototype.setupLeftButton = function(title, image, onselect, optio
     cordova.exec("NavigationBar.setupLeftButton", title || "", image || "", options || {});
 };
 
-NavigationBar.prototype.hideLeftButton = function()
+/**
+ * @param options: May contain the key "animated" (boolean)
+ */
+NavigationBar.prototype.hideLeftButton = function(options)
 {
-    cordova.exec("NavigationBar.hideLeftButton");
+    options = options || {}
+    if(!("animated" in options))
+        options.animated = false
+
+    cordova.exec("NavigationBar.hideLeftButton", options)
 };
 
-NavigationBar.prototype.showLeftButton = function()
+NavigationBar.prototype.setLeftButtonTitle = function(title)
 {
-    cordova.exec("NavigationBar.showLeftButton");
+    cordova.exec("NavigationBar.setLeftButtonTitle", title)
+};
+
+NavigationBar.prototype.showLeftButton = function(options)
+{
+    options = options || {}
+    if(!("animated" in options))
+        options.animated = false
+
+    cordova.exec("NavigationBar.showLeftButton", options)
 };
 
 /**
@@ -67,14 +83,27 @@ NavigationBar.prototype.setupRightButton = function(title, image, onselect, opti
 };
 
 
-NavigationBar.prototype.hideRightButton = function()
+NavigationBar.prototype.hideRightButton = function(options)
 {
-    cordova.exec("NavigationBar.hideRightButton");
+    options = options || {}
+    if(!("animated" in options))
+        options.animated = false
+
+    cordova.exec("NavigationBar.hideRightButton", options)
 };
 
-NavigationBar.prototype.showRightButton = function()
+NavigationBar.prototype.setRightButtonTitle = function(title)
 {
-    cordova.exec("NavigationBar.showRightButton");
+    cordova.exec("NavigationBar.setRightButtonTitle", title)
+};
+
+NavigationBar.prototype.showRightButton = function(options)
+{
+    options = options || {}
+    if(!("animated" in options))
+        options.animated = false
+
+    cordova.exec("NavigationBar.showRightButton", options)
 };
 
 /**
@@ -113,9 +142,7 @@ NavigationBar.prototype.hide = function() {
 
 cordova.addConstructor(function()
 {
-	if(!window.plugins)
-	{
-		window.plugins = {};
-	}
-    window.plugins.navigationBar = new NavigationBar();
+    if(!window.plugins)
+        window.plugins = {}
+    window.plugins.navigationBar = new NavigationBar()
 });
