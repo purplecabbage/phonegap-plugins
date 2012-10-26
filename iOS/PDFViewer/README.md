@@ -3,7 +3,7 @@
 
 ![image](https://raw.github.com/RandyMcMillan/Cordova--iOS--PDFViewer-/master/pdfview.png)
 
-Usage is exactly like ChildBrowser except you send a bundled pdf file name instead of an external url
+Usage is like ChildBrowser except you send a bundled pdf file name instead of an external url
 
          <button onclick="cordova.exec('PDFViewerCommand.showPDF', 'CordovaBot.pdf');">Click to open  CordovaBot.pdf!</button>
 
