@@ -177,9 +177,9 @@
     tabBar.userInteractionEnabled = YES;
     tabBar.opaque = YES;
 
-    const NSDictionary *options = command ? [command.arguments objectAtIndex:0] : nil;
+    const id options = command ? [command.arguments objectAtIndex:0] : nil;
 
-    if(options)
+    if(options && options != [NSNull null])
     {
         id iconTint = [options objectForKey:@"selectedImageTintColorRgba"];
         id tint = [options objectForKey:@"tintColorRgba"];
@@ -217,9 +217,9 @@
 	if (!tabBar.hidden)
 		return;
 
-    const NSDictionary *options = [command.arguments objectAtIndex:0];
+    const id options = [command.arguments objectAtIndex:0];
 
-    if(options)
+    if(options && options != [NSNull null])
     {
         id tabBarHeightOpt = [options objectForKey:@"height"];
         id positionOpt = [options objectForKey:@"position"];
@@ -300,7 +300,7 @@
     if (!tabBar)
         [self create:nil];
 
-    const NSDictionary *options = [command.arguments objectAtIndex:4];
+    const id options = [command.arguments objectAtIndex:4];
 
     NSString  *name      = [command.arguments objectAtIndex:0];
     NSString  *title     = [command.arguments objectAtIndex:1];
@@ -330,7 +330,7 @@
     if (item == nil)
         item = [[UITabBarItem alloc] initWithTitle:title image:[UIImage imageNamed:imageName] tag:tag];
 
-    if(options)
+    if(options && options != [NSNull null])
     {
         id badgeOpt = [options objectForKey:@"badge"];
 
