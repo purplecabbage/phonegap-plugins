@@ -1,15 +1,24 @@
 ## PhoneGap AudioEncode Plugin ##
 by Lyle Pratt
+Updated Oct 2012 by Keenan Wyrobek for Cordova 2.1.0
 
 ## About this Plugin ##
 
-This plugin lets you easily convert WAV audio into M4A audio. It is useful when using Phonegap's audio capture or media recording functionality. Uploading WAV files on via cellular connections is not advised.  M4A encoded files are about 1/4 the size.
+This plugin lets you easily convert WAV audio into M4A audio. It is useful when using Phonegap's audio capture or media recording functionality. Uploading WAV files on via cellular connections is not advised.		M4A encoded files are		1/4 to 1/10 the size.
 
 ## Using the Plugin ##
 
-The plugin creates the object `window.plugins.AudioEncode` with one method `encodeAudio(pathToWavFile, success, fail)`. All parameters are required and it will crash if they are not included. The plugin will encode and save the audio in the same directory the WAV audio was in, then delete the WAV file on completion. If you encode `festMonkey.wav`, you'll get `festMonkey.m4a`.
+The plugin creates a global CompressAudio(originalSrc, success, fail, obj) method.
+		originalSrc: (required) This is a string path to the local file to encode. This is typically the fullPath property of the entry passed to the success of a fileSystem.root.getFile call
+		success: (required) This function is called when the encoding has completed successfully. It will be called in one of two ways.
+				if obj is passed into CompressAudio - success(m4ASource, obj)
+				if obj is not passed into CompressAudio - success(m4ASource)
+		fail: (required) This function is called on encode failure and will be passed a statusCode.
+		obj: (optional) this object is passed through to success function.
 
-		window.plugins.AudioEncode.encodeAudio(pathToWavFile, success, fail);
+Example:
+
+		CompressAudio(pathToWavFile, success, fail);
 
 		var success = function(newM4APath) {
 			//Do something with your new encoded audio (upload it?)
@@ -23,9 +32,9 @@ The plugin creates the object `window.plugins.AudioEncode` with one method `enco
 
 ## Adding the Plugin to your project ##
 
-Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap-iphone).
+Using this plugin requires [iPhone PhoneGap](http://github.com/phonegap/phonegap-iphone)
 
-1. Make sure your PhoneGap Xcode project has been updated.
+1. This plug in has been tested with Cordova/PhoneGap 2.1.0
 2. Add the .h and .m files to your Plugins folder in your project.
 3. Add the .js files to your "www" folder on disk, and add reference(s) to the .js files in your html file(s).
 

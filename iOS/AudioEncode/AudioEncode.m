@@ -2,7 +2,7 @@
 //  AudioEncode.m
 //
 //  By Lyle Pratt, September 2011.
-//    Updated Oct 2012 by Keenan Wyrobek for Cordova 2.0.0
+//    Updated Oct 2012 by Keenan Wyrobek for Cordova 2.1.0
 //  MIT licensed
 //
 
