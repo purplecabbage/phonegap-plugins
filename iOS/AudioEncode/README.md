@@ -1,20 +1,38 @@
 ## PhoneGap AudioEncode Plugin ##
+<<<<<<< HEAD
 by Lyle Pratt
 Updated Oct 2012 by Keenan Wyrobek for Cordova 2.1.0
 
 ## About this Plugin ##
 
 This plugin lets you easily convert WAV audio into M4A audio. It is useful when using Phonegap's audio capture or media recording functionality. Uploading WAV files on via cellular connections is not advised.		M4A encoded files are		1/4 to 1/10 the size.
+=======
+ * by Lyle Pratt
+ * Updated Oct 2012 by Keenan Wyrobek for Cordova 2.1.0
+
+## About this Plugin ##
+
+This plugin lets you easily convert WAV audio into M4A audio. It is useful when using Phonegap's audio capture or media recording functionality. Uploading WAV files on via cellular connections is not advised. M4A encoded files are 1/4 to 1/10 the size.
+>>>>>>> Updated AudioEncode for Cordova 2.1.0 and updated readme
 
 ## Using the Plugin ##
 
 The plugin creates a global CompressAudio(originalSrc, success, fail, obj) method.
+<<<<<<< HEAD
 		originalSrc: (required) This is a string path to the local file to encode. This is typically the fullPath property of the entry passed to the success of a fileSystem.root.getFile call
 		success: (required) This function is called when the encoding has completed successfully. It will be called in one of two ways.
 				if obj is passed into CompressAudio - success(m4ASource, obj)
 				if obj is not passed into CompressAudio - success(m4ASource)
 		fail: (required) This function is called on encode failure and will be passed a statusCode.
 		obj: (optional) this object is passed through to success function.
+=======
+ * originalSrc: (required) This is a string path to the local file to encode. This is typically the fullPath property of the entry passed to the success of a fileSystem.root.getFile call
+ * success: (required) This function is called when the encoding has completed successfully. It will be called in one of two ways.
+  * if obj is passed into CompressAudio - success(m4ASource, obj)
+  * if obj is not passed into CompressAudio - success(m4ASource)
+ * fail: (required) This function is called on encode failure and will be passed a statusCode.
+ * obj: (optional) this object is passed through to success function.
+>>>>>>> Updated AudioEncode for Cordova 2.1.0 and updated readme
 
 Example:
 
