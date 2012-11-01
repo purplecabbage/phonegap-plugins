@@ -3,24 +3,22 @@
 //  Copyright 2012, Randy McMillan
 
 #import "ChildBrowserCommand.h"
-
-#ifdef CORDOVA_FRAMEWORK
 #import <Cordova/CDVViewController.h>
-#else
-#import "Cordova/CDVViewController.h"
-#endif
-
 
 @implementation ChildBrowserCommand
 
 @synthesize childBrowser;
 
-- (void) showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options // args: url
+- (void)showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args: url
 {
-    if(childBrowser == NULL)
-    {
-	childBrowser = [[ ChildBrowserViewController alloc ] initWithScale:FALSE ];
-	childBrowser.delegate = self;
+    if (self.childBrowser == nil) {
+#if __has_feature(objc_arc)
+        self.childBrowser = [[ChildBrowserViewController alloc] initWithScale:NO];
+#else
+        self.childBrowser = [[[ChildBrowserViewController alloc] initWithScale:NO] autorelease];
+#endif
+        self.childBrowser.delegate = self;
+        self.childBrowser.orientationDelegate = self.viewController;
     }
 
     /* // TODO: Work in progress
@@ -28,49 +26,53 @@
      NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
      */
 
-#ifdef CORDOVA_FRAMEWORK
-    CDVViewController* cont = (CDVViewController*)[ super viewController ];
-    childBrowser.supportedOrientations = cont.supportedOrientations;
-    [ cont presentModalViewController:childBrowser animated:YES ];
-#endif
+    [self.viewController presentModalViewController:childBrowser animated:YES];
 
-    NSString *url = (NSString*) [arguments objectAtIndex:0];
+    NSString* url = (NSString*)[arguments objectAtIndex:0];
 
-    [childBrowser loadURL:url  ];
-
-}
-- (void) getPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options {
-    NSString *url = (NSString*) [arguments objectAtIndex:0];
-    [childBrowser loadURL:url  ];
+    [self.childBrowser loadURL:url];
 }
 
--(void) close:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options // args: url
+- (void)getPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
-    [ childBrowser closeBrowser];
+    NSString* url = (NSString*)[arguments objectAtIndex:0];
 
+    [self.childBrowser loadURL:url];
 }
 
--(void) onClose
+- (void)close:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options // args: url
 {
-    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onClose();",@""];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+    [self.childBrowser closeBrowser];
 }
 
--(void) onOpenInSafari
+- (void)onClose
 {
-    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onOpenExternal();",@""];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"window.plugins.childBrowser.onClose();"];
 }
 
-
--(void) onChildLocationChange:(NSString*)newLoc
+- (void)onOpenInSafari
 {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"window.plugins.childBrowser.onOpenExternal();"];
+}
 
-    NSString* tempLoc = [NSString stringWithFormat:@"%@",newLoc];
+- (void)onChildLocationChange:(NSString*)newLoc
+{
+    NSString* tempLoc = [NSString stringWithFormat:@"%@", newLoc];
     NSString* encUrl = [tempLoc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
-    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onLocationChange('%@');",encUrl];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onLocationChange('%@');", encUrl];
 
+    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 }
+
+
+#if !__has_feature(objc_arc)
+- (void)dealloc
+{
+    self.childBrowser = nil;
+
+    [super dealloc];
+}
+#endif
+
 @end

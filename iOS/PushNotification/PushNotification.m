@@ -8,11 +8,7 @@
 // MIT Licensed
 
 #import "PushNotification.h"
-#ifdef CORDOVA_FRAMEWORK
-	#import <Cordova/JSONKit.h>
-#else
-	#import "JSONKit.h"
-#endif
+#import <Cordova/JSONKit.h>
 
 @implementation PushNotification
 
@@ -84,7 +80,7 @@
 - (void)didReceiveRemoteNotification:(NSDictionary*)userInfo {
 	DLog(@"didReceiveRemoteNotification:%@", userInfo);
 
-	NSString *jsStatement = [NSString stringWithFormat:@"window.plugins.pushNotification.notificationCallback(%@);", [userInfo JSONString]];
+	NSString *jsStatement = [NSString stringWithFormat:@"window.plugins.pushNotification.notificationCallback(%@);", [userInfo cdvjk_JSONString]];
 	[self writeJavascript:jsStatement];
 }
 
