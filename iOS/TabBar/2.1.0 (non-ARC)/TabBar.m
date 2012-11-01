@@ -371,7 +371,9 @@
         id badgeOpt = [options objectForKey:@"badge"];
 
         if(badgeOpt && badgeOpt != [NSNull null])
-            item.badgeValue = [badgeOpt stringValue];
+            item.badgeValue = [NSString stringWithFormat:@"%@", badgeOpt];
+        else
+            item.badgeValue = nil;
     }
 }
 
