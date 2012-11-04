@@ -15,6 +15,8 @@ by [Olivier Louvignes](http://olouv.com)
 
 * There is a `Sencha Touch 2.0` plugin to easily leverage this plugin [here](https://github.com/mgcrea/sencha-touch-plugins/blob/master/CordovaMessageBox.js)
 
+[![Screenshot](https://raw.github.com/mgcrea/cordova-messagebox/master/samples/ios/sample.png)](https://github.com/mgcrea/cordova-messagebox/tree/master)
+
 ## LICENSE ##
 
     The MIT License

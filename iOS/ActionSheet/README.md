@@ -11,6 +11,10 @@ by [Olivier Louvignes](http://olouv.com)
 
 * This plugin is built for Cordova >= v2.1.0 with ARC.
 
+* There is a `Sencha Touch 2.0` plugin to easily leverage this plugin [here](https://github.com/mgcrea/sencha-touch-plugins/blob/master/CordovaActionSheet.js)
+
+[![Screenshot](https://raw.github.com/mgcrea/cordova-actionsheet/master/samples/ios/sample.png)](https://github.com/mgcrea/cordova-actionsheet/tree/master)
+
 ## LICENSE ##
 
     The MIT License
