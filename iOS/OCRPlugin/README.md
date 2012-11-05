@@ -1,5 +1,5 @@
 PhonegapOCRPlugin
 =================
-The latest version can be downloaded from:
+This plugin has been moved to:
 
 https://github.com/jcesarmobile/PhonegapOCRPlugin
