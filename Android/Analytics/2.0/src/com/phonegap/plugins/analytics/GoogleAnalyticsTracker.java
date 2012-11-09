@@ -78,6 +78,7 @@ public class GoogleAnalyticsTracker extends Plugin {
 	}
 
 	private void setCustomVar(int index, String label, String value, int scope) {
-		tracker.setCustomVar(index, label, value, scope);
+		if(scope > 0) tracker.setCustomVar(index, label, value, scope);
+		else tracker.setCustomVar(index, label, value);
 	}
 }
