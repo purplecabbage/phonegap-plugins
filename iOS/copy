@@ -1,0 +1,125 @@
+#!/bin/bash
+set -e
+
+help () {
+    cat<<EOF
+
+Usage: quick-vim [install|uninstall|upgrade|help]
+
+Commands:
+
+    install     installs phonegap iOS plugins from the author's git repo 
+                listed in the bundles.txt
+
+    uninstall   moves ~/phonegap-plugins/iOS to ~/backup/phonegap-plugins/iOS 
+                ment to be non destructive while testing
+
+    upgrade     TODO: over write repos
+
+    help        print this message
+
+EOF
+}
+
+
+install () {
+
+    # create backup folder
+    if [ -e ~/backup/phonegap-plugins ]
+    then
+        echo 'backup phonegap-plugins folder exists'
+else
+mkdir -p ~/backup/phonegap-plugins
+mkdir -p ~/backup/phonegap-plugins/iOSTEST
+fi
+
+#create ~/phonegap-plugins if doesnt exist
+    if [ -e ~/phonegap-plugins ]
+    then
+        echo 'phonegap-plugins folder exists'
+else
+mkdir -p ~/phonegap-plugins
+fi
+
+#create ~/phonegap-plugins/iOSTEST if doesnt exist
+    if [ -e ~/phonegap-plugins/iOSTEST ]
+then
+    echo 'phonegap-plugins/iOSTEST folder exists'
+else
+mkdir -p ~/phonegap-plugins/iOSTEST
+fi
+
+
+bundles=$(cat ./bundles.txt)
+cd ~/phonegap-plugins/iOSTEST
+for repo in $bundles; do
+    git clone $repo
+done
+
+}
+
+
+# if phonegap-plugins/iOS exists backs up /iOS
+# doesnt remove ~/phonegap-plugins/iOS
+
+backup () {
+    if [ -e ~/phonegap-plugins/iOSTEST ]
+    then
+echo 'copying ~/phonegap-plugins/iOSTEST to ~/backup/phonegap-plugins/iOSTEST'
+        cp ~/phonegap-plugins/iOSTEST ~/backup/phonegap-plugins/iOSTEST
+    else
+   echo '' 
+    fi
+}
+
+
+# if phonegap-plugins/iOS exists clobbers /iOS
+# doesnt remove ~/phonegap-plugins
+
+uninstall () {
+
+  #  backup
+
+    if [ -e ~/phonegap-plugins/iOSTEST ]
+    then
+echo 'moving ~/phonegap-plugins/iOSTEST to ~/backup/phonegap-plugins/iOSTEST'
+        mv ~/phonegap-plugins/iOSTEST ~/backup/phonegap-plugins
+        #rm  ~/phonegap-plugins/iOS
+    else
+echo 'moving ~/phonegap-plugins/iOSTEST to ~/backup/phonegap-plugins/iOSTEST'
+    fi
+
+    cd ~/backup/phonegap-plugins/iOSTEST
+    ls
+}
+
+
+# kills everything, pulls latest from git, installs it
+upgrade () {
+
+ #   uninstall
+ #   git pull
+ #    install
+
+ echo 'TODO: upgrade'
+}
+
+
+
+
+# Test for a valid arg and execute it if so; otherwise show the help
+if [ "$1" != "" ]; then
+    wl=(install uninstall upgrade backup help)
+    for i in "${wl[@]}"
+    do
+        if [ "$i" == "$1" ]
+        then
+            $1
+            exit 0
+        fi
+    done
+fi
+
+# show help
+help
+exit 0
