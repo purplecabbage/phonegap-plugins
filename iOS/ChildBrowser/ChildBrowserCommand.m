@@ -4,7 +4,6 @@
 
 #import "ChildBrowserCommand.h"
 #import <Cordova/CDVViewController.h>
-#import <AVFoundation/AVFoundation.h>
 
 @implementation ChildBrowserCommand
 
@@ -12,15 +11,6 @@
 
 - (void)showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args: url
 {
-
-    /* setting audio session category to "Playback" (since iOS 6) */
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    NSError *setCategoryError = nil;
-    BOOL ok = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
-    if (!ok) {
-        NSLog(@"Error setting AVAudioSessionCategoryPlayback: %@", setCategoryError);
-    };
-
     if (self.childBrowser == nil) {
 #if __has_feature(objc_arc)
         self.childBrowser = [[ChildBrowserViewController alloc] initWithScale:NO];
