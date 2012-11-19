@@ -25,6 +25,7 @@ Plugin repositories listed in <b>[bundles.txt](https://github.com/phonegap/phone
     https://github.com/shazron/PayPalPlugin.git
     https://github.com/shazron/iAdPlugin.git
     https://github.com/RandyMcMillan/PDFViewer.git
+    https://github.com/RandyMcMillan/CDVPlugin.git
     
 Add your url to the list located in <b>[bundles.txt](https://github.com/phonegap/phonegap-plugins/blob/master/iOS/bin/bundles.txt)</b> and submit a pull request.
 
