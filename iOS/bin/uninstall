@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+
+help () {
+    cat<<EOF
+
+Usage: uninstall [help]
+
+Commands:
+
+    help        print this message
+
+EOF
+}
+
+#create ~/phonegap-plugins if doesnt exist
+    if [ -e ~/phonegap-plugins ]
+    then
+    echo 'phonegap-plugins folder exists and not affected by this command'
+    fi
+
+#create ~/phonegap-plugins/iOSTEST if doesnt exist
+    if [ -e ~/phonegap-plugins/iOSTEST ]
+    then
+    echo 'phonegap-plugins/iOSTEST folder exists'
+    mkdir ~/Desktop/delete
+    mv ~/phonegap-plugins/iOSTEST ~/Desktop/delete
+    fi
+
+
+# Test for a valid arg and execute it if so; otherwise show the help
+if [ "$1" != "" ]; then
+    wl=(help)
+    for i in "${wl[@]}"
+    do
+        if [ "$i" == "$1" ]
+        then
+            $1
+            exit 0
+        fi
+    done
+fi
+
+# show help
+help
+exit 0
