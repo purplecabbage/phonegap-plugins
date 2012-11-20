@@ -34,13 +34,13 @@ var powerman = window.plugins.powerManagement;
 
 There are three available methods to call:
 
-`powerman.acquire(successCallback, failureCallback)`
+<pre>powerman.acquire(successCallback, failureCallback)</pre>
 Acquires a 'wake-lock', preventing the device screen from going to sleep.
 
-`powerman.dim(successCallback, failureCallback)`
+<pre>powerman.dim(successCallback, failureCallback)</pre>
 Acquires a partial 'wake-lock', allowing the screen to dim but preventing the device from going to sleep.
 
-`powerman.release(successCallback, failureCallback)`
+<pre>powerman.release(successCallback, failureCallback)</pre>
 Release an acquired 'wake-lock'. Device able to sleep again.
 
 License
