@@ -27,9 +27,8 @@
 
 package com.phonegap.plugins.statusBarNotification;
 
-import org.apache.cordova.api.Plugin;
-import org.apache.cordova.api.PluginResult;
-import org.apache.cordova.api.PluginResult.Status;
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -39,7 +38,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-public class StatusBarNotification extends Plugin {
+public class StatusBarNotification extends CordovaPlugin {
     //	Action to execute
     public static final String NOTIFY = "notify";
     public static final String CLEAR = "clear";
@@ -49,13 +48,13 @@ public class StatusBarNotification extends Plugin {
      *
      * 	@param action		Action to execute
      * 	@param data			JSONArray of arguments to the plugin
-     *  @param callbackId	The callback id used when calling back into JavaScript
+     *  @param callbackContext	The callback context used when calling back into JavaScript.
      *
      *  @return				A PluginRequest object with a status
      * */
     @Override
-    public PluginResult execute(String action, JSONArray data, String callbackId) {
-        PluginResult result = null;
+    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
+        boolean actionValid = true;
         if (NOTIFY.equals(action)) {
             try {
                 String tag = data.getString(0);
@@ -65,27 +64,25 @@ public class StatusBarNotification extends Plugin {
                 Log.d("NotificationPlugin", "Notification: " + tag + ", " + title + ", " + body);
                 int notificationFlag = getFlagValue(flag);
                 showNotification(tag, title, body, notificationFlag);
-                result = new PluginResult(Status.OK);
             } catch (JSONException jsonEx) {
                 Log.d("NotificationPlugin", "Got JSON Exception "
                         + jsonEx.getMessage());
-                result = new PluginResult(Status.JSON_EXCEPTION);
+                actionValid = false;
             }
         } else if (CLEAR.equals(action)){
             try {
                 String tag = data.getString(0);
                 Log.d("NotificationPlugin", "Notification cancel: " + tag);
                 clearNotification(tag);
-                result = new PluginResult(Status.OK);
             } catch (JSONException jsonEx) {
                 Log.d("NotificationPlugin", "Got JSON Exception " + jsonEx.getMessage());
-                result = new PluginResult(Status.JSON_EXCEPTION);
+                actionValid = false;
             }
         } else {
-            result = new PluginResult(Status.INVALID_ACTION);
+            actionValid = false;
             Log.d("NotificationPlugin", "Invalid action : "+action+" passed");
         }
-        return result;
+        return actionValid;
     }
 
     /**
@@ -148,7 +145,7 @@ public class StatusBarNotification extends Plugin {
         // The incoming Intent may or may not have been for a notification.
         String tag = intent.getStringExtra("notificationTag");
         if (tag != null) {
-            sendJavascript("window.Notification.callOnclickByTag('"+ tag + "')");
+        	 this.webView.sendJavascript("window.Notification.callOnclickByTag('"+ tag + "')");
         }
     }
 
