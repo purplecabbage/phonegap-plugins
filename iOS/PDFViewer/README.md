@@ -1,21 +1,31 @@
 ##PDFViewer for Cordova iOS
 
+PDFViewer is meant for one purpose.  To view PDFs that are included in your app.
 
-![image](https://raw.github.com/RandyMcMillan/Cordova--iOS--PDFViewer-/master/pdfview.png)
+"showPDF" usage is exactly like ChildBrowser's "showWebPage" except you send a bundled pdf file name instead of a url.
 
-Usage is like ChildBrowser except you send a bundled pdf file name instead of an external url
+Examples: 
 
-         <button onclick="cordova.exec('PDFViewerCommand.showPDF', 'CordovaBot.pdf');">Click to open  CordovaBot.pdf!</button>
+    <button onclick="cordova.exec('PDFViewerCommand.showPDF', 'CordovaBot.pdf');">Click to open  CordovaBot.pdf!</button>
 
-            <button onclick="cordova.exec('PDFViewerCommand.showPDF', 'readme.pdf');">Click to open  readme.pdf!</button>
+    <button onclick="cordova.exec('PDFViewerCommand.showPDF', 'readme.pdf');">Click to open  readme.pdf!</button>
 
 
 
 Add PDFViewerCommand | PDFViewerCommand to Cordova.plist
 
-![image](https://raw.github.com/RandyMcMillan/Cordova--iOS--PDFViewer-/master/Cordova.plist.png)
+![image](https://raw.github.com/RandyMcMillan/PDFViewer/master/Cordova.plist.png)
 
-This code is completely dependent on the Apache Cordova (formerly PhoneGap) project, hosted on [GitHub](http://github.com/apache)
+
+• PDFViewer is not meant to replace ChildBrowser.
+
+• PDFViewer only displays PDFs.
+
+<br>
+
+This code is dependent on the Apache Cordova (iOS) project. 
+
+[https://github.com/apache/incubator-cordova-ios.git](https://github.com/apache/incubator-cordova-ios)
 
 The MIT License
 
