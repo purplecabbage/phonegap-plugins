@@ -36,7 +36,7 @@ or
 - ccRecipients: a js array containing all the email addresses for CC field; can be null/empty
 - bccRecipients: a js array containing all the email addresses for BCC field; can be null/empty
 - isHtml: a bool value indicating if the body is HTML or plain text
-- <attachments>: a js array containing all full paths to the files you want to attach; can be null/empty
+- attachments: a js array containing all full paths to the files you want to attach; can be null/empty
 
 **Example**
 
