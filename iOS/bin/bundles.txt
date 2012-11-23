@@ -1,7 +1,0 @@
-https://github.com/shazron/KeychainPlugin.git
-https://github.com/shazron/TestFlightPlugin.git
-https://github.com/shazron/TorchPlugin.git
-https://github.com/shazron/PayPalPlugin.git
-https://github.com/shazron/iAdPlugin.git
-https://github.com/RandyMcMillan/PDFViewer.git
-https://github.com/RandyMcMillan/CDVPlugin.git
