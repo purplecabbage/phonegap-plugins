@@ -4,7 +4,8 @@ _Created by `Guido Sabatini`_
 
 Creates a modal dialog to give a waiting feedback to users
 You can only show and dismiss the dialog, it will block user interactions. You can set the text appearing in the dialog
-NOTE: this is not a progress dialog, you can not show progress
+
+**NOTE:** this is not a progress dialog, you can not show progress
 
     // To SHOW a modal waiting dialog
     window.plugins.waitingDialog.show("Your dialog text");
