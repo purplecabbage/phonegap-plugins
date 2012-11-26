@@ -4,6 +4,8 @@ It would be best for everyone if the individual authors of the plugins were able
 
 This also helps for the future whenever we decide to have a npm-like registry for Cordova plugins.
 
+http://shazronatadobe.wordpress.com/2012/11/07/cordova-plugins-put-them-in-your-own-repo-2/
+
 --
 
 This code is completely dependent on the Apache Cordova (formerly PhoneGap) project, hosted on [GitHub](http://github.com/apache)
