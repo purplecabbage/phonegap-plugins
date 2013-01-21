@@ -8,19 +8,21 @@
 
 package com.phonegap.plugins.barcodescanner;
 
-import org.apache.cordova.api.CallbackContext;
-import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
+
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 
 /**
  * This calls out to the ZXing barcode reader and returns the result.
  */
-public class BarcodeScanner extends CordovaPlugin {
+public class BarcodeScanner extends Plugin {
     private static final String SCAN = "scan";
     private static final String ENCODE = "encode";
     private static final String CANCELLED = "cancelled";
@@ -36,8 +38,6 @@ public class BarcodeScanner extends CordovaPlugin {
     private static final String EMAIL_TYPE = "EMAIL_TYPE";
     private static final String PHONE_TYPE = "PHONE_TYPE";
     private static final String SMS_TYPE = "SMS_TYPE";
-    
-    private CallbackContext cbContext;
 
     public static final int REQUEST_CODE = 0x0ba7c0de;
 
@@ -57,10 +57,9 @@ public class BarcodeScanner extends CordovaPlugin {
      * @param callbackId    The callback id used when calling back into JavaScript.
      * @return              A PluginResult object with a status and message.
      */
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-        
-        this.cbContext = callbackContext;
-    	
+    public PluginResult execute(String action, JSONArray args, String callbackId) {
+        this.callback = callbackId;
+
         if (action.equals(ENCODE)) {
             JSONObject obj = args.optJSONObject(0);
             if (obj != null) {
@@ -73,39 +72,33 @@ public class BarcodeScanner extends CordovaPlugin {
                 }
 
                 if (data == null) {
-                	callbackContext.error("User did not specify data to encode");
-                
-                    return false;
+                    return new PluginResult(PluginResult.Status.ERROR, "User did not specify data to encode");
                 }
 
                 encode(type, data);
             } else {
-            	callbackContext.error("User did not specify data to encode");
-            	
-                return false;
+                return new PluginResult(PluginResult.Status.ERROR, "User did not specify data to encode");
             }
         }
         else if (action.equals(SCAN)) {
-        	
-        	scan();
-        	
+            scan();
         } else {
-        	callbackContext.error("Invalid Action");
-        	
-            return false;
+            return new PluginResult(PluginResult.Status.INVALID_ACTION);
         }
-        
-        return true;
+        PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
+        r.setKeepCallback(true);
+        return r;
     }
 
-	 /**
+
+    /**
      * Starts an intent to scan and decode a barcode.
      */
     public void scan() {
         Intent intentScan = new Intent(SCAN_INTENT);
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
-        this.cordova.startActivityForResult((CordovaPlugin) this, intentScan, REQUEST_CODE);
+        this.cordova.startActivityForResult((Plugin) this, intentScan, REQUEST_CODE);
     }
 
     /**
@@ -127,9 +120,7 @@ public class BarcodeScanner extends CordovaPlugin {
                 } catch(JSONException e) {
                     //Log.d(LOG_TAG, "This should never happen");
                 }
-                
-                this.cbContext.success(obj);
-                
+                this.success(new PluginResult(PluginResult.Status.OK, obj), this.callback);
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 JSONObject obj = new JSONObject();
                 try {
@@ -139,13 +130,9 @@ public class BarcodeScanner extends CordovaPlugin {
                 } catch(JSONException e) {
                     //Log.d(LOG_TAG, "This should never happen");
                 }
-                	
-                this.cbContext.success(obj);
-                
+                this.success(new PluginResult(PluginResult.Status.OK, obj), this.callback);
             } else {
-            	
-            	this.cbContext.error("Invalid Activity");
-
+                this.error(new PluginResult(PluginResult.Status.ERROR), this.callback);
             }
         }
     }
