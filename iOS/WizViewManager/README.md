@@ -6,7 +6,7 @@ This plugin lives in [https://github.com/Wizcorp/phonegap-plugin-wizViewManager]
 
 --------------
 
-# DESCRIPTION :
+# Description :
 
 PhoneGap plugin for;
 

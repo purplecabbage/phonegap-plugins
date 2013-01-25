@@ -6,7 +6,7 @@ This plugin lives in [https://github.com/Wizcorp/phonegap-plugin-wizAssets](http
 
 --------------
 
-# DESCRIPTION :
+# Description :
 
 PhoneGap plugin for;
 
