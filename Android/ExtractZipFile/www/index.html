@@ -23,14 +23,14 @@ function extractFile(fileName, destination)
 	var ZipClient = new ExtractZipFilePlugin();
 	ZipClient.extractFile('sdcard/'+fileName, 'sdcard/'+destination,win,fail);
 }
-function win() 
+function win(destination) 
 { 
-   alert('Success');
+   alert('Success unzip to: ' + destination);
 } 
   
-function fail(errorcode) 
+function fail(errormsg) 
 { 
-	alert('Fail to unzip: ' + errorcode);
+	alert('Fail to unzip: ' + errormsg);
 }
 </script>
 </head>

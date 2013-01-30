@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
@@ -91,11 +92,17 @@ public class ExtractZipFilePlugin extends CordovaPlugin {
 				  }
 			  }
 		} catch (ZipException e1) {
-			return new PluginResult(PluginResult.Status.ERROR, PluginResult.Status.MALFORMED_URL_EXCEPTION.ordinal());
+			return new PluginResult(PluginResult.Status.ERROR, "Invalid zip file");
 		} catch (IOException e1) {
-			return new PluginResult(PluginResult.Status.ERROR, PluginResult.Status.IO_EXCEPTION.ordinal());
+			return new PluginResult(PluginResult.Status.ERROR, "I/O error");
 		}
-		return new PluginResult(PluginResult.Status.OK);
+		String encoding;
+		try {
+			encoding = URLEncoder.encode(destination, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			encoding = "";
+		}
+		return new PluginResult(PluginResult.Status.OK, encoding);
 	}
 	
 }

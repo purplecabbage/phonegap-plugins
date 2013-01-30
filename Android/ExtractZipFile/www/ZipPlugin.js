@@ -15,5 +15,5 @@ cordova.addConstructor(function(){
 
 ExtractZipFilePlugin.prototype.extractFile = function(file, destination, successCallback, errorCallback) 
 {
-    return cordova.exec(successCallback, errorCallback, "ZipPlugin", "extract", [file, destination]);
+    return cordova.exec(successCallback, errorCallback, "ExtractZipFilePlugin", "extract", [file, destination]);
 };
