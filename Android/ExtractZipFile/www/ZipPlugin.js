@@ -2,18 +2,18 @@
  	Author: Vishal Rajpal
  	Filename: ZipPlugin.js
  	Created Date: 21-02-2012
- 	Modified Date: 04-04-2012
+ 	Modified Date: 30-01-2013
 */
 
-var ExtractZipFilePlugin=function(){
-};
+var ExtractZipFilePlugin = function(){
+}
 
-PhoneGap.addConstructor(function() 
-{
-	PhoneGap.addPlugin('ExtractZipFilePlugin', new ExtractZipFilePlugin());
+cordova.addConstructor(function(){
+    if(!window.plugins) window.plugins = {};
+    window.plugins.extractZipFile = new ExtractZipFilePlugin();
 });
 
-ExtractZipFilePlugin.prototype.extractFile = function(file, successCallback, errorCallback) 
+ExtractZipFilePlugin.prototype.extractFile = function(file, destination, successCallback, errorCallback) 
 {
-    return PhoneGap.exec(successCallback, errorCallback, "ZipPlugin", "extract", [file]);
+    return cordova.exec(successCallback, errorCallback, "ZipPlugin", "extract", [file, destination]);
 };
