@@ -31,6 +31,7 @@ If you are using PhoneGap 2.2.0 or greater please use the 2.2.0 directory.
     `<!-- ZXing activities -->`
     `<activity android:name="com.google.zxing.client.android.CaptureActivity"`
               `android:screenOrientation="landscape"`
+              `android:clearTaskOnLaunch="true"`
               `android:configChanges="orientation|keyboardHidden"`
               `android:theme="@android:style/Theme.NoTitleBar.Fullscreen"`
               `android:windowSoftInputMode="stateAlwaysHidden"`
