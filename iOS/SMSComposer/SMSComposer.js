@@ -28,7 +28,7 @@ SMSComposer.prototype.showSMSComposer = function(toRecipients, body)
 	if(body)
 		args.body = body;
 	
-	Cordova.exec("SMSComposer.showSMSComposer",args);
+	cordova.exec("SMSComposer.showSMSComposer",args);
 }
 
 SMSComposer.prototype.showSMSComposerWithCB = function(cbFunction,toRecipients,body)
