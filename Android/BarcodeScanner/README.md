@@ -4,7 +4,9 @@ Updates by Simon MacDonald
 
 ## Choosing the right source directory ##
 
-If you are using PhoneGap 1.5.0 to 1.8.1 please use the 1.8.1 directory. If you have upgraded to PhoneGap version 2.0.0 or better please use the 2.0.0 directory.
+If you are using PhoneGap 1.5.0 to 1.8.1 please use the 1.8.1 directory. 
+If you are using PhoneGap 2.0.0 to 2.1.0 please use the 2.0.0 directory.
+If you are using PhoneGap 2.2.0 or greater please use the 2.2.0 directory.
 
 
 ## Adding the Plugin to your project ##
@@ -29,6 +31,7 @@ If you are using PhoneGap 1.5.0 to 1.8.1 please use the 1.8.1 directory. If you 
     `<!-- ZXing activities -->`
     `<activity android:name="com.google.zxing.client.android.CaptureActivity"`
               `android:screenOrientation="landscape"`
+              `android:clearTaskOnLaunch="true"`
               `android:configChanges="orientation|keyboardHidden"`
               `android:theme="@android:style/Theme.NoTitleBar.Fullscreen"`
               `android:windowSoftInputMode="stateAlwaysHidden"`
