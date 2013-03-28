@@ -26,11 +26,11 @@ Using this plugin requires [PhoneGap Cordova library for Android](http://phonega
       &lt;/intent-filter&gt;<br/>
     &lt;/activity&gt;
 
-4. Download [GoogleAnalytics](https://developers.google.com/analytics/devguides/collection/android/resources) library (tested with 1.4.2) and copy "lib/libGoogleAnalytics.jar" into the libs directory within your project.  You will also need to right click on this file in eclipse and add the jar to the build path.
+4. Download [GoogleAnalytics](https://developers.google.com/analytics/devguides/collection/android/resources) library (tested with 2.0 beta 4) and copy "lib/libGoogleAnalytics.jar" into the libs directory within your project.  You will also need to right click on this file in eclipse and add the jar to the build path.
 
 5. In your res/xml/config.xml file add the following line:
 
-	&lt;plugin name=&quot;GoogleAnalyticsTracker&quot; value=&quot;com.phonegap.plugins.analytics.GoogleAnalyticsTracker&quot; /&gt;
+  &lt;plugin name=&quot;GoogleAnalyticsTracker&quot; value=&quot;com.phonegap.plugins.analytics.GoogleAnalyticsTracker&quot; /&gt;
 
 ## Using the plugin ##
 
@@ -39,87 +39,61 @@ The plugin creates the object `window.plugins.analytics`.  To use, call one of t
 <pre>
 /**
  * Initialize Google Analytics configuration
- * 
- * @param accountId			The Google Analytics account id 
- * @param successCallback	The success callback
- * @param failureCallback	The error callback
+ *
+ * @param accountId     The Google Analytics account id
+ * @param successCallback The success callback
+ * @param failureCallback The error callback
  */
-   
+
   start(accountId, successCallback, failureCallback);
 </pre>
 
 Sample use:
 
-	window.plugins.analytics.start("Your-Account-ID-Here", function(){alert("Start: success");}, function(){alert("Start: failure");});
-    
+  window.plugins.analytics.start("Your-Account-ID-Here", function(){alert("Start: success");}, function(){alert("Start: failure");});
+
 <pre>
 /**
  * Track a page view on Google Analytics
- * @param key				The name of the tracked item (can be a url or some logical name).
- * 							The key name will be presented in Google Analytics report.  
- * @param successCallback	The success callback
- * @param failureCallback	The error callback 
+ * @param key       The name of the tracked item (can be a url or some logical name).
+ *              The key name will be presented in Google Analytics report.
+ * @param successCallback The success callback
+ * @param failureCallback The error callback
  */
-   
-  trackPageView(key, successCallback, failureCallback);
+
+  sendView(key, successCallback, failureCallback);
 </pre>
 
 Sample use:
 
-    window.plugins.analytics.trackPageView("page1.html", function(){alert("Track: success");}, function(){alert("Track: failure");});
-	
+    window.plugins.analytics.sendView("page1.html", function(){alert("Track: success");}, function(){alert("Track: failure");});
+
 <pre>
 /**
  * Track an event on Google Analytics
- * @param category			The name that you supply as a way to group objects that you want to track
- * @param action			The name the type of event or interaction you want to track for a particular web object
- * @param label				Provides additional information for events that you want to track (optional)
- * @param value				Assign a numerical value to a tracked page object (optional)
+ * @param category      The name that you supply as a way to group objects that you want to track
+ * @param action      The name the type of event or interaction you want to track for a particular web object
+ * @param label       Provides additional information for events that you want to track (optional)
+ * @param value       Assign a numerical value to a tracked page object (optional)
 
- * @param successCallback	The success callback
- * @param failureCallback	The error callback 
+ * @param successCallback The success callback
+ * @param failureCallback The error callback
  */
 
-  trackEvent(category, action, label, value, successCallback, failureCallback);
+  sendEvent(category, action, label, value, successCallback, failureCallback);
 </pre>
 
 Sample use:
 
-	window.plugins.analytics.trackEvent("category", "action", "event", 1, function(){alert("Track: success");}, function(){alert("Track: failure");});
-	
-<pre>
-/**
- * Set a custom variable on Google Analytics
- * @param index			The slot for the custom variable
- * @param label			The name for the custom variable
- * @param value			The value for the custom variable
- * @param scope			The scope for the custom variable (optional)
-
- * @param successCallback	The success callback
- * @param failureCallback	The error callback 
- */
-
-  setCustomVar(index, label, value, scope, successCallback, failureCallback);
-</pre>
-
-Sample use:
-
-	window.plugins.analytics.setCustomVar(1, "type", "android", null, function(){alert("SetVar: success");}, function(){alert("SetVar: failure");});
+  window.plugins.analytics.sendEvent("category", "action", "event", 1, function(){alert("Track: success");}, function(){alert("Track: failure");});
 
 Please keep in mind that these methods, as in any other plugin, are ready to be invoked only after '[deviceready](http://docs.phonegap.com/phonegap_events_events.md.html#deviceready)' event has been fired
-Good practice will be manual dispatch and stop session. Add this code to your main activity:
-<pre>    
-@Override
-public void onDestroy() 
-{
-    super.onDestroy();
-    GoogleAnalyticsTracker tracker = com.google.android.apps.analytics.GoogleAnalyticsTracker.getInstance();
-    tracker.dispatch();
-    tracker.stopSession();
-}
-</pre>
 
 ## RELEASE NOTES ##
+
+### MAR, 28, 2013 ###
+
+* Added support for Analytics 2.0 beta
 
 ### AUG, 14, 2012 ###
 
@@ -146,7 +120,7 @@ the directories in which they reside and in the code itself. No external
 contributions are allowed under licenses which are fundamentally incompatible
 with the MIT or BSD licenses that PhoneGap is distributed under.
 
-The text of the MIT and BSD licenses is reproduced below. 
+The text of the MIT and BSD licenses is reproduced below.
 
 ---
 
@@ -201,11 +175,11 @@ Copyright (c) <2010> <Nitobi Software Inc., et. al., >
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- 
+
  ---
- 
+
  ### libGoogleAnalytics.jar
- 
+
  The libGoogleAnalytics.jar is distributed under Apache License, Version 2.0.
  License URL: http://www.apache.org/licenses/LICENSE-2.0
  libGoogleAnalytics.jar URL: http://code.google.com/p/android-scripting/source/browse/android/AndroidScriptingEnvironment/libs/libGoogleAnalytics.jar?r=41b40b84919bdf461784fd86e6ae464697d2abea

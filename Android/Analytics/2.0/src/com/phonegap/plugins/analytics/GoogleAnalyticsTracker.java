@@ -13,19 +13,25 @@ import org.apache.cordova.api.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.util.Log;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 
 public class GoogleAnalyticsTracker extends Plugin {
 	public static final String START = "start";
+	
+	@Deprecated
 	public static final String TRACK_PAGE_VIEW = "trackPageView";
+	@Deprecated
 	public static final String TRACK_EVENT = "trackEvent";
-	public static final String SET_CUSTOM_VARIABLE = "setCustomVariable";
+	
+	public static final String SEND_VIEW = "sendView";
+	public static final String SEND_EVENT = "sendEvent";
     
 	public static final int DISPATCH_INTERVAL = 20;
-	private com.google.android.apps.analytics.GoogleAnalyticsTracker tracker;
+	private Tracker mGaTracker;
+	private GoogleAnalytics mGaInstance;
 	
 	public GoogleAnalyticsTracker() {
-		tracker = com.google.android.apps.analytics.GoogleAnalyticsTracker.getInstance();
 	}
 	
 	@Override
@@ -38,23 +44,16 @@ public class GoogleAnalyticsTracker extends Plugin {
 			} catch (JSONException e) {
 				result = new PluginResult(Status.JSON_EXCEPTION);
 			}
-		} else if (TRACK_PAGE_VIEW.equals(action)) {
+		} else if (TRACK_PAGE_VIEW.equals(action) || SEND_VIEW.equals(action)) {
 			try {
 				trackPageView(data.getString(0));
 				result = new PluginResult(Status.OK);
 			} catch (JSONException e) {
 				result = new PluginResult(Status.JSON_EXCEPTION);
 			}
-		} else if (TRACK_EVENT.equals(action)) {
+		} else if (TRACK_EVENT.equals(action) || SEND_EVENT.equals(action)) {
 			try {
-				trackEvent(data.getString(0), data.getString(1), data.getString(2), data.getInt(3));
-				result = new PluginResult(Status.OK);
-			} catch (JSONException e) {
-				result = new PluginResult(Status.JSON_EXCEPTION);
-			}
-		} else if (SET_CUSTOM_VARIABLE.equals(action)){
-			try {
-				setCustomVar(data.getInt(0), data.getString(1), data.getString(2), data.getInt(3));
+				trackEvent(data.getString(0), data.getString(1), data.getString(2), data.getLong(3));
 				result = new PluginResult(Status.OK);
 			} catch (JSONException e) {
 				result = new PluginResult(Status.JSON_EXCEPTION);
@@ -65,20 +64,16 @@ public class GoogleAnalyticsTracker extends Plugin {
 		return result;
 	}
 	
-	private void start(String accountId) {
-		tracker.startNewSession(accountId, DISPATCH_INTERVAL, this.cordova.getActivity());
+	private void start(String accountId) { 
+		mGaInstance = GoogleAnalytics.getInstance(this.cordova.getActivity());
+		mGaTracker = mGaInstance.getTracker(accountId);
 	}
 	
 	private void trackPageView(String key) {
-		tracker.trackPageView(key);
+		mGaTracker.sendView(key);
 	}
 
-	private void trackEvent(String category, String action, String label, int value){
-		tracker.trackEvent(category, action, label, value);
-	}
-
-	private void setCustomVar(int index, String label, String value, int scope) {
-		if(scope > 0) tracker.setCustomVar(index, label, value, scope);
-		else tracker.setCustomVar(index, label, value);
+	private void trackEvent(String category, String action, String label, Long value){
+		mGaTracker.sendEvent(category, action, label, value);
 	}
 }
