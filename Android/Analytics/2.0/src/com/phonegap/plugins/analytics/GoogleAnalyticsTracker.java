@@ -19,11 +19,6 @@ import com.google.analytics.tracking.android.Tracker;
 public class GoogleAnalyticsTracker extends Plugin {
 	public static final String START = "start";
 	
-	@Deprecated
-	public static final String TRACK_PAGE_VIEW = "trackPageView";
-	@Deprecated
-	public static final String TRACK_EVENT = "trackEvent";
-	
 	public static final String SEND_VIEW = "sendView";
 	public static final String SEND_EVENT = "sendEvent";
     
@@ -44,16 +39,16 @@ public class GoogleAnalyticsTracker extends Plugin {
 			} catch (JSONException e) {
 				result = new PluginResult(Status.JSON_EXCEPTION);
 			}
-		} else if (TRACK_PAGE_VIEW.equals(action) || SEND_VIEW.equals(action)) {
+		} else if (SEND_VIEW.equals(action)) {
 			try {
-				trackPageView(data.getString(0));
+				sendView(data.getString(0));
 				result = new PluginResult(Status.OK);
 			} catch (JSONException e) {
 				result = new PluginResult(Status.JSON_EXCEPTION);
 			}
-		} else if (TRACK_EVENT.equals(action) || SEND_EVENT.equals(action)) {
+		} else if (SEND_EVENT.equals(action)) {
 			try {
-				trackEvent(data.getString(0), data.getString(1), data.getString(2), data.getLong(3));
+				sendEvent(data.getString(0), data.getString(1), data.getString(2), data.getLong(3));
 				result = new PluginResult(Status.OK);
 			} catch (JSONException e) {
 				result = new PluginResult(Status.JSON_EXCEPTION);
@@ -69,11 +64,11 @@ public class GoogleAnalyticsTracker extends Plugin {
 		mGaTracker = mGaInstance.getTracker(accountId);
 	}
 	
-	private void trackPageView(String key) {
+	private void sendView(String key) {
 		mGaTracker.sendView(key);
 	}
 
-	private void trackEvent(String category, String action, String label, Long value){
+	private void sendEvent(String category, String action, String label, Long value){
 		mGaTracker.sendEvent(category, action, label, value);
 	}
 }
