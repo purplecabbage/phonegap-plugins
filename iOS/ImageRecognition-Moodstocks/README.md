@@ -1,10 +1,8 @@
 # Moodstocks SDK PhoneGap plugin
 
-This is a PhoneGap plugin that uses Moodstocks real-time on-device image recognition SDK. We provide a demo application to help you get started.
+This is a PhoneGap plugin that uses Moodstocks real-time on-device image recognition SDK. We provide iOS and Android version along with demo application for each platform.
 
-So far we only support the iOS platform (tested with PhoneGap v2.3). The Android version is under development.
-
-This plugin is hosted at: [https://github.com/Moodstocks/moodstocks-phonegap-demo-app](https://github.com/Moodstocks/moodstocks-phonegap-demo-app)
+This plugin is hosted at: [https://github.com/Moodstocks/moodstocks-phonegap-plugin](https://github.com/Moodstocks/moodstocks-phonegap-plugin)
 
 ## Real-time on-device image recognition SDK
 
