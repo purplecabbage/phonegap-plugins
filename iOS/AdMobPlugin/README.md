@@ -21,7 +21,7 @@ the Google AdMob SDK version 6.4.0 for iOS, and Cordova 2.5.0.
    your index.html lives.
 3. Place AdMobPlugin.h and AdMobPlugin.m into the plugins/ folder.
 4. Add AdMobPlugin to Config.xml under the \<plugins\> element. The entry should
-   be \<plugin name="AdMobPlugin" value="AdMobPlugin" \/\>.
+   be \<plugin name="AdMobPlugin" value="AdMobPlugin" /\>.
 5. To make sure there are no domain whitelisting issues, make sure you've set
    the origin attribute of the \<access\> element to "*".
 6. Complete the Google AdMob SDK setup for iOS at
