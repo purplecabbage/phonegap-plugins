@@ -81,7 +81,7 @@ AdMob.prototype.createBannerView =
       failureCallback,
       'AdMobPlugin',
       'createBannerView',
-      new Array(defaults)
+      [defaults['publisherId'], defaults['adSize'], defaults['positionAtTop']]
   );
 };
 
@@ -127,6 +127,6 @@ AdMob.prototype.requestAd =
       failureCallback,
       'AdMobPlugin',
       'requestAd',
-      new Array(defaults)
+      [defaults['isTesting'], defaults['extras']]
   );
 };

@@ -1,4 +1,4 @@
-#import <Cordova/CDVPlugin.h>
+#import <Cordova/CDV.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -6,16 +6,17 @@
 
 #pragma mark - JS requestAd options
 
-#define KEY_PUBLISHER_ID_ARG    @"publisherId"
-#define KEY_AD_SIZE_ARG         @"adSize"
-#define KEY_POSITION_AT_TOP_ARG @"positionAtTop"
-#define KEY_EXTRAS_ARG          @"extras"
-#define KEY_IS_TESTING_ARG      @"isTesting"
+#define PUBLISHER_ID_ARG_INDEX    0
+#define AD_SIZE_ARG_INDEX         1
+#define POSITION_AT_TOP_ARG_INDEX 2
+#define IS_TESTING_ARG_INDEX      0
+#define EXTRAS_ARG_INDEX          1
 
 @class GADBannerView;
 
 #pragma mark AdMob Plugin
 
+// This version of the AdMob plugin has been tested with Cordova version 2.5.0.
 @interface AdMobPlugin : CDVPlugin <GADBannerViewDelegate> {
  @private
   // Value set by the javascript to indicate whether the ad is to be positioned
@@ -25,9 +26,7 @@
 
 @property(nonatomic, retain) GADBannerView *bannerView;
 
-- (void)createBannerView:(NSMutableArray *)arguments
-                withDict:(NSMutableDictionary *)options;
-- (void)requestAd:(NSMutableArray *)arguments
-         withDict:(NSMutableDictionary *)options;
+- (void)createBannerView:(CDVInvokedUrlCommand *)command;
+- (void)requestAd:(CDVInvokedUrlCommand *)command;
 
 @end

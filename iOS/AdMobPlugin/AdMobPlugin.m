@@ -24,7 +24,6 @@
 - (CDVPlugin *)initWithWebView:(UIWebView *)theWebView {
   self = (AdMobPlugin *)[super initWithWebView:theWebView];
   if (self) {
-    positionAdAtTop_ = NO;
     // These notifications are required for re-placing the ad on orientation
     // changes. Start listening for notifications here since we need to
     // translate the Smart Banner constants according to the orientation.
@@ -40,46 +39,45 @@
 
 // The javascript from the AdMob plugin calls this when createBannerView is
 // invoked. This method parses the arguments passed in.
-- (void)createBannerView:(NSMutableArray *)arguments
-                withDict:(NSMutableDictionary *)options {
+- (void)createBannerView:(CDVInvokedUrlCommand *)command {
   CDVPluginResult *pluginResult;
-  NSString *callbackId = [arguments pop];
+  NSString *callbackId = command.callbackId;
   GADAdSize adSize = [self GADAdSizeFromString:
-                         [options objectForKey:KEY_AD_SIZE_ARG]];
+                         [command argumentAtIndex:AD_SIZE_ARG_INDEX]];
+  positionAdAtTop_ = NO;
   // We don't need positionAtTop to be set, but we need values for adSize and
   // publisherId if we don't want to fail.
-  if (![options objectForKey:KEY_PUBLISHER_ID_ARG]) {
+  if (![command argumentAtIndex:PUBLISHER_ID_ARG_INDEX]) {
     // Call the error callback that was passed in through the javascript
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                      messageAsString:@"AdMobPlugin:"
                                                      @"Invalid publisher Id"];
-    [self writeJavascript:[pluginResult toErrorCallbackString:callbackId]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
     return;
   } else if (GADAdSizeEqualToSize(adSize, kGADAdSizeInvalid)) {
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                      messageAsString:@"AdMobPlugin:"
                                                      @"Invalid ad size"];
-    [self writeJavascript:[pluginResult toErrorCallbackString:callbackId]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
     return;
   }
-  if ([options objectForKey:KEY_POSITION_AT_TOP_ARG]) {
+  if ([command argumentAtIndex:POSITION_AT_TOP_ARG_INDEX]) {
     positionAdAtTop_=
-        (BOOL)[[options objectForKey:KEY_POSITION_AT_TOP_ARG] boolValue];
+        [[command argumentAtIndex:POSITION_AT_TOP_ARG_INDEX] boolValue];
   }
 
-  NSString *publisherId = [options objectForKey:KEY_PUBLISHER_ID_ARG];
+  NSString *publisherId = [command argumentAtIndex:PUBLISHER_ID_ARG_INDEX];
   [self createGADBannerViewWithPubId:publisherId
                           bannerType:adSize];
 
   // Call the success callback that was passed in through the javascript.
   pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-  [self writeJavascript:[pluginResult toSuccessCallbackString:callbackId]];
+  [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
-- (void)requestAd:(NSMutableArray *)arguments
-         withDict:(NSMutableDictionary *)options {
+- (void)requestAd:(CDVInvokedUrlCommand *)command {
   CDVPluginResult *pluginResult;
-  NSString *callbackId = [arguments pop];
+  NSString *callbackId = command.callbackId;
 
   if (!self.bannerView) {
     // Try to prevent requestAd from being called without createBannerView first
@@ -87,21 +85,22 @@
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                      messageAsString:@"AdMobPlugin:"
                                                      @"No ad view exists"];
-    [self writeJavascript:[pluginResult toErrorCallbackString:callbackId]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
     return;
   }
 
   NSDictionary *extrasDictionary = nil;
-  if ([options objectForKey:KEY_EXTRAS_ARG]) {
+  if ([command argumentAtIndex:EXTRAS_ARG_INDEX]) {
     extrasDictionary = [NSDictionary dictionaryWithDictionary:
-                           [options objectForKey:KEY_EXTRAS_ARG]];
+                           [command argumentAtIndex:EXTRAS_ARG_INDEX]];
   }
-  BOOL isTesting = (BOOL)[[options objectForKey:KEY_IS_TESTING_ARG] boolValue];
+  BOOL isTesting =
+      [[command argumentAtIndex:IS_TESTING_ARG_INDEX] boolValue];
   [self requestAdWithTesting:isTesting
                       extras:extrasDictionary];
 
   pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-  [self writeJavascript:[pluginResult toSuccessCallbackString:callbackId]];
+  [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
 - (GADAdSize)GADAdSizeFromString:(NSString *)string {
@@ -141,7 +140,17 @@
 - (void)requestAdWithTesting:(BOOL)isTesting
                       extras:(NSDictionary *)extrasDict {
   GADRequest *request = [GADRequest request];
-  request.testing = isTesting;
+
+  if (isTesting) {
+    // Make the request for a test ad. Put in an identifier for the simulator as
+    // well as any devices you want to receive test ads.
+    request.testDevices =
+        [NSArray arrayWithObjects:
+            GAD_SIMULATOR_ID,
+            // TODO: Add your device test identifiers here. They are
+            // printed to the console when the app is launched.
+            nil];
+  }
   if (extrasDict) {
     GADAdMobExtras *extras = [[[GADAdMobExtras alloc] init] autorelease];
     NSMutableDictionary *modifiedExtrasDict =
