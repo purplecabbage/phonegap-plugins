@@ -25,7 +25,9 @@ If you are using PhoneGap 2.2.0 or greater please use the 2.2.0 directory.
 
 7. In your res/xml/plugins.xml file add the following line:
 
+```
     <plugin name="BarcodeScanner" value="com.phonegap.plugins.barcodescanner.BarcodeScanner"/>
+```
 
 8. Add the following activity to your AndroidManifest.xml file. It should be added inside the &lt;application/&gt; tag.
 
