@@ -10,7 +10,6 @@
 package com.triggertrap;
 
 import java.io.IOException;
-
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.apache.cordova.api.PluginResult;
@@ -31,17 +30,20 @@ public class ZeroConf extends CordovaPlugin {
     WifiManager.MulticastLock lock;
     private JmDNS jmdns = null;
     private ServiceListener listener;
-    private CallbackContext callbackContext;
     private static final String LOG_TAG = "ZeroConf";
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        this.callbackContext = callbackContext;
-
+        Log.d(LOG_TAG,"action:" + action + " callbackId:" + callbackContext.getCallbackId() );
         if (action.equals("watch")) {
             String type = args.optString(0);
             if (type != null) {
-                watch(type);
+                try {
+                    watch(type, callbackContext);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 PluginResult pluginResult = new PluginResult(PluginResult.Status.NO_RESULT);
                 pluginResult.setKeepCallback(true);
                 callbackContext.sendPluginResult(pluginResult);
@@ -69,7 +71,6 @@ public class ZeroConf extends CordovaPlugin {
             } else {
                 callbackContext.error("Missing required service info.");
             }
-
         } else if (action.equals("close")) {
             if(jmdns != null) {
                 try {
@@ -78,10 +79,23 @@ public class ZeroConf extends CordovaPlugin {
                     e.printStackTrace();
                 }
             }
-        }  else if (action.equals("unregister")) {
+        } else if (action.equals("unregister")) {
             if(jmdns != null) {
                 jmdns.unregisterAllServices();
             }
+        } else if (action.equals("list")) {
+                String type = args.optString(0);
+                int timeout = args.optInt(1);
+                if (type != null) {
+                    try {
+                        list(type, timeout, callbackContext);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                } else {
+                    callbackContext.error("Service type not specified.");
+                }
 
         } else {
             Log.e(LOG_TAG, "Invalid action: " + action);
@@ -93,14 +107,44 @@ public class ZeroConf extends CordovaPlugin {
         return true;
     }
 
-    private void watch(String type) {
-        if(jmdns == null) {
-            setupWatcher();
+    private void watch(String type, final CallbackContext callbackContext) throws IOException {
+        WifiManager wifi = (WifiManager) this.cordova.getActivity().getSystemService(android.content.Context.WIFI_SERVICE);
+        lock = wifi.createMulticastLock("ZeroConfPluginLock");
+        lock.setReferenceCounted(true);
+        lock.acquire();
+        try {
+            if(jmdns == null) {
+                jmdns = JmDNS.create();
+            }
+            listener = new ServiceListener() {
+
+                public void serviceResolved(ServiceEvent ev) {
+                    Log.d(LOG_TAG, "Resolved");
+                    sendCallback("added", ev.getInfo(), callbackContext);
+                }
+
+                public void serviceRemoved(ServiceEvent ev) {
+                    Log.d(LOG_TAG, "Removed");
+                    sendCallback("removed", ev.getInfo(), callbackContext);
+                }
+
+                public void serviceAdded(ServiceEvent event) {
+                    Log.d(LOG_TAG, "Added");
+                    // Force serviceResolved to be called again
+                    jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
+                }
+            };
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
         }
+
         Log.d(LOG_TAG, "Watch " + type);
         Log.d(LOG_TAG, "Name: " + jmdns.getName() + " host: " + jmdns.getHostName());
         jmdns.addServiceListener(type, listener);
     }
+
     private void unwatch(String type) {
         if(jmdns == null) {
             return;
@@ -125,40 +169,33 @@ public class ZeroConf extends CordovaPlugin {
         }
     }
 
-    private void setupWatcher() {
-        Log.d(LOG_TAG, "Setup watcher");
-        WifiManager wifi = (WifiManager) this.cordova.getActivity().getSystemService(android.content.Context.WIFI_SERVICE);
-        lock = wifi.createMulticastLock("ZeroConfPluginLock");
-        lock.setReferenceCounted(true);
-        lock.acquire();
-        try {
+    private void list(final String type, final int timeout, final CallbackContext callbackContext) throws IOException {
+        if(jmdns == null) {
             jmdns = JmDNS.create();
-            listener = new ServiceListener() {
-
-                public void serviceResolved(ServiceEvent ev) {
-                    Log.d(LOG_TAG, "Resolved");
-                    sendCallback("added", ev.getInfo());
-                }
-
-                public void serviceRemoved(ServiceEvent ev) {
-                    Log.d(LOG_TAG, "Removed");
-                    sendCallback("removed", ev.getInfo());
-                }
-
-                public void serviceAdded(ServiceEvent event) {
-                    Log.d(LOG_TAG, "Added");
-                    // Force serviceResolved to be called again
-                    jmdns.requestServiceInfo(event.getType(), event.getName(), 1);
-                }
-            };
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
         }
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+                ServiceInfo[] serviceInfoList;
+                serviceInfoList = jmdns.list(type, timeout);
+                JSONArray services = new JSONArray();
+                if (serviceInfoList != null) {
+                    for (int index = 0; index < serviceInfoList.length; index++) {
+                        services.put(jsonifyService(serviceInfoList[index]));
+                    }
+                }
+
+                Log.d(LOG_TAG, "List " + type);
+                Log.d(LOG_TAG, "Name: " + jmdns.getName() + " host: " + jmdns.getHostName());
+                //PluginResult result = new PluginResult(PluginResult.Status.OK, services);
+                //result.setKeepCallback(true);
+                //callbackContext.sendPluginResult(result);
+                callbackContext.success(services); // Thread-safe.
+            }
+        });
+
     }
 
-    private void sendCallback(String action, ServiceInfo info) {
+    private void sendCallback(String action, ServiceInfo info, CallbackContext callbackContext) {
         JSONObject status = new JSONObject();
         try {
             status.put("action", action);
@@ -170,8 +207,6 @@ public class ZeroConf extends CordovaPlugin {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -208,7 +243,6 @@ public class ZeroConf extends CordovaPlugin {
         }
 
         return obj;
-
     }
 
 }

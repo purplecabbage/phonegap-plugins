@@ -17,7 +17,7 @@ ZeroConf.prototype.watch = function(type, callback) {
     }, ZeroConf.fail, "ZeroConf", "watch", [type]);
 };
 
-ZeroConf.prototype.list = function(type, callback) {
+ZeroConf.prototype.list = function(type, timeout, callback) {
     return cordova.exec(function(result) {
         if(callback) {
             callback(result);
