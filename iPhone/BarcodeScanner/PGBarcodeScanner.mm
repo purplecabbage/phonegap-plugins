@@ -16,11 +16,8 @@
 //------------------------------------------------------------------------------
 #import "zxing-all-in-one.h"
 
-#ifdef PHONEGAP_FRAMEWORK
-#import <PhoneGap/PGPlugin.h>
-#else
-#import "PGPlugin.h"
-#endif
+#import <CORDOVA/CDVPlugin.h>
+
 
 //------------------------------------------------------------------------------
 // Adds a shutter button to the UI, and changes the scan from continuous to
@@ -35,7 +32,7 @@
 //------------------------------------------------------------------------------
 // plugin class
 //------------------------------------------------------------------------------
-@interface PGBarcodeScanner : PGPlugin {}
+@interface PGBarcodeScanner : CDVPlugin {}
     - (NSString*)isScanNotPossible;
     - (void)scan:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
     - (void)encode:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
@@ -132,7 +129,7 @@
         processor = [[PGbcsProcessor alloc]
             initWithPlugin:self
             callback:callback
-            parentViewController:[self appViewController]
+            parentViewController:[self viewController]
             alterateOverlayXib:overlayXib
         ];
 
@@ -154,8 +151,8 @@
         [resultDict setObject:format          forKey:@"format"];
         [resultDict setObject:cancelledNumber forKey:@"cancelled"];
 
-        PluginResult* result = [PluginResult
-            resultWithStatus: PGCommandStatus_OK
+        CDVPluginResult* result = [CDVPluginResult
+            resultWithStatus: CDVCommandStatus_OK
             messageAsDictionary: resultDict
         ];
 
@@ -166,8 +163,8 @@
 
     //--------------------------------------------------------------------------
     - (void)returnError:(NSString*)message callback:(NSString*)callback {
-        PluginResult* result = [PluginResult
-            resultWithStatus: PGCommandStatus_OK
+        CDVPluginResult* result = [CDVPluginResult
+            resultWithStatus: CDVCommandStatus_OK
             messageAsString: message
         ];
 
