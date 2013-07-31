@@ -1,0 +1,12 @@
+[submodule "/Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/Badge"]
+	path = /Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/Badge
+	url = https://github.com/cemerson/cordova-badge.git
+[submodule "/Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/InAppBrowser"]
+	path = /Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/InAppBrowser
+	url = https://github.com/cemerson/cordova-inappbrowser-ce.git
+[submodule "/Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/SecureDeviceIdentifier"]
+	path = /Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/SecureDeviceIdentifier
+	url = https://github.com/cemerson/cordova-securedeviceidentifier.git
+[submodule "/Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/PowerManagement"]
+	path = /Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/PowerManagement
+	url = https://github.com/cemerson/cordova-powermanagement.git
