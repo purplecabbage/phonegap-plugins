@@ -1,4 +1,4 @@
-**cemerson fork note**: My fork of this repo uses submodules for each plugin. To clone with all submodules intact use:
+**cemerson fork note**: My fork of this repo uses submodules for a few plugins. To clone with all submodules intact use:
 
     git clone --recursive https://github.com/cemerson/phonegap-plugins.git
 
