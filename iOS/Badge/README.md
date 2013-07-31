@@ -9,3 +9,5 @@ cordova plugin add https://github.com/cemerson/cordova-badge.git
 
 ##Remove Plugin:
 cordova plugin rm org.apache.cordova.plugins.Badge
+
+20130731.5
