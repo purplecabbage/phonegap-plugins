@@ -1,0 +1,3 @@
+[submodule "/Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/Badge"]
+	path = /Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/Badge
+	url = https://github.com/cemerson/cordova-badge.git
