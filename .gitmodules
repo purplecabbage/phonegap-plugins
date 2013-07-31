@@ -6,4 +6,7 @@
 	url = https://github.com/cemerson/cordova-inappbrowser-ce.git
 [submodule "/Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/SecureDeviceIdentifier"]
 	path = /Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/SecureDeviceIdentifier
+	url = https://github.com/cemerson/cordova-securedeviceidentifier.git?1
+[submodule "/Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/PowerManagement"]
+	path = /Users/Administrator/Dropbox/Projects/github/phonegap-plugins/iOS/PowerManagement
 	url = https://github.com/cemerson/cordova-securedeviceidentifier.git
