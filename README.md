@@ -1,3 +1,8 @@
+**cemerson fork note**: My fork of this repo uses submodules for each plugin. To clone with all submodules intact use:
+
+    git clone --recursive https://github.com/cemerson/phonegap-plugins.git
+
+
 **NOTE**: We don’t want to “clutter” this repo with code anymore. Authors should maintain the code in their own repos and just put a pointer in a README.md in this repo.
 
 It would be best for everyone if the individual authors of the plugins were able to manage issues and pull requests while still allowing this to be an easier way for users to discover the plugins they need.
