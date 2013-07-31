@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
+           id="org.apache.cordova.plugins.SecureDeviceIdentifier"
+      version="0.1.0">
+
+    <name>SecureDeviceIdentifier</name>
+
+    <js-module src="www/SecureDeviceIdentifier.js" name="SecureDeviceIdentifier">
+        <clobbers target="SecureDeviceIdentifier" />
+    </js-module>
+        
+    <!-- ios -->
+    <platform name="ios">            
+        <config-file target="config.xml" parent="/*">
+            <feature name="SecureDeviceIdentifier">
+                <param name="ios-package" value="SecureDeviceIdentifier" /> 
+            </feature>
+        </config-file>
+    
+        <header-file src="src/ios/SecureDeviceIdentifier.h" />
+	    <source-file src="src/ios/SecureDeviceIdentifier.m" />
+        <resource-file src="src/ios/SecureUDID"/> 
+        <header-file src="src/ios/SecureUDID/SecureUDID.h"/> 
+        <source-file src="src/ios/SecureUDID/SecureUDID.m"/> 
+	    	    
+    </platform>
+
+
+</plugin>
