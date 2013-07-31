@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"           
+           id="org.apache.cordova.plugins.inappbrowserce"
+      version="20130730.9">
+    <name>InAppBrowserCE</name>
+
+    <js-module src="www/InAppBrowser.js" name="InAppBrowser">
+        <clobbers target="window.open" />
+    </js-module>
+    
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="InAppBrowser"> 
+                <param name="android-package" value="org.apache.cordova.plugins.inappbrowserce"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/InAppBrowser.java" target-dir="src/org/apache/cordova/core" />
+    </platform>
+    
+    <!-- ios -->
+    <platform name="ios">            
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppBrowser">
+                <param name="ios-package" value="CDVInAppBrowser" /> 
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/CDVInAppBrowser.h" />
+	    <source-file src="src/ios/CDVInAppBrowser.m" />
+	    
+        <framework src="CoreGraphics.framework" weak="true" />
+    </platform>
+
+    <!-- wp7 -->
+    <platform name="wp7">
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppBrowser">
+                <param name="wp-package" value="InAppBrowser"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/wp/InAppBrowser.cs" />
+    </platform>
+
+    <!-- wp8 -->
+    <platform name="wp8">
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppBrowser">
+                <param name="wp-package" value="InAppBrowser"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/wp/InAppBrowser.cs" />
+    </platform>
+        
+
+</plugin>
