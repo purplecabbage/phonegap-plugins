@@ -1,0 +1,12 @@
+[submodule "iOS/SecureDeviceIdentifier"]
+	path = iOS/SecureDeviceIdentifier
+	url = https://github.com/cemerson/cordova-securedeviceidentifier.git
+[submodule "iOS/PowerManagement"]
+	path = iOS/PowerManagement
+	url = https://github.com/cemerson/cordova-powermanagement.git
+[submodule "iOS/Badge"]
+	path = iOS/Badge
+	url = https://github.com/cemerson/cordova-badge.git
+[submodule "iOS/InAppBrowser"]
+	path = iOS/InAppBrowser
+	url = https://github.com/cemerson/cordova-inappbrowser-ce.git
