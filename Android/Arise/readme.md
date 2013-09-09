@@ -1,14 +1,15 @@
-SpeechRecognizer Plugin
-----------------
-Maintained by Guillaume Charhon - Smart Mobile Software  
+Arise PhoneGap plugin
+-----------------------
+Maintained by Guillaume Charhon - Arise.io
 
-The repository for this plugin is located at https://github.com/poiuytrez/SpeechRecognizer
+The repository for this plugin is located at https://github.com/poiuytrez/ArisePhoneGap  
+
+This plugin let you use the Arise service through phonegap to perform A/B testing.
 
 MIT License
 ----------------
 
-Copyright (c) 2011-2013 Guillaume Charhon (github.com/poiuytrez)
-Copyright (c) 2011-2013 Colin Turner (github.com/koolspin)
+Copyright (c) 2013 Guillaume Charhon - Arise.io
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
