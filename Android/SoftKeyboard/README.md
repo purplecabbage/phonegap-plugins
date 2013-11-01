@@ -1,9 +1,3 @@
 # show/hide softkeyboard plugin for Phonegap Android #
 
-## Usage ##
-
-    plugins.SoftKeyBoard.show(function () {
-        // success
-    },function () {
-       // fail
-    });
+This plugin has been moved to [http://github.com/jwark/SoftKeyboardPlugin](http://github.com/jwark/SoftKeyboardPlugin)
