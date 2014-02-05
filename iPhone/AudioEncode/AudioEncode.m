@@ -9,13 +9,12 @@
 
 @implementation AudioEncode
 
-@synthesize successCallback, failCallback;
+@synthesize callback;
 
 - (void)encodeAudio:(NSArray*)arguments withDict:(NSDictionary*)options
 {
-    self.successCallback = [[arguments objectAtIndex:1] retain];
-    self.failCallback = [[arguments objectAtIndex:2] retain];
-	NSString* audioPath = [arguments objectAtIndex:0];
+    self.callback = [[arguments objectAtIndex:0] retain];
+    NSString* audioPath = [arguments objectAtIndex:1];
     
 	NSURL* audioURL = [NSURL fileURLWithPath:audioPath];
 	AVURLAsset* audioAsset = [[AVURLAsset alloc] initWithURL:audioURL options:nil];
@@ -59,16 +58,22 @@
 
 -(void) doSuccessCallback:(NSString*)path {
     NSLog(@"doing success callback");
-    NSString* jsCallback = [NSString stringWithFormat:@"%@(\"%@\");", self.successCallback, path];
-    [self writeJavascript: jsCallback];
-    [self.successCallback release];
+    
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:path];
+    NSString* javaScript = [pluginResult toSuccessCallbackString:self.callback];
+
+    [self writeJavascript: javaScript];
+    [self.callback release];
 }
 
 -(void) doFailCallback:(NSString*)status {
-    NSLog(@"doing fail callback");
-    NSString* jsCallback = [NSString stringWithFormat:@"%@(\"%@\");", self.failCallback, status];
-    [self writeJavascript: jsCallback];
-    [self.failCallback release];
+    NSLog(@"doing success callback");
+    
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:status];
+    NSString* javaScript = [pluginResult toErrorCallbackString:self.callback];
+
+    [self writeJavascript: javaScript];
+    [self.callback release];
 }
 
 @end
