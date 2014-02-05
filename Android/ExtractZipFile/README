@@ -12,26 +12,26 @@ Adding the Plugin to your project
     Create a folder called 'com/phonegap/plugin/ExtractZipFile' within your project's src folder and copy ExtractZipFilePlugin.java file into that new folder.
 
     Add a plugin line to res/xml/plugins.xml
-    <plugin name="ZipPlugin" value="com.phonegap.plugin.ExtractZipFile.ExtractZipFilePlugin" />
+    <plugin name="ExtractZipFilePlugin" value="org.apache.cordova.plugin.ExtractZipFile.ExtractZipFilePlugin" />
 
 Using the plugin
 ================
-  function extractFile(fileName)
+  function extractFile(fileName, destination)
   {
 		var ZipClient = new ExtractZipFilePlugin();
-		ZipClient.extractFile('sdcard/'+fileName,win,fail,'ExtractZipFilePlugin');
+		ZipClient.extractFile('sdcard/'+fileName, 'sdcard/'+destination,win,fail);
 	}
 
-	function win(status) 
-	{	 
-		alert('Success'+status);
-	}	 
-  
-	function fail(error) 
+	function win(destination) 
 	{ 
-		alert(error);
+	   alert('Success unzip to: ' + destination);
+	} 
+	  
+	function fail(errormsg) 
+	{ 
+		alert('Fail to unzip: ' + errormsg);
 	}
 	
 Function Call
 =============
-	<input type="button" value="Extract Zip File" onClick="extractFile('ZipFolder/ZipFile.zip');"/>
+	<input type="button" value="Extract Zip File" onClick="extractFile('FileName.zip', 'destinationFolder');"/>
