@@ -4,6 +4,8 @@ Originally by Matt Kane
 
 Modifications by IBM
 
+Ported to cordova 2.7 by pille72
+
 ## Using the plugin ##
 
 The plugin requires the AVFoundation Framework, which is only available under
@@ -35,17 +37,18 @@ The `scan` function is invoked as follows:
 
 A full example could be:
 
-    window.plugins.barcodeScanner.scan(
+    var myScanner = new PGBarcodeScanner();
+    myScanner.scan(
         function(result) {
             if (result.cancelled)
                 alert("the user cancelled the scan")
             else
-                alert("we got a barcode: " + result.text)
+                document.write(result.text);
         },
         function(error) {
             alert("scanning failed: " + error)
         }
-    )
+    );
 
 ## `encode()` method ##
 
@@ -99,7 +102,7 @@ at the bare minumum a transparent view that is connected to the PGbcsViewControl
 * In the `Supporting Files` directory of your project, add a new plugin
 by editing the file `PhoneGap.plist` and in the `Plugins` dictionary adding
 the following key/value pair:
- * key: `com.phonegap.barcodeScanner`
+ * key: `PGBarcodeScanner`
  * value: `PGBarcodeScanner`
 * Add the following libraries to your Xcode project, if not already there:
  * AVFoundation.framework

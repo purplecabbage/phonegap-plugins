@@ -5,19 +5,18 @@
  * Copyright (c) Matt Kane 2010
  * Copyright (c) 2010, IBM Corporation
  */
+var PGBarcodeScanner;
 
 ;(function(){
-
-if (PhoneGap.hasResource("barcodeScanner")) return
-
-PhoneGap.addResource("barcodeScanner")
+if (!window.Cordova) window.Cordova = window.cordova;
+//PhoneGap.addResource("PGBarcodeScanner")
 
 //-------------------------------------------------------------------
-var BarcodeScanner = function() {
+PGBarcodeScanner = function() {
 }
 
 //-------------------------------------------------------------------
-BarcodeScanner.Encode = {
+PGBarcodeScanner.Encode = {
         TEXT_TYPE:     "TEXT_TYPE",
         EMAIL_TYPE:    "EMAIL_TYPE",
         PHONE_TYPE:    "PHONE_TYPE",
@@ -27,7 +26,7 @@ BarcodeScanner.Encode = {
 }
 
 //-------------------------------------------------------------------
-BarcodeScanner.prototype.scan = function(success, fail, options) {
+PGBarcodeScanner.prototype.scan = function(success, fail, options) {
     function successWrapper(result) {
         result.cancelled = (result.cancelled == 1)
         success.call(null, result)
@@ -36,7 +35,7 @@ BarcodeScanner.prototype.scan = function(success, fail, options) {
     if (!fail) { fail = function() {}}
 
     if (typeof fail != "function")  {
-        console.log("BarcodeScanner.scan failure: failure parameter not a function")
+        console.log("PGBarcodeScanner.scan failure: failure parameter not a function")
         return
     }
 
@@ -48,15 +47,15 @@ BarcodeScanner.prototype.scan = function(success, fail, options) {
     if ( null == options ) 
       options = []
 
-    return PhoneGap.exec(successWrapper, fail, "com.phonegap.barcodeScanner", "scan", options)
+    cordova.exec(successWrapper, fail, "PGBarcodeScanner", "scan", options);
 }
 
 //-------------------------------------------------------------------
-BarcodeScanner.prototype.encode = function(type, data, success, fail, options) {
+PGBarcodeScanner.prototype.encode = function(type, data, success, fail, options) {
     if (!fail) { fail = function() {}}
 
     if (typeof fail != "function")  {
-        console.log("BarcodeScanner.scan failure: failure parameter not a function")
+        console.log("PGBarcodeScanner.scan failure: failure parameter not a function")
         return
     }
 
@@ -65,19 +64,18 @@ BarcodeScanner.prototype.encode = function(type, data, success, fail, options) {
         return
     }
 
-    return PhoneGap.exec(success, fail, "com.phonegap.barcodeScanner", "encode", [{type: type, data: data, options: options}])
+    cordova.exec(success, fail, "PGBarcodeScanner", "encode", [{type: type, data: data, options: options}]);
 }
 
 //-------------------------------------------------------------------
-PhoneGap.addConstructor(function() {
+/*PhoneGap.addConstructor(function() {
     if (!window.plugins) window.plugins = {}
 
-    if (!window.plugins.barcodeScanner) {
-        window.plugins.barcodeScanner = new BarcodeScanner()
+    if (!window.plugins.PGBarcodeScanner) {
+        window.plugins.PGBarcodeScanner = new PGBarcodeScanner()
     }
     else {
-        console.log("Not installing barcodeScanner: window.plugins.barcodeScanner already exists")
+        console.log("Not installing PGBarcodeScanner: window.plugins.PGBarcodeScanner already exists")
     }
-})
-
+})*/
 })();
