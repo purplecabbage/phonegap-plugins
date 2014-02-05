@@ -5,7 +5,7 @@
 //  Author: Felix Montanez
 //  
 //  Collaborators:
-//  Michael Brooks
+//  Michael Brooks, Trevor Cox
 //
 //  Notes: this is a basic plugin which creates an event to the user's local calendar. There are methods that I'm working on for fetching an event, modifying and deleting 
 //  events in the calendar. 
@@ -24,7 +24,7 @@
 //  var cal;
 //  cal = window.plugins.calendarPlugin
 //  
-//  function call in Javascript:
+//  function call in Javascript with just the required parameters:
 //
 //  createEvent : function(title,location,notes, startDate, endDate, calendarName){
 //            var title= "My Appt";
@@ -38,18 +38,28 @@
 //        },
 //
 //
-//  Which can also be written as:
+//  Which can also be written (with optional parameters):
 //
 //  function createEvent(title,location,notes, startDate, endDate, calendarName){
 //      var title= "My Appt";
 //      var location = "Los Felix";
 //      var notes = "me testing";
-//      var startDate = "2012-01-23 09:30:00";
-//      var endDate = "2012-01-23 12:30:00";
-//      var calendarName = "Work";  // optional
-//           
-//      cal.createEvent(title,location,notes,startDate,endDate, calendarName);
-//  }
+//      var startDate = "2012-01-23 09:30:00"; // or "2012-01-23" for all-day
+//      var endDate = "2012-01-23 12:30:00";   // or "2012-01-23" for all-day
+//      var reminder = 60; //minutes
+//      cal.createEvent(title,location,notes,startDate,endDate,reminder,
+//                        function() {
+//                            // success
+//                            alert('Added to your Calendar.');
+//                        },
+//                        function(errmsg) {
+//                            // failure
+//                            alert(errmsg);
+//                        });
+//      }
+//
+//
+// 
 //
 //  Also, there is a method "getCalendarList" which provides a list of calendar titles if you want 
 //  pass in the title as the last parameter to createEvent to specify a calendar other than the default.

@@ -10,9 +10,8 @@
 #import <EventKit/EventKit.h>
 
 @implementation calendarPlugin
-@synthesize eventStore;
-@synthesize defaultCalendar;
-
+//@synthesize eventStore;
+//@synthesize defaultCalendar;
 
 - (CDVPlugin*) initWithWebView:(UIWebView*)theWebView
 {
@@ -25,6 +24,39 @@
 
 -(void)createEvent:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
+    EKEventStore    *eventStore1 = [[EKEventStore alloc] init];
+    // iOS 6.0 prompts user before allowing calendar access.
+    if ([eventStore1 respondsToSelector:@selector(requestAccessToEntityType:completion:)]) {
+        // Note: To test access prompt, uninstall won't reset; must use Settings.app / General / Reset / Reset Location & Privacy
+        [eventStore1 requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+            if (granted) {
+                [self createEventImpl:arguments withDict:options];
+            } else
+            {
+                NSLog(@"%@", error);
+                NSString* callbackId = [arguments objectAtIndex:0];
+                NSString* javaScript = nil;
+                CDVPluginResult* pluginResult = nil;
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:
+                    @"You have not given permission for this app to access the calendar. You can change this in your Settings (Privacy->Calendar)."];
+                javaScript = [pluginResult toErrorCallbackString:callbackId];
+                [self performSelector:@selector(writeJavascript:) onThread:[NSThread mainThread] withObject:javaScript waitUntilDone:NO];
+            }
+            [eventStore1 release];
+        }];
+    }
+    else {
+        [self createEventImpl:arguments withDict:options];
+        [eventStore1 release];
+    }
+}
+
+-(BOOL)createEventImpl:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
+{
+    NSString* callbackId = [arguments objectAtIndex:0];
+    NSString* javaScript = nil;
+    CDVPluginResult* pluginResult = nil;
+
     //Get the Event store object
     EKEvent *myEvent;
     EKEventStore *store;
@@ -38,6 +70,7 @@
     NSString* startDate     = [arguments objectAtIndex:4];
     NSString* endDate       = [arguments objectAtIndex:5];
     NSString* calendarTitle = [arguments objectAtIndex:6];
+    NSString *reminderMinutes = [arguments objectAtIndex:7];
     
     EKCalendar* calendar = nil;
     if(calendarTitle == nil){
@@ -58,16 +91,22 @@
         }
     }
     
-    //creating the dateformatter object
+    NSString *dateFmt;
+    if([startDate length] == 19) {
+        dateFmt = @"yyyy-MM-dd HH:mm:ss";
+    }
+    else {
+        myEvent.allDay = YES;
+        dateFmt = @"yyyy-MM-dd";
+    }
+    
     NSDateFormatter *sDate = [[[NSDateFormatter alloc] init] autorelease];
-    [sDate setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [sDate setDateFormat:dateFmt];
     NSDate *myStartDate = [sDate dateFromString:startDate];
-    
-    
+
     NSDateFormatter *eDate = [[[NSDateFormatter alloc] init] autorelease];
-    [eDate setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [eDate setDateFormat:dateFmt];
     NSDate *myEndDate = [eDate dateFromString:endDate];
-    
     
     myEvent.title = title;
     myEvent.location = location;
@@ -76,24 +115,31 @@
     myEvent.endDate = myEndDate;
     myEvent.calendar = calendar;
     
+    if(reminderMinutes != nil) {
+        EKAlarm *reminder = [EKAlarm alarmWithRelativeOffset:-60*[reminderMinutes intValue]];
+        [myEvent addAlarm:reminder];
+    }
     
-    EKAlarm *reminder = [EKAlarm alarmWithRelativeOffset:-2*60*60];
-    
-    [myEvent addAlarm:reminder];
+    NSLog(@"%@", myEvent);
     
     NSError *error;
     BOOL saved = [store saveEvent:myEvent span:EKSpanThisEvent
                             error:&error];
-    if (saved) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:@"Saved to Calendar" delegate:self
-                                              cancelButtonTitle:@"Thank you!"
-                                              otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-        
-        
+    
+    if(saved) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        javaScript = [pluginResult toSuccessCallbackString:callbackId];
     }
+    else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:
+            [NSString stringWithFormat:@"%@", [error localizedDescription]]];
+        javaScript = [pluginResult toErrorCallbackString:callbackId];
+    }
+    [self performSelector:@selector(writeJavascript:) onThread:[NSThread mainThread] withObject:javaScript waitUntilDone:NO];
+    
+    [store release];
+    
+    return saved;
 }
 
 /***** NOT YET IMPLEMENTED BELOW ************/

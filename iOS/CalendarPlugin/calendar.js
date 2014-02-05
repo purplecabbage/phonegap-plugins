@@ -4,7 +4,7 @@
 // Created: 01-17-2012
 //
 // Contributors:
-// Michael Brooks
+// Michael Brooks, Trevor Cox
 
 
 function calendarPlugin()
@@ -13,9 +13,9 @@ function calendarPlugin()
 
 
 
-calendarPlugin.prototype.createEvent = function(title,location,notes,startDate,endDate,calendarName) {
-    console.log("creating event");
-    cordova.exec(null,null,"calendarPlugin","createEvent", [title,location,notes,startDate,endDate,calendarName]);
+calendarPlugin.prototype.createEvent = function(title,location,notes,startDate,endDate,calendarName,reminderMinutes,success,fail) {
+    console.log("calendarPlugin.createEvent");
+    cordova.exec(success,fail,"calendarPlugin","createEvent", [title,location,notes,startDate,endDate,calendarName,reminderMinutes]);
 };
 
 calendarPlugin.prototype.getCalendarList = function(response, err) {
