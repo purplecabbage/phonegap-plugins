@@ -1,4 +1,4 @@
-# Former home of Plugins for PhoneGap and Apache Cordova
+### Former home of Plugins for PhoneGap and Apache Cordova
 ===
 
 ## This repo has been deprecated
